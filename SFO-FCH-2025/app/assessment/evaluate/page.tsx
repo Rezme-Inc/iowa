@@ -107,18 +107,21 @@ export default function AssessmentEvaluate() {
   const [finalNoticeData, setFinalNoticeData] = useState({
     date: new Date().toISOString().split('T')[0],
     applicantName: "",
-    position: "",
+    employerContact: "",
+    employerCompany: "",
+    employerAddress: "",
+    employerPhone: "",
     initialNoticeDate: "",
-    receivedResponse: false,
-    responseDetails: "",
-    convictionError: false,
-    convictions: "",
+    responseReceived: "none", // 'none', 'noResponse', 'infoSubmitted'
+    convictionError: "none", // 'none', 'was', 'wasNot'
+    convictions: ["", "", ""],
     assessmentNotes: "",
     timeSinceOffense: "",
     timeSinceSentence: "",
+    position: "",
     jobDuties: "",
     fitnessImpact: "",
-    reconsiderationAllowed: false,
+    reconsideration: "none", // 'none', 'notAllowed', 'allowed'
     reconsiderationProcess: ""
   });
   const [isEditingFinalNotice, setIsEditingFinalNotice] = useState(false);
@@ -830,91 +833,84 @@ export default function AssessmentEvaluate() {
     return (
       <div className="space-y-6 max-h-[60vh] overflow-y-auto">
         <div className={!isEditingFinalNotice ? "space-y-4" : "hidden"}>
-          <p>[{finalNoticeData.date}]</p>
-          <p>Re: Final Decision to Revoke Job Offer Because of Conviction History</p>
+          <p>{finalNoticeData.date}</p>
+          <p className="font-semibold">Re: Final Decision to Revoke Job Offer Because of Conviction History</p>
           <p>Dear {finalNoticeData.applicantName || "[APPLICANT NAME]"}:</p>
           <p>
-            We are following up about our letter dated {finalNoticeData.initialNoticeDate || "[DATE OF NOTICE]"} which notified you of our initial
-            decision to revoke (take back) the conditional job offer:
+            We are following up about our letter dated {finalNoticeData.initialNoticeDate || "[DATE OF NOTICE]"} which notified you of our initial decision to revoke (take back) the conditional job offer:
           </p>
-          
+          <p>(Please check one:)</p>
           <div className="space-y-2">
-            <p>{finalNoticeData.receivedResponse ? 
-              `We made a final decision to revoke the job offer after considering the information you submitted, which included: ${finalNoticeData.responseDetails}` :
-              "We did not receive a timely response from you after sending you that letter, and our decision to revoke the job offer is now final."
-            }</p>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                checked={finalNoticeData.responseReceived === 'noResponse'}
+                onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, responseReceived: 'noResponse' }))}
+              />
+              <span>We did not receive a timely response from you after sending you that letter, and our decision to revoke the job offer is now final.</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                checked={finalNoticeData.responseReceived === 'infoSubmitted'}
+                onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, responseReceived: 'infoSubmitted' }))}
+              />
+              <span>We made a final decision to revoke the job offer after considering the information you submitted, which included: {finalNoticeData.responseDetails || "[LIST INFORMATION SUBMITTED]"}</span>
+            </div>
           </div>
-
-          <p>
-            After reviewing the information you submitted, we have determined that there 
-            {finalNoticeData.convictionError ? " was " : " was not "} an error on your conviction history report. 
-            We have decided to revoke our job offer because of the following conviction(s):
-          </p>
-          
-          <p>{finalNoticeData.convictions || "[LIST CONVICTION(S) THAT LED TO DECISION TO REVOKE OFFER]"}</p>
-          
-          <div className="space-y-4">
-            <p className="font-semibold">Our Individualized Assessment:</p>
-            <p>
-              We have individually assessed whether your conviction history is directly related to the duties of the
-              job we offered you. We considered the following:
-            </p>
-            <ol className="list-decimal pl-5 space-y-2">
-              <li>
-                The nature and seriousness of the conduct that led to your conviction(s), which we assessed
-                as follows: {finalNoticeData.assessmentNotes || "[DESCRIBE WHY CONSIDERED SERIOUS]"}
-              </li>
-              <li>
-                How long ago the conduct occurred that led to your conviction, which was: {finalNoticeData.timeSinceOffense || "[INSERT AMOUNT OF TIME PASSED]"} 
-                and how long ago you completed your sentence, which was: {finalNoticeData.timeSinceSentence || "[INSERT AMOUNT OF TIME PASSED]"}.
-              </li>
-              <li>
-                The specific duties and responsibilities of the position of {finalNoticeData.position || "[INSERT POSITION]"},
-                which are: {finalNoticeData.jobDuties || "[LIST JOB DUTIES]"}
-              </li>
-            </ol>
-            
-            <p>
-              We believe your conviction record lessens your fitness/ability to perform the job duties and have
-              made a final decision to revoke the job offer because: {finalNoticeData.fitnessImpact}
-            </p>
+          <div className="mt-4">
+            <span>After reviewing the information you submitted, we have determined that there </span>
+            <Checkbox
+              checked={finalNoticeData.convictionError === 'was'}
+              onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, convictionError: 'was' }))}
+            /> <span>was </span>
+            <Checkbox
+              checked={finalNoticeData.convictionError === 'wasNot'}
+              onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, convictionError: 'wasNot' }))}
+            /> <span>was not (check one) an error on your conviction history report. We have decided to revoke our job offer because of the following conviction(s):</span>
           </div>
-
-          <div className="space-y-4">
-            <p className="font-semibold">Request for Reconsideration:</p>
-            {finalNoticeData.reconsiderationAllowed ? (
-              <>
-                <p>If you would like to challenge this decision or request reconsideration, you may:</p>
-                <p>{finalNoticeData.reconsiderationProcess}</p>
-              </>
-            ) : (
-              <p>We do not offer any way to challenge this decision or request reconsideration.</p>
-            )}
+          <ul className="list-disc pl-5">
+            {finalNoticeData.convictions.map((conv, idx) => (
+              <li key={idx}>{conv || <span className="text-muted-foreground">[LIST CONVICTION(S) THAT LED TO DECISION TO REVOKE OFFER]</span>}</li>
+            ))}
+          </ul>
+          <p className="font-semibold mt-4">Our Individualized Assessment:</p>
+          <p>We have individually assessed whether your conviction history is directly related to the duties of the job we offered you. We considered the following:</p>
+          <ol className="list-decimal pl-5">
+            <li>The nature and seriousness of the conduct that led to your conviction(s), which we assessed as follows: {finalNoticeData.assessmentNotes || "[DESCRIBE WHY CONSIDERED SERIOUS]"}</li>
+            <li>How long ago the conduct occurred that led to your conviction, which was: {finalNoticeData.timeSinceOffense || "[INSERT AMOUNT OF TIME PASSED]"} and how long ago you completed your sentence, which was: {finalNoticeData.timeSinceSentence || "[INSERT AMOUNT OF TIME PASSED]"}.</li>
+            <li>The specific duties and responsibilities of the position of {finalNoticeData.position || "[INSERT POSITION]"}, which are: {finalNoticeData.jobDuties || "[LIST JOB DUTIES]"}</li>
+          </ol>
+          <p>We believe your conviction record lessens your fitness/ability to perform the job duties and have made a final decision to revoke the job offer because:</p>
+          <p>{finalNoticeData.fitnessImpact || <span className="text-muted-foreground">[reason]</span>}</p>
+          <p className="font-semibold mt-4">Request for Reconsideration:</p>
+          <p>(Please check one:)</p>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Checkbox
+                checked={finalNoticeData.reconsideration === 'notAllowed'}
+                onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, reconsideration: 'notAllowed' }))}
+              />
+              <span>We do not offer any way to challenge this decision or request reconsideration.</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                checked={finalNoticeData.reconsideration === 'allowed'}
+                onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, reconsideration: 'allowed' }))}
+              />
+              <span>If you would like to challenge this decision or request reconsideration, you may: {finalNoticeData.reconsiderationProcess || "[DESCRIBE INTERNAL PROCEDURE]"}</span>
+            </div>
           </div>
-
-          <div className="space-y-4">
-            <p className="font-semibold">Your Right to File a Complaint:</p>
-            <p>
-              If you believe your rights under the California Fair Chance Act have been violated during this job
-              application process, you have the right to file a complaint with the Civil Rights Department (CRD).
-            </p>
-            <p>There are several ways to file a complaint:</p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>File a complaint online at: ccrs.calcivilrights.ca.gov/s/</li>
-              <li>
-                Download an intake form at: calcivilrights.ca.gov/complaintprocess/filebymail/ and email it to
-                contact.center@calcivilrights.gov or mail it to 2218 Kausen Drive, Suite 100, Elk Grove, CA 95758.
-              </li>
-              <li>
-                Visit a CRD office. For office locations: calcivilrights.ca.gov/locations/
-              </li>
-            </ul>
-            <p>
-              For more information, visit calcivilrights.ca.gov/complaintprocess/ or call (800) 884-1684.
-            </p>
-          </div>
+          <p className="font-semibold mt-4">Your Right to File a Complaint:</p>
+          <p>If you believe your rights under the California Fair Chance Act have been violated during this job application process, you have the right to file a complaint with the Civil Rights Department (CRD).</p>
+          <p>There are several ways to file a complaint:</p>
+          <ul className="list-disc pl-5">
+            <li>File a complaint online at the following link: <a href="https://ccrs.calcivilrights.ca.gov/s/" target="_blank" rel="noopener noreferrer">ccrs.calcivilrights.ca.gov/s/</a></li>
+            <li>Download an intake form at the following link: <a href="https://calcivilrights.ca.gov/complaintprocess/filebymail/" target="_blank" rel="noopener noreferrer">calcivilrights.ca.gov/complaintprocess/filebymail/</a> and email it to contact.center@calcivilrights.gov or mail it to 2218 Kausen Drive, Suite 100, Elk Grove, CA 95758.</li>
+            <li>Visit a CRD office. Click the following link for office locations: <a href="https://calcivilrights.ca.gov/locations/" target="_blank" rel="noopener noreferrer">calcivilrights.ca.gov/locations/</a></li>
+          </ul>
+          <p>For more information, visit <a href="https://calcivilrights.ca.gov/complaintprocess/" target="_blank" rel="noopener noreferrer">calcivilrights.ca.gov/complaintprocess/</a> or call (800) 884-1684.</p>
+          <p className="mt-4">Sincerely,<br />{finalNoticeData.employerContact || "[Employer contact person name]"}<br />{finalNoticeData.employerCompany || "[Employer company name]"}<br />{finalNoticeData.employerAddress || "[Employer address]"}<br />{finalNoticeData.employerPhone || "[Employer contact phone number]"}</p>
+          <p className="mt-6 text-xs text-muted-foreground">CRD-ENG / Final Notice to Revoke Job Offer / March 2023</p>
         </div>
-
         <div className={isEditingFinalNotice ? "space-y-4" : "hidden"}>
           <div className="space-y-2">
             <Label htmlFor="date">Date</Label>
@@ -935,16 +931,43 @@ export default function AssessmentEvaluate() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="position">Position</Label>
+            <Label htmlFor="employerContact">Employer Contact Person Name</Label>
             <Input
-              id="position"
-              value={finalNoticeData.position}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, position: e.target.value }))}
-              placeholder="Enter position title"
+              id="employerContact"
+              value={finalNoticeData.employerContact}
+              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerContact: e.target.value }))}
+              placeholder="Enter employer contact person name"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="initialNoticeDate">Initial Notice Date</Label>
+            <Label htmlFor="employerCompany">Employer Company Name</Label>
+            <Input
+              id="employerCompany"
+              value={finalNoticeData.employerCompany}
+              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerCompany: e.target.value }))}
+              placeholder="Enter employer company name"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="employerAddress">Employer Address</Label>
+            <Input
+              id="employerAddress"
+              value={finalNoticeData.employerAddress}
+              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerAddress: e.target.value }))}
+              placeholder="Enter employer address"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="employerPhone">Employer Contact Phone Number</Label>
+            <Input
+              id="employerPhone"
+              value={finalNoticeData.employerPhone}
+              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerPhone: e.target.value }))}
+              placeholder="Enter employer contact phone number"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="initialNoticeDate">Date of Notice</Label>
             <Input
               id="initialNoticeDate"
               type="date"
@@ -953,74 +976,63 @@ export default function AssessmentEvaluate() {
             />
           </div>
           <div className="space-y-2">
-            <Label className="flex items-center gap-2">
-              <Checkbox
-                checked={finalNoticeData.receivedResponse}
-                onCheckedChange={(checked) => 
-                  setFinalNoticeData(prev => ({ ...prev, receivedResponse: checked as boolean }))
-                }
-                className="h-5 w-5 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:border-green-500 data-[state=checked]:text-green-500 focus:ring-green-500 transition"
+            <Label>Convictions</Label>
+            {finalNoticeData.convictions.map((conv, idx) => (
+              <Input
+                key={idx}
+                value={conv}
+                onChange={e => setFinalNoticeData(prev => {
+                  const convictions = [...prev.convictions];
+                  convictions[idx] = e.target.value;
+                  return { ...prev, convictions };
+                })}
+                placeholder={`Conviction ${idx + 1}`}
               />
-              Received response from candidate
-            </Label>
-          </div>
-          {finalNoticeData.receivedResponse && (
-            <div className="space-y-2">
-              <Label htmlFor="responseDetails">Response Details</Label>
-              <Textarea
-                id="responseDetails"
-                value={finalNoticeData.responseDetails}
-                onChange={(e) => setFinalNoticeData(prev => ({ ...prev, responseDetails: e.target.value }))}
-                placeholder="Enter details of candidate's response"
-              />
-            </div>
-          )}
-          <div className="space-y-2">
-            <Label className="flex items-center gap-2">
-              <Checkbox
-                checked={finalNoticeData.convictionError}
-                onCheckedChange={(checked) => 
-                  setFinalNoticeData(prev => ({ ...prev, convictionError: checked as boolean }))
-                }
-                className="h-5 w-5 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:border-green-500 data-[state=checked]:text-green-500 focus:ring-green-500 transition"
-              />
-              Error found in conviction history report
-            </Label>
+            ))}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="convictions">Convictions</Label>
+            <Label htmlFor="responseDetails">Information Submitted by Applicant</Label>
             <Textarea
-              id="convictions"
-              value={finalNoticeData.convictions}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, convictions: e.target.value }))}
-              placeholder="List convictions that led to decision"
+              id="responseDetails"
+              value={finalNoticeData.responseDetails}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, responseDetails: e.target.value }))}
+              placeholder="List information submitted by applicant"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="assessmentNotes">Assessment Notes</Label>
+            <Label htmlFor="assessmentNotes">Why Conduct Considered Serious</Label>
             <Textarea
               id="assessmentNotes"
               value={finalNoticeData.assessmentNotes}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, assessmentNotes: e.target.value }))}
-              placeholder="Describe why the convictions are considered serious"
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, assessmentNotes: e.target.value }))}
+              placeholder="Describe why considered serious"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="timeSinceOffense">Time Since Offense</Label>
+            <Label htmlFor="timeSinceOffense">How long ago did the conduct occur?</Label>
             <Input
               id="timeSinceOffense"
               value={finalNoticeData.timeSinceOffense}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, timeSinceOffense: e.target.value }))}
-              placeholder="Enter time since offense"
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, timeSinceOffense: e.target.value }))}
+              placeholder="e.g. 2 years ago"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="timeSinceSentence">Time Since Sentence Completion</Label>
+            <Label htmlFor="timeSinceSentence">How long ago was sentence completed?</Label>
             <Input
               id="timeSinceSentence"
               value={finalNoticeData.timeSinceSentence}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, timeSinceSentence: e.target.value }))}
-              placeholder="Enter time since sentence completion"
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, timeSinceSentence: e.target.value }))}
+              placeholder="e.g. 1 year ago"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="position">Position</Label>
+            <Input
+              id="position"
+              value={finalNoticeData.position}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, position: e.target.value }))}
+              placeholder="Enter position"
             />
           </div>
           <div className="space-y-2">
@@ -1028,42 +1040,28 @@ export default function AssessmentEvaluate() {
             <Textarea
               id="jobDuties"
               value={finalNoticeData.jobDuties}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, jobDuties: e.target.value }))}
-              placeholder="List relevant job duties"
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, jobDuties: e.target.value }))}
+              placeholder="List job duties"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="fitnessImpact">Impact on Job Fitness</Label>
+            <Label htmlFor="fitnessImpact">Reason for Revoking Offer</Label>
             <Textarea
               id="fitnessImpact"
               value={finalNoticeData.fitnessImpact}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, fitnessImpact: e.target.value }))}
-              placeholder="Explain how the conviction impacts job fitness"
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, fitnessImpact: e.target.value }))}
+              placeholder="Describe the link between the criminal history and job duties"
             />
           </div>
           <div className="space-y-2">
-            <Label className="flex items-center gap-2">
-              <Checkbox
-                checked={finalNoticeData.reconsiderationAllowed}
-                onCheckedChange={(checked) => 
-                  setFinalNoticeData(prev => ({ ...prev, reconsiderationAllowed: checked as boolean }))
-                }
-                className="h-5 w-5 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:border-green-500 data-[state=checked]:text-green-500 focus:ring-green-500 transition"
-              />
-              Allow reconsideration requests
-            </Label>
+            <Label htmlFor="reconsiderationProcess">Internal Procedure for Reconsideration</Label>
+            <Textarea
+              id="reconsiderationProcess"
+              value={finalNoticeData.reconsiderationProcess}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, reconsiderationProcess: e.target.value }))}
+              placeholder="Describe internal procedure for reconsideration"
+            />
           </div>
-          {finalNoticeData.reconsiderationAllowed && (
-            <div className="space-y-2">
-              <Label htmlFor="reconsiderationProcess">Reconsideration Process</Label>
-              <Textarea
-                id="reconsiderationProcess"
-                value={finalNoticeData.reconsiderationProcess}
-                onChange={(e) => setFinalNoticeData(prev => ({ ...prev, reconsiderationProcess: e.target.value }))}
-                placeholder="Describe the reconsideration process"
-              />
-            </div>
-          )}
         </div>
       </div>
     );
