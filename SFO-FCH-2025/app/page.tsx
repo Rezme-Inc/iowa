@@ -7,25 +7,31 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Users, ClipboardList, CheckCircle2, FileText, AlertTriangle, ArrowRight, Scale } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const steps = [
+const stepsRow1 = [
 	{
-		title: "Assessment",
-		description: "Evaluate conviction history in relation to job duties.",
+		title: "Ad and App Compliance Statement",
+		icon: <FileText className="w-6 h-6" />,
+	},
+	{
+		title: "Conditional Job Offer Letter",
 		icon: <ClipboardList className="w-6 h-6" />,
 	},
 	{
-		title: "Candidate Response",
-		description: "Allow candidate to respond or provide evidence.",
-		icon: <User className="w-6 h-6" />,
+		title: "Individualized Assessment",
+		icon: <Scale className="w-6 h-6" />,
 	},
+];
+const stepsRow2 = [
 	{
-		title: "Reassessment",
-		description: "Review candidate input and reassess decision.",
+		title: "Preliminary Notice to Revoke Job Offer",
 		icon: <AlertTriangle className="w-6 h-6" />,
 	},
 	{
-		title: "Final Decision",
-		description: "Communicate the final employment decision.",
+		title: "Individualized Reassessment Form",
+		icon: <Users className="w-6 h-6" />,
+	},
+	{
+		title: "Final Notice to Revoke Job Offer",
 		icon: <CheckCircle2 className="w-6 h-6" />,
 	},
 ];
@@ -48,30 +54,28 @@ export default function Home() {
 			<div className="mx-auto max-w-7xl space-y-8 px-8 pb-8">
 				<h1 className="text-4xl font-bold text-foreground">
 					Fair Chance Hiring Compliance Platform Demo:{" "}
-					<span className="text-cinnabar">San Francisco</span>
+					<span className="text-cinnabar">California</span>
 				</h1>
 				<div className="flex gap-8">
 					{/* Legal Overview Panel */}
 					<Card className="bg-background text-foreground border border-border shadow-sm rounded-lg w-2/5 min-w-[320px] max-w-[480px] flex-shrink-0">
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-foreground">
-                <Scale className="h-5 w-5 text-cinnabar" />
-								Fair Chance Ordinance Legal Overview
+                <Scale className="h-6 w-6 text-cinnabar" />
+								Fair Chance Act: Guidance for California Employers and Job Applicants
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<p className="text-gray35">
-								San Francisco's Fair Chance Ordinance promotes compliant hiring
-								practices by regulating how employers use arrest and conviction
-								records in employment decisions.
+								The Fair Chance Act, which went into effect on January 1, 2018, is a California law that aims to reduce undue barriers to employment for individuals with criminal histories. This law generally prohibits employers with five or more employees from asking a job candidate about conviction history before making a job offer, among other requirements. This type of law is also known as a "Ban the Box" law.
 							</p>
 							<div className="space-y-2">
 								<h3 className="font-semibold text-gray35">Key Requirements:</h3>
 								<ul className="list-disc pl-5 space-y-1 text-sm text-foreground font-poppins">
-									<li>Background checks only after conditional offer</li>
+									<li>Applies to employers with 5+ employees</li>
+									<li>No conviction history questions before job offer</li>
 									<li>Individualized assessment required</li>
-									<li>7-day candidate response period</li>
-									<li>3-year record retention mandate</li>
+									<li>Must consider rehabilitation evidence</li>
 								</ul>
 							</div>
 							<Button
@@ -79,15 +83,15 @@ export default function Home() {
 								className="w-full border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins"
 								onClick={() => router.push("/ordinance")}
 							>
-								View Full San Francisco Fair Chance Ordinance
+								View Full California Fair Chance Act
 							</Button>
 						</CardContent>
 					</Card>
 
 					{/* Assessment Launch Panel */}
-					<Card className="bg-background text-foreground border border-border shadow-sm rounded-lg w-3/5 max-w-none flex-shrink min-w-[400px]">
+					<Card className="bg-background text-foreground border border-border shadow-sm rounded-lg w-full max-w-none flex-shrink min-w-[600px]">
 					  <CardHeader>
-					    <CardTitle className="flex items-center gap-2 text-foreground">
+					    <CardTitle className="flex items-center gap-2 text-foreground text-xl font-semibold">
 					      <ClipboardList className="h-5 w-5 text-cinnabar" />
 					      Launch Assessment Demo
 					    </CardTitle>
@@ -99,55 +103,33 @@ export default function Home() {
 					      you through:
 					    </p>
 					    {/* Steps Row (Icons + Arrows) */}
-					    <div className="relative w-full mt-6">
-					      {/* Grid for steps */}
-					      <div
-					        className="grid w-full"
-					        style={{
-					          gridTemplateColumns: `repeat(${steps.length}, 1fr)`,
-					          alignItems: "start",
-					          gap: 0,
-					        }}
-					      >
-					        {steps.map((step, idx) => (
-					          <div key={step.title} className="flex flex-col items-center min-w-0">
+					    <div className="relative w-full mt-6 space-y-6">
+					      {/* First row */}
+					      <div className="flex justify-between w-full">
+					        {stepsRow1.map((step, idx) => (
+					          <div key={step.title} className="flex flex-col items-center min-w-0 flex-1">
 					            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-cinnabar text-white">
 					              {step.icon}
 					            </div>
 					            <span className="text-lg font-bold text-foreground text-center break-words leading-tight mt-2 max-w-[200px]">
 					              {step.title}
 					            </span>
-					            <span className="text-sm text-gray35 text-center block max-w-[340px] mt-2">
-					              {step.description}
+					          </div>
+					        ))}
+					      </div>
+					      {/* Second row */}
+					      <div className="flex justify-between w-full">
+					        {stepsRow2.map((step, idx) => (
+					          <div key={step.title} className="flex flex-col items-center min-w-0 flex-1">
+					            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-cinnabar text-white">
+					              {step.icon}
+					            </div>
+					            <span className="text-lg font-bold text-foreground text-center break-words leading-tight mt-2 max-w-[200px]">
+					              {step.title}
 					            </span>
 					          </div>
 					        ))}
 					      </div>
-					      {/* Absolutely positioned arrows */}
-					      {steps.length > 1 && (
-					        <div className="absolute left-0 top-0 w-full h-16 pointer-events-none">
-					          <div className="flex h-16 w-full">
-					            {steps.map((_, idx) =>
-					              idx < steps.length - 1 ? (
-					                <div
-					                  key={idx}
-					                  className="flex-1 flex items-center justify-center"
-					                  style={{ position: "relative" }}
-					                >
-					                  <span
-					                    className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl text-gray35 select-none"
-					                    style={{ zIndex: 10 }}
-					                  >
-					                    &gt;
-					                  </span>
-					                </div>
-					              ) : (
-					                <div key={idx} className="flex-1" />
-					              )
-					            )}
-					          </div>
-					        </div>
-					      )}
 					    </div>
 					    <Button
 					      className="w-full bg-cinnabar text-white hover:bg-cinnabar-600 transition font-poppins"

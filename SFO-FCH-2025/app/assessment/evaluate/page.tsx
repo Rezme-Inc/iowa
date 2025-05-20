@@ -128,6 +128,9 @@ export default function AssessmentEvaluate() {
     restorativeRecord: { type: "restorativeRecord", file: null, notes: "" },
   });
 
+  // Add state for the modal
+  const [showComplianceModal, setShowComplianceModal] = useState(false);
+
   useEffect(() => {
     setDocuments({
       jobDescription: {
@@ -1445,6 +1448,42 @@ export default function AssessmentEvaluate() {
           </Button>
 
           <div className="space-y-6">
+            <Card className="mb-6 p-4 flex flex-col items-center">
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-cinnabar text-white">
+                  <FileText className="w-8 h-8" />
+                </div>
+                <span className="text-lg font-bold text-foreground text-center break-words leading-tight mt-2 max-w-[200px]">
+                  Ad and App Compliance Statement
+                </span>
+                <Button className="mt-4 border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins" variant="outline" onClick={() => setShowComplianceModal(true)}>
+                  View Advertisement and Application Compliance Statement
+                </Button>
+              </div>
+            </Card>
+
+            {/* Compliance Statement Modal */}
+            <Dialog open={showComplianceModal} onOpenChange={setShowComplianceModal}>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <DialogTitle>Voluntary Fair Chance Act Compliance Statement</DialogTitle>
+                </DialogHeader>
+                <DialogDescription>
+                  <div className="space-y-4 mt-2 text-gray-700 text-base">
+                    <p>
+                      Below is a voluntary statement that employers can choose to add to job advertisements and applications regarding the Fair Chance Act:
+                    </p>
+                    <div className="bg-muted p-4 rounded-md border text-gray-900">
+                      <p className="mb-2">[Employer] will consider qualified applicants with a criminal history pursuant to the California Fair Chance Act. You do not need to disclose your criminal history or participate in a background check until a conditional job offer is made to you. After making a conditional offer and running a background check, if [Employer] is concerned about conviction that is directly related to the job, you will be given the chance to explain the circumstances surrounding the conviction, provide mitigating evidence, or challenge the accuracy of the background report. Find out more about the Fair Chance Act by visiting the Civil Right's Department Fair Chance Act webpage.</p>
+                    </div>
+                  </div>
+                </DialogDescription>
+                <div className="flex justify-end mt-4">
+                  <Button onClick={() => setShowComplianceModal(false)} variant="outline">Close</Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+
             <Card className="p-6">
               {renderStepContent()}
 
