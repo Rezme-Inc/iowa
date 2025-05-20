@@ -113,6 +113,7 @@ export default function AssessmentEvaluate() {
     employerPhone: "",
     initialNoticeDate: "",
     responseReceived: "none", // 'none', 'noResponse', 'infoSubmitted'
+    responseDetails: "", // Add this line
     convictionError: "none", // 'none', 'was', 'wasNot'
     convictions: ["", "", ""],
     assessmentNotes: "",
@@ -138,6 +139,15 @@ export default function AssessmentEvaluate() {
 
   // Add state for the modal
   const [showComplianceModal, setShowComplianceModal] = useState(false);
+
+  const [showReassessmentReminder, setShowReassessmentReminder] = useState(false);
+
+  const [reassessmentData, setReassessmentData] = useState({
+    hasError: "",
+    errorDescription: "",
+    evidence: ["", "", "", ""],
+    rescindReason: ""
+  });
 
   useEffect(() => {
     setDocuments({
@@ -1678,7 +1688,8 @@ export default function AssessmentEvaluate() {
                   description: "The candidate has been notified and has 7 days to respond.",
                 });
                 setShowNoticeDialog(false);
-                handleNext();
+                setShowReassessmentReminder(true); // Show the reminder dialog
+                // handleNext(); // Move to next step only after closing the reminder
               }}
             >
               <Send className="mr-2 h-4 w-4" />
@@ -1928,6 +1939,150 @@ export default function AssessmentEvaluate() {
           <div className="flex justify-end">
             <Button onClick={() => { setShowWOTCCongratsModal(false); router.push("/"); }}>
               Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Reassessment Reminder Dialog */}
+      <Dialog open={showReassessmentReminder} onOpenChange={setShowReassessmentReminder}>
+        <DialogContent className="max-w-[90vw] max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="sticky top-0 bg-background z-10 pb-4 border-b">
+            <DialogTitle>Adverse Action Notice Issued</DialogTitle>
+          </DialogHeader>
+          <DialogDescription className="pt-4">
+            <div className="space-y-6 text-gray-700 text-base">
+              <p>
+                You've indicated an intent to revoke this offer based on criminal history. We have stored your initial assessment of the candidate during the necessary individualized assessment of an applicant's criminal history that you conducted.
+              </p>
+              
+              <p>
+                Per compliance requirements, the candidate must be given 5 business days to respond. During this time, they may dispute the background information or submit mitigating evidence. When this information is provided by the candidate, your system will be updated with this content.
+              </p>
+
+              <div className="space-y-6">
+                <h3 className="font-semibold text-gray-900">INFORMATION</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="employerName">Employer Name</Label>
+                    <Input id="employerName" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="applicantName">Applicant Name</Label>
+                    <Input id="applicantName" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="position">Position Applied For</Label>
+                    <Input id="position" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="conditionalOfferDate">Date of Conditional Offer</Label>
+                    <Input id="conditionalOfferDate" type="date" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="reassessmentDate">Date of Reassessment</Label>
+                    <Input id="reassessmentDate" type="date" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="criminalHistoryDate">Date of Criminal History Report</Label>
+                    <Input id="criminalHistoryDate" type="date" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="assessor">Assessment Performed by</Label>
+                    <Input id="assessor" className="mt-1" />
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <h3 className="font-semibold text-gray-900">REASSESSMENT</h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <Label>1. Was there an error in the Criminal History Report?</Label>
+                      <RadioGroup
+                        value={reassessmentData.hasError}
+                        onValueChange={(value) => setReassessmentData(prev => ({ ...prev, hasError: value }))}
+                        className="flex gap-4 mt-2"
+                      >
+                        <div className="flex items-center gap-2">
+                          <RadioGroupItem value="yes" id="error-yes" />
+                          <Label htmlFor="error-yes">Yes</Label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <RadioGroupItem value="no" id="error-no" />
+                          <Label htmlFor="error-no">No</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+
+                    {reassessmentData.hasError === "yes" && (
+                      <div>
+                        <Label htmlFor="errorDescription">If yes, describe the error:</Label>
+                        <Textarea
+                          id="errorDescription"
+                          value={reassessmentData.errorDescription}
+                          onChange={(e) => setReassessmentData(prev => ({ ...prev, errorDescription: e.target.value }))}
+                          className="mt-1"
+                          placeholder="Describe any errors found in the criminal history report..."
+                        />
+                      </div>
+                    )}
+
+                    <div>
+                      <Label>2. Evidence of rehabilitation and good conduct</Label>
+                      <p className="text-sm text-muted-foreground mt-1 mb-2">
+                        This evidence may include, but is not limited to, documents or other information demonstrating that the Applicant attended school, a religious institution, job training, or counseling, or is involved with the community. This evidence can include letters from people who know the Applicant, such as teachers, counselors, supervisors, clergy, and parole or probation officers.
+                      </p>
+                      <div className="grid grid-cols-2 gap-4">
+                        {['a', 'b', 'c', 'd'].map((letter, index) => (
+                          <div key={letter}>
+                            <Label htmlFor={`evidence-${letter}`}>{letter}.</Label>
+                            <Textarea
+                              id={`evidence-${letter}`}
+                              value={reassessmentData.evidence[index]}
+                              onChange={(e) => {
+                                const newEvidence = [...reassessmentData.evidence];
+                                newEvidence[index] = e.target.value;
+                                setReassessmentData(prev => ({ ...prev, evidence: newEvidence }));
+                              }}
+                              className="mt-1"
+                              placeholder={`Enter evidence ${letter}...`}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="rescindReason" className="font-semibold">
+                        BASED ON THE FACTORS ABOVE, WE ARE RESCINDING OUR OFFER OF EMPLOYMENT BECAUSE
+                      </Label>
+                      <p className="text-sm text-muted-foreground mt-1 mb-2">
+                        (describe the link between the specific aspects of the Applicant's criminal history with risks inherent in the duties of the employment position):
+                      </p>
+                      <Textarea
+                        id="rescindReason"
+                        value={reassessmentData.rescindReason}
+                        onChange={(e) => setReassessmentData(prev => ({ ...prev, rescindReason: e.target.value }))}
+                        className="mt-1"
+                        placeholder="Describe the link between criminal history and job duties..."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-xs text-muted-foreground">
+                  CRD-ENG / Criminal History Reassessment Form / March 2023
+                </p>
+              </div>
+            </div>
+          </DialogDescription>
+          <div className="flex justify-end gap-3 mt-6 sticky bottom-0 bg-background pt-4 border-t">
+            <Button variant="outline" onClick={() => setShowReassessmentReminder(false)}>
+              Save Draft
+            </Button>
+            <Button onClick={() => { setShowReassessmentReminder(false); handleNext(); }}>
+              Complete Reassessment
             </Button>
           </div>
         </DialogContent>
