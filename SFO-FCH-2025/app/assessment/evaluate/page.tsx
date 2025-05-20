@@ -88,14 +88,18 @@ export default function AssessmentEvaluate() {
   const [showNoticeDialog, setShowNoticeDialog] = useState(false);
   const [noticeData, setNoticeData] = useState({
     date: new Date().toISOString().split('T')[0],
+    employerName: "",
     applicantName: "",
     position: "",
-    convictions: "",
-    assessmentNotes: "",
-    timeSinceOffense: "",
-    timeSinceSentence: "",
-    jobDuties: "",
-    fitnessImpact: ""
+    dateOfConditionalOffer: "",
+    dateOfAssessment: "",
+    dateOfCriminalHistoryReport: "",
+    assessmentPerformedBy: "",
+    jobDuties: ["", "", "", ""],
+    conductDescription: "",
+    timeSinceActivity: "",
+    activitiesSince: ["", "", "", ""],
+    rescindReason: ""
   });
   const [isEditingNotice, setIsEditingNotice] = useState(false);
 
@@ -666,50 +670,44 @@ export default function AssessmentEvaluate() {
     return (
       <div className="space-y-6 max-h-[60vh] overflow-y-auto">
         <div className={!isEditingNotice ? "space-y-4" : "hidden"}>
-          <p>[{noticeData.date}]</p>
-          <p>Re: Preliminary Decision to Revoke Job Offer Because of Conviction History</p>
-          <p>Dear {noticeData.applicantName || "[APPLICANT NAME]"}:</p>
-          <p>
-            After reviewing the results of your conviction history background check, we have made a preliminary
-            (non-final) decision to revoke (take back) our previous job offer for the position of {noticeData.position || "[INSERT POSITION]"} 
-            because of the following conviction(s):
-          </p>
-          <p>{noticeData.convictions || "[LIST CONVICTION(S) THAT LED TO DECISION TO REVOKE OFFER]"}</p>
-          
-          <p>Our Individualized Assessment:</p>
-          <p>
-            We have individually assessed whether your conviction history is directly related to the duties of the
-            job we offered you. We considered the following:
-          </p>
-          <ol className="list-decimal pl-5 space-y-2">
-            <li>
-              The nature and seriousness of the conduct that led to your conviction(s), which we assessed
-              as follows: {noticeData.assessmentNotes || "[DESCRIBE WHY CONSIDERED SERIOUS]"}
-            </li>
-            <li>
-              How long ago the conduct occurred that led to your conviction, which was: {noticeData.timeSinceOffense || "[INSERT AMOUNT OF TIME PASSED]"} 
-              and how long ago you completed your sentence, which was: {noticeData.timeSinceSentence || "[INSERT AMOUNT OF TIME PASSED]"}.
-            </li>
-            <li>
-              The specific duties and responsibilities of the position of {noticeData.position || "[INSERT POSITION]"},
-              which are: {noticeData.jobDuties || "[LIST JOB DUTIES]"}
-            </li>
-          </ol>
-          
-          <p>
-            We believe your conviction record lessens your fitness/ability to perform the job duties because:
-            {noticeData.fitnessImpact}
-          </p>
-        </div>
+          <h3 className="font-semibold">INFORMATION</h3>
+          <p>Employer Name: {noticeData.employerName || "[EMPLOYER NAME]"}</p>
+          <p>Applicant Name: {noticeData.applicantName || "[APPLICANT NAME]"}</p>
+          <p>Position Applied For: {noticeData.position || "[POSITION]"}</p>
+          <p>Date of Conditional Offer: {noticeData.dateOfConditionalOffer || "[DATE OF CONDITIONAL OFFER]"}</p>
+          <p>Date of Assessment: {noticeData.dateOfAssessment || "[DATE OF ASSESSMENT]"}</p>
+          <p>Date of Criminal History Report: {noticeData.dateOfCriminalHistoryReport || "[DATE OF CRIMINAL HISTORY REPORT]"}</p>
+          <p>Assessment Performed by: {noticeData.assessmentPerformedBy || "[ASSESSOR]"}</p>
 
+          <h3 className="font-semibold mt-6">ASSESSMENT</h3>
+          <p>1. The specific duties and responsibilities of the job are:</p>
+          <ul className="list-disc pl-5">
+            {noticeData.jobDuties.map((duty, idx) => (
+              <li key={idx}>{duty || <span className="text-muted-foreground">[duty]</span>}</li>
+            ))}
+          </ul>
+          <p className="mt-4">2. Description of the criminal conduct and why the conduct is of concern with respect to the position in question (conduct that can't be considered includes infractions or arrests that didn't lead to a conviction, convictions that have been sealed or expunged, adjudications in the juvenile justice system, or participation in a pre- or post-trial diversion program):</p>
+          <p>{noticeData.conductDescription || <span className="text-muted-foreground">[description]</span>}</p>
+          <p className="mt-4">3. How long ago did the criminal activity occur:</p>
+          <p>{noticeData.timeSinceActivity || <span className="text-muted-foreground">[time since activity]</span>}</p>
+          <p className="mt-4">4. Activities since criminal activity, such as work experience, job training, rehabilitation, community service, etc.:</p>
+          <ul className="list-disc pl-5">
+            {noticeData.activitiesSince.map((activity, idx) => (
+              <li key={idx}>{activity || <span className="text-muted-foreground">[activity]</span>}</li>
+            ))}
+          </ul>
+          <p className="mt-4 font-semibold">BASED ON THE FACTORS ABOVE, WE ARE CONSIDERING RESCINDING OUR OFFER OF EMPLOYMENT BECAUSE (describe the link between the specific aspects of the applicant's criminal history with risks inherent in the duties of the employment position):</p>
+          <p>{noticeData.rescindReason || <span className="text-muted-foreground">[reason]</span>}</p>
+          <p className="mt-6 text-xs text-muted-foreground">CRD-ENG / Criminal History Assessment Form / March 2023</p>
+        </div>
         <div className={isEditingNotice ? "space-y-4" : "hidden"}>
           <div className="space-y-2">
-            <Label htmlFor="date">Date</Label>
+            <Label htmlFor="employerName">Employer Name</Label>
             <Input
-              id="date"
-              type="date"
-              value={noticeData.date}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, date: e.target.value }))}
+              id="employerName"
+              value={noticeData.employerName}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, employerName: e.target.value }))}
+              placeholder="Enter employer name"
             />
           </div>
           <div className="space-y-2">
@@ -722,67 +720,105 @@ export default function AssessmentEvaluate() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="position">Position</Label>
+            <Label htmlFor="position">Position Applied For</Label>
             <Input
               id="position"
               value={noticeData.position}
               onChange={(e) => setNoticeData(prev => ({ ...prev, position: e.target.value }))}
-              placeholder="Enter position title"
+              placeholder="Enter position"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="convictions">Convictions</Label>
-            <Textarea
-              id="convictions"
-              value={noticeData.convictions}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, convictions: e.target.value }))}
-              placeholder="List convictions that led to decision"
-            />
-          </div>
-          <div className="space-y-2">
-            
-            <Label htmlFor="assessmentNotes">Assessment Notes</Label>
-            <Textarea
-              id="assessmentNotes"
-              value={noticeData.assessmentNotes}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, assessmentNotes: e.target.value }))}
-              placeholder="Describe why the convictions are considered serious"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="timeSinceOffense">Time Since Offense</Label>
+            <Label htmlFor="dateOfConditionalOffer">Date of Conditional Offer</Label>
             <Input
-              id="timeSinceOffense"
-              value={noticeData.timeSinceOffense}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, timeSinceOffense: e.target.value }))}
-              placeholder="Enter time since offense"
+              id="dateOfConditionalOffer"
+              type="date"
+              value={noticeData.dateOfConditionalOffer}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, dateOfConditionalOffer: e.target.value }))}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="timeSinceSentence">Time Since Sentence Completion</Label>
+            <Label htmlFor="dateOfAssessment">Date of Assessment</Label>
             <Input
-              id="timeSinceSentence"
-              value={noticeData.timeSinceSentence}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, timeSinceSentence: e.target.value }))}
-              placeholder="Enter time since sentence completion"
+              id="dateOfAssessment"
+              type="date"
+              value={noticeData.dateOfAssessment}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, dateOfAssessment: e.target.value }))}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="jobDuties">Job Duties</Label>
-            <Textarea
-              id="jobDuties"
-              value={noticeData.jobDuties}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, jobDuties: e.target.value }))}
-              placeholder="List relevant job duties"
+            <Label htmlFor="dateOfCriminalHistoryReport">Date of Criminal History Report</Label>
+            <Input
+              id="dateOfCriminalHistoryReport"
+              type="date"
+              value={noticeData.dateOfCriminalHistoryReport}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, dateOfCriminalHistoryReport: e.target.value }))}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="fitnessImpact">Impact on Job Fitness</Label>
+            <Label htmlFor="assessmentPerformedBy">Assessment Performed by</Label>
+            <Input
+              id="assessmentPerformedBy"
+              value={noticeData.assessmentPerformedBy}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, assessmentPerformedBy: e.target.value }))}
+              placeholder="Enter assessor name"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Job Duties</Label>
+            {noticeData.jobDuties.map((duty, idx) => (
+              <Input
+                key={idx}
+                value={duty}
+                onChange={e => setNoticeData(prev => {
+                  const duties = [...prev.jobDuties];
+                  duties[idx] = e.target.value;
+                  return { ...prev, jobDuties: duties };
+                })}
+                placeholder={`Duty ${String.fromCharCode(97 + idx)}`}
+              />
+            ))}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="conductDescription">Description of Criminal Conduct</Label>
             <Textarea
-              id="fitnessImpact"
-              value={noticeData.fitnessImpact}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, fitnessImpact: e.target.value }))}
-              placeholder="Explain how the conviction impacts job fitness"
+              id="conductDescription"
+              value={noticeData.conductDescription}
+              onChange={e => setNoticeData(prev => ({ ...prev, conductDescription: e.target.value }))}
+              placeholder="Describe the conduct and why it is of concern"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="timeSinceActivity">How long ago did the criminal activity occur?</Label>
+            <Input
+              id="timeSinceActivity"
+              value={noticeData.timeSinceActivity}
+              onChange={e => setNoticeData(prev => ({ ...prev, timeSinceActivity: e.target.value }))}
+              placeholder="e.g. 2 years ago"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Activities Since Criminal Activity</Label>
+            {noticeData.activitiesSince.map((activity, idx) => (
+              <Input
+                key={idx}
+                value={activity}
+                onChange={e => setNoticeData(prev => {
+                  const activities = [...prev.activitiesSince];
+                  activities[idx] = e.target.value;
+                  return { ...prev, activitiesSince: activities };
+                })}
+                placeholder={`Activity ${String.fromCharCode(97 + idx)}`}
+              />
+            ))}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="rescindReason">Reason for Considering Rescinding Offer</Label>
+            <Textarea
+              id="rescindReason"
+              value={noticeData.rescindReason}
+              onChange={e => setNoticeData(prev => ({ ...prev, rescindReason: e.target.value }))}
+              placeholder="Describe the link between the criminal history and job duties"
             />
           </div>
         </div>
