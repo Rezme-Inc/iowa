@@ -45,6 +45,7 @@ export default function AssessmentEvaluate() {
   const [offerLetterData, setOfferLetterData] = useState({
     applicantName: "",
     position: "",
+    employer: "",
     date: new Date().toISOString().split('T')[0]
   });
   const [isEditingLetter, setIsEditingLetter] = useState(false);
@@ -585,18 +586,16 @@ export default function AssessmentEvaluate() {
     return (
       <div className="space-y-6 max-h-[60vh] overflow-y-auto">
         <div className={!isEditingLetter ? "space-y-4" : "hidden"}>
-          <p>Date: {offerLetterData.date}</p>
+          <p>{offerLetterData.date}</p>
           <p>RE: Conditional Offer of Employment & Notice of Conviction Background Check</p>
           <p>Dear {offerLetterData.applicantName || "[APPLICANT NAME]"}:</p>
           <p>
-            We are writing to make you a conditional offer of employment for the position of {offerLetterData.position || "[INSERT POSITION]"}. 
-            Before this job offer becomes final, we will check your conviction history. The form attached to this letter asks for your permission 
-            to check your conviction history and provides more information about that background check.
+            We are writing to make you a conditional offer of employment for the position of {offerLetterData.position || "[INSERT POSITION]"}. Before this job offer becomes final, we will check your conviction history. The form attached to this letter asks for your permission to check your conviction history and provides more information about that background check.
           </p>
           <p>After reviewing your conviction history report, we will either:</p>
           <ul className="list-disc pl-5 space-y-2">
-            <li>Notify you that this conditional job offer has become final; or</li>
-            <li>Notify you in writing that we intend to revoke (take back) this job offer because of your conviction history.</li>
+            <li>a. Notify you that this conditional job offer has become final; or</li>
+            <li>b. Notify you in writing that we intend to revoke (take back) this job offer because of your conviction history.</li>
           </ul>
           <p>As required by California law, we will NOT consider any of the following information:</p>
           <ul className="list-disc pl-5 space-y-2">
@@ -605,8 +604,7 @@ export default function AssessmentEvaluate() {
             <li>Convictions that have been sealed, dismissed, expunged, or pardoned.</li>
           </ul>
           <p>
-            As required by the California Fair Chance Act, we will consider whether your conviction history is directly related 
-            to the duties of the job we have offered you. We will consider all of the following:
+            As required by the California Fair Chance Act, we will consider whether your conviction history is directly related to the duties of the job we have offered you. We will consider all of the following:
           </p>
           <ul className="list-disc pl-5 space-y-2">
             <li>The nature and seriousness of the offense</li>
@@ -614,20 +612,14 @@ export default function AssessmentEvaluate() {
             <li>The nature of the job</li>
           </ul>
           <p>
-            We will notify you in writing if we plan to revoke (take back) this job offer after reviewing your conviction history. 
-            That decision will be preliminary, and you will have an opportunity to respond before it becomes final.
+            We will notify you in writing if we plan to revoke (take back) this job offer after reviewing your conviction history. That decision will be preliminary, and you will have an opportunity to respond before it becomes final. We will identify conviction(s) that concern us, give you a copy of the background check report, and allow you at least 5 business days to respond with information showing the conviction history report is inaccurate and/or with information about your rehabilitation or mitigating circumstances.
           </p>
           <p>
-            We will identify conviction(s) that concern us, give you a copy of the background check report, and allow you at least 
-            5 business days to respond with information showing the conviction history report is inaccurate and/or with information 
-            about your rehabilitation or mitigating circumstances.
+            We will review any information you timely submit and then decide whether to finalize or take back this conditional job offer. We will notify you of that decision in writing.
           </p>
-          <p>
-            We will review any information you timely submit and then decide whether to finalize or take back this conditional job offer. 
-            We will notify you of that decision in writing.
-          </p>
+          <p>Sincerely,<br />{offerLetterData.employer || "[EMPLOYER]"}</p>
+          <p>Enclosure: Authorization for Background Check (as required by the U.S. Fair Credit Reporting Act and California Investigative Consumer Reporting Agencies Act)</p>
         </div>
-
         <div className={isEditingLetter ? "space-y-4" : "hidden"}>
           <div className="space-y-2">
             <Label htmlFor="date">Date</Label>
@@ -654,6 +646,15 @@ export default function AssessmentEvaluate() {
               value={offerLetterData.position}
               onChange={(e) => setOfferLetterData(prev => ({ ...prev, position: e.target.value }))}
               placeholder="Enter position title"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="employer">Employer</Label>
+            <Input
+              id="employer"
+              value={offerLetterData.employer}
+              onChange={(e) => setOfferLetterData(prev => ({ ...prev, employer: e.target.value }))}
+              placeholder="Enter employer name"
             />
           </div>
         </div>
