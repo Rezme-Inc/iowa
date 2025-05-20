@@ -9,29 +9,29 @@ import { useRouter } from "next/navigation";
 
 const stepsRow1 = [
 	{
-		title: "Ad and App Compliance Statement",
+		title: "Application",
 		icon: <FileText className="w-6 h-6" />,
 	},
 	{
-		title: "Conditional Job Offer Letter",
+		title: "Conditional Offer of Employment",
 		icon: <ClipboardList className="w-6 h-6" />,
 	},
 	{
-		title: "Individualized Assessment",
+		title: "Criminal Background Check",
 		icon: <Scale className="w-6 h-6" />,
 	},
 ];
 const stepsRow2 = [
 	{
-		title: "Preliminary Notice to Revoke Job Offer",
+		title: "Individualized Assessment",
 		icon: <AlertTriangle className="w-6 h-6" />,
 	},
 	{
-		title: "Individualized Reassessment Form",
+		title: "Fair Chance Process",
 		icon: <Users className="w-6 h-6" />,
 	},
 	{
-		title: "Final Notice to Revoke Job Offer",
+		title: "Reassessment & Final Decision",
 		icon: <CheckCircle2 className="w-6 h-6" />,
 	},
 ];
@@ -54,28 +54,28 @@ export default function Home() {
 			<div className="mx-auto max-w-7xl space-y-8 px-8 pb-8">
 				<h1 className="text-4xl font-bold text-foreground">
 					Fair Chance Hiring Compliance Platform Demo:{" "}
-					<span className="text-cinnabar">California</span>
+					<span className="text-cinnabar">Los Angeles</span>
 				</h1>
 				<div className="flex gap-8">
 					{/* Legal Overview Panel */}
 					<Card className="bg-background text-foreground border border-border shadow-sm rounded-lg w-2/5 min-w-[320px] max-w-[480px] flex-shrink-0">
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-foreground">
-                <Scale className="h-6 w-6 text-cinnabar" />
-								Fair Chance Act: Guidance for California Employers and Job Applicants
+								<Scale className="h-6 w-6 text-cinnabar" />
+								Los Angeles Fair Chance Initiative for Hiring Ordinance
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<p className="text-gray35">
-								The Fair Chance Act, which went into effect on January 1, 2018, is a California law that aims to reduce undue barriers to employment for individuals with criminal histories. This law generally prohibits employers with five or more employees from asking a job candidate about conviction history before making a job offer, among other requirements. This type of law is also known as a "Ban the Box" law.
+								It is the policy of the County to overcome the stigma and unfair biases associated with persons with criminal records when employers are making hiring and employment decisions, and to ensure individuals with criminal history have fair and equitable access to opportunities for gainful employment in Los Angeles County. The Fair Chance Ordinance for Employers has been enacted to achieve this policy, which enhances public health, makes communities safer, and achieves rehabilitative outcomes.
 							</p>
 							<div className="space-y-2">
 								<h3 className="font-semibold text-gray35">Key Requirements:</h3>
 								<ul className="list-disc pl-5 space-y-1 text-sm text-foreground font-poppins">
-									<li>Applies to employers with 5+ employees</li>
-									<li>No conviction history questions before job offer</li>
-									<li>Individualized assessment required</li>
-									<li>Must consider rehabilitation evidence</li>
+									<li>Applies to employers with 5 or more employees and positions involving at least 2 hours/week in unincorporated areas of Los Angeles County.</li>
+									<li>Criminal history inquiries are prohibited before making a conditional job offer (with limited exceptions).</li>
+									<li>Employers may not consider convictions older than 7 years (with limited exceptions).</li>
+									<li>Employers must complete a Fair Chance Process before withdrawing a conditional offer or taking any adverse action based on criminal history.</li>
 								</ul>
 							</div>
 							<Button
@@ -83,7 +83,7 @@ export default function Home() {
 								className="w-full border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins"
 								onClick={() => router.push("/ordinance")}
 							>
-								View Full California Fair Chance Act
+								View Los Angeles Fair Chance Initiative for Hiring Ordinance
 							</Button>
 						</CardContent>
 					</Card>
