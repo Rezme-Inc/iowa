@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, ArrowRight, Check, FileText, Info, Send, Edit } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, FileText, Info, Send, Edit, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image"; // Add this import for the logo
@@ -46,7 +46,14 @@ export default function AssessmentEvaluate() {
     applicantName: "",
     position: "",
     employer: "",
-    date: new Date().toISOString().split('T')[0]
+    date: new Date().toISOString().split('T')[0],
+    businessRisk: "",
+    safetyRisk: "",
+    additionalChecks: [""],
+    employerContact: "",
+    employerAddress: "",
+    contactPhone: "",
+    contactEmail: ""
   });
   const [isEditingLetter, setIsEditingLetter] = useState(false);
   const [showWOTCModal, setShowWOTCModal] = useState(false);
@@ -604,38 +611,38 @@ export default function AssessmentEvaluate() {
       <div className="space-y-6 max-h-[60vh] overflow-y-auto">
         <div className={!isEditingLetter ? "space-y-4" : "hidden"}>
           <p>{offerLetterData.date}</p>
-          <p>RE: Conditional Offer of Employment & Notice of Conviction Background Check</p>
-          <p>Dear {offerLetterData.applicantName || "[APPLICANT NAME]"}:</p>
+          <p>RE: Conditional Job Offer & Notice of Intent to Conduct Background Check</p>
+          <p>Dear {offerLetterData.applicantName || "[APPLICANT NAME]"},</p>
           <p>
-            We are writing to make you a conditional offer of employment for the position of {offerLetterData.position || "[INSERT POSITION]"}. Before this job offer becomes final, we will check your conviction history. The form attached to this letter asks for your permission to check your conviction history and provides more information about that background check.
+            We are writing to make you a conditional offer of employment for the position of {offerLetterData.position || "[INSERT POSITION]"}. We are informing you that before this job offer becomes final, we will conduct a review of your criminal history background.
           </p>
-          <p>After reviewing your conviction history report, we will either:</p>
+          <p>We have good cause to conduct a review of criminal history for this position because:</p>
           <ul className="list-disc pl-5 space-y-2">
-            <li>a. Notify you that this conditional job offer has become final; or</li>
-            <li>b. Notify you in writing that we intend to revoke (take back) this job offer because of your conviction history.</li>
+            <li>
+              If we do not review the criminal history of applicants for this position, we will face a significant risk to our business operations or business reputation because {offerLetterData.businessRisk || "[explain the reasoning, i.e., the sensitive, serious, public, or critical nature of the business and job position, which requires the conduct of criminal background checks.]"}
+              <br />
+              <span className="text-sm text-muted-foreground">Los Angeles County Code Chapter 8.300.050. D</span>
+            </li>
+            <li>
+              a review of criminal history is necessary for the position due to concerns regarding the safety of, or risk of harm or harassment to {offerLetterData.safetyRisk || "[identify the persons at risk, i.e, staff, employees, contractors, vendors, associates, clients, customers, minors, dependents, or persons 65 years or older, or the general public]"}
+              <br />
+              <span className="text-sm text-muted-foreground">Los Angeles County Code Chapter 8.300.050. D.6</span>
+            </li>
           </ul>
-          <p>As required by California law, we will NOT consider any of the following information:</p>
+          <p>In addition to your criminal history information, we will also be reviewing the following information, background or history as part of the overall background check process before your job offer becomes final:</p>
           <ul className="list-disc pl-5 space-y-2">
-            <li>Arrest not followed by conviction;</li>
-            <li>Referral to or participation in a pretrial or posttrial diversion program; or</li>
-            <li>Convictions that have been sealed, dismissed, expunged, or pardoned.</li>
+            {offerLetterData.additionalChecks.map((check, index) => (
+              <li key={index}>{check || "______________________________________"}</li>
+            ))}
           </ul>
-          <p>
-            As required by the California Fair Chance Act, we will consider whether your conviction history is directly related to the duties of the job we have offered you. We will consider all of the following:
-          </p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>The nature and seriousness of the offense</li>
-            <li>The amount of time since the offense</li>
-            <li>The nature of the job</li>
-          </ul>
-          <p>
-            We will notify you in writing if we plan to revoke (take back) this job offer after reviewing your conviction history. That decision will be preliminary, and you will have an opportunity to respond before it becomes final. We will identify conviction(s) that concern us, give you a copy of the background check report, and allow you at least 5 business days to respond with information showing the conviction history report is inaccurate and/or with information about your rehabilitation or mitigating circumstances.
-          </p>
-          <p>
-            We will review any information you timely submit and then decide whether to finalize or take back this conditional job offer. We will notify you of that decision in writing.
-          </p>
-          <p>Sincerely,<br />{offerLetterData.employer || "[EMPLOYER]"}</p>
-          <p>Enclosure: Authorization for Background Check (as required by the U.S. Fair Credit Reporting Act and California Investigative Consumer Reporting Agencies Act)</p>
+          <div className="mt-6">
+            <p>Sincerely,</p>
+            <p>{offerLetterData.employerContact || "[EMPLOYER CONTACT]"}</p>
+            <p>{offerLetterData.employer || "[EMPLOYER]"}</p>
+            <p>{offerLetterData.employerAddress || "[EMPLOYER ADDRESS]"}</p>
+            <p>{offerLetterData.contactPhone || "[CONTACT'S PHONE NUMBER]"}</p>
+            <p>{offerLetterData.contactEmail || "[CONTACT'S EMAIL]"}</p>
+          </div>
         </div>
         <div className={isEditingLetter ? "space-y-4" : "hidden"}>
           <div className="space-y-2">
@@ -666,12 +673,101 @@ export default function AssessmentEvaluate() {
             />
           </div>
           <div className="space-y-2">
+            <Label htmlFor="businessRisk">Business Risk Explanation</Label>
+            <Textarea
+              id="businessRisk"
+              value={offerLetterData.businessRisk}
+              onChange={(e) => setOfferLetterData(prev => ({ ...prev, businessRisk: e.target.value }))}
+              placeholder="Explain the reasoning for conducting criminal background checks"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="safetyRisk">Safety Risk Explanation</Label>
+            <Textarea
+              id="safetyRisk"
+              value={offerLetterData.safetyRisk}
+              onChange={(e) => setOfferLetterData(prev => ({ ...prev, safetyRisk: e.target.value }))}
+              placeholder="Identify the persons at risk"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Additional Background Checks</Label>
+            {offerLetterData.additionalChecks.map((check, index) => (
+              <div key={index} className="flex gap-2">
+                <Input
+                  value={check}
+                  onChange={(e) => {
+                    const newChecks = [...offerLetterData.additionalChecks];
+                    newChecks[index] = e.target.value;
+                    setOfferLetterData(prev => ({ ...prev, additionalChecks: newChecks }));
+                  }}
+                  placeholder="Enter additional check"
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => {
+                    const newChecks = offerLetterData.additionalChecks.filter((_, i) => i !== index);
+                    setOfferLetterData(prev => ({ ...prev, additionalChecks: newChecks }));
+                  }}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+            <Button
+              variant="outline"
+              onClick={() => setOfferLetterData(prev => ({
+                ...prev,
+                additionalChecks: [...prev.additionalChecks, ""]
+              }))}
+            >
+              Add Check
+            </Button>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="employerContact">Employer Contact</Label>
+            <Input
+              id="employerContact"
+              value={offerLetterData.employerContact}
+              onChange={(e) => setOfferLetterData(prev => ({ ...prev, employerContact: e.target.value }))}
+              placeholder="Enter employer contact name"
+            />
+          </div>
+          <div className="space-y-2">
             <Label htmlFor="employer">Employer</Label>
             <Input
               id="employer"
               value={offerLetterData.employer}
               onChange={(e) => setOfferLetterData(prev => ({ ...prev, employer: e.target.value }))}
               placeholder="Enter employer name"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="employerAddress">Employer Address</Label>
+            <Textarea
+              id="employerAddress"
+              value={offerLetterData.employerAddress}
+              onChange={(e) => setOfferLetterData(prev => ({ ...prev, employerAddress: e.target.value }))}
+              placeholder="Enter employer address"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="contactPhone">Contact Phone</Label>
+            <Input
+              id="contactPhone"
+              value={offerLetterData.contactPhone}
+              onChange={(e) => setOfferLetterData(prev => ({ ...prev, contactPhone: e.target.value }))}
+              placeholder="Enter contact phone number"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="contactEmail">Contact Email</Label>
+            <Input
+              id="contactEmail"
+              value={offerLetterData.contactEmail}
+              onChange={(e) => setOfferLetterData(prev => ({ ...prev, contactEmail: e.target.value }))}
+              placeholder="Enter contact email"
             />
           </div>
         </div>
