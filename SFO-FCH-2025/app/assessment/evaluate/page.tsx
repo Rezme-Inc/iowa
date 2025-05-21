@@ -1499,27 +1499,49 @@ export default function AssessmentEvaluate() {
                   <FileText className="w-8 h-8" />
                 </div>
                 <span className="text-lg font-bold text-foreground text-center break-words leading-tight mt-2 max-w-[200px]">
-                  Ad and App Compliance Statement
+                  Regulations regarding job postings or job bulletins
                 </span>
                 <Button className="mt-4 border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins" variant="outline" onClick={() => setShowComplianceModal(true)}>
-                  View Advertisement and Application Compliance Statement
+                  View Regulations
                 </Button>
               </div>
             </Card>
 
             {/* Compliance Statement Modal */}
             <Dialog open={showComplianceModal} onOpenChange={setShowComplianceModal}>
-              <DialogContent className="max-w-lg">
+              <DialogContent className="max-w-2xl">
                 <DialogHeader>
-                  <DialogTitle>Voluntary Fair Chance Act Compliance Statement</DialogTitle>
+                  <DialogTitle>Regulations regarding job postings or job bulletins</DialogTitle>
                 </DialogHeader>
                 <DialogDescription>
                   <div className="space-y-4 mt-2 text-gray-700 text-base">
-                    <p>
-                      Below is a voluntary statement that employers can choose to add to job advertisements and applications regarding the Fair Chance Act:
-                    </p>
-                    <div className="bg-muted p-4 rounded-md border text-gray-900">
-                      <p className="mb-2">[Employer] will consider qualified applicants with a criminal history pursuant to the California Fair Chance Act. You do not need to disclose your criminal history or participate in a background check until a conditional job offer is made to you. After making a conditional offer and running a background check, if [Employer] is concerned about conviction that is directly related to the job, you will be given the chance to explain the circumstances surrounding the conviction, provide mitigating evidence, or challenge the accuracy of the background report. Find out more about the Fair Chance Act by visiting the Civil Right's Department Fair Chance Act webpage.</p>
+                    <div className="bg-muted p-4 rounded-md border text-gray-900 space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-cinnabar mb-2">Prohibited Language</h3>
+                        <p className="mb-2">In job postings, employers can NOT include language such as:</p>
+                        <ul className="list-disc pl-6 space-y-1">
+                          <li>No Felons</li>
+                          <li>No Convictions</li>
+                          <li>Must Have Clean Background</li>
+                          <li>Must Pass Background Check</li>
+                          <li>etc.</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-cinnabar mb-2">Required Language</h3>
+                        <p>In all job postings, employers MUST include language stating that qualified applications with arrest or conviction records will be considered for employment in accordance with the Los Angeles County Fair Chance Ordinance for Employers and the California Fair Chance Act.</p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-cinnabar mb-2">Legal Restrictions</h3>
+                        <p>If an organization prevents the hiring of individuals with a criminal history as required by law, the organization must specify the laws or regulation that impose these restrictions.</p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-cinnabar mb-2">Criminal History Review Notice</h3>
+                        <p>If your organization plans to conduct a review of criminal history after the interview process, the job posting must include a list of all material job duties of the specific position in which you believe a criminal history may have a direct, adverse, and negative relationship potentially resulting in the withdrawal of a conditional offer of employment.</p>
+                      </div>
                     </div>
                   </div>
                 </DialogDescription>

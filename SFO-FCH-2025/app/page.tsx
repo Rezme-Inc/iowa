@@ -54,7 +54,7 @@ export default function Home() {
 			<div className="mx-auto max-w-7xl space-y-8 px-8 pb-8">
 				<h1 className="text-4xl font-bold text-foreground">
 					Fair Chance Hiring Compliance Platform Demo:{" "}
-					<span className="text-cinnabar">Los Angeles</span>
+					<span className="text-cinnabar">Los Angeles County</span>
 				</h1>
 				<div className="flex gap-8">
 					{/* Legal Overview Panel */}
