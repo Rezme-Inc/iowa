@@ -123,7 +123,7 @@ export default function AssessmentEvaluate() {
     employerPhone: "",
     initialNoticeDate: "",
     responseReceived: "none", // 'none', 'noResponse', 'infoSubmitted'
-    responseDetails: "", // Add this line
+    responseDetails: "",
     convictionError: "none", // 'none', 'was', 'wasNot'
     convictions: ["", "", ""],
     assessmentNotes: "",
@@ -133,7 +133,9 @@ export default function AssessmentEvaluate() {
     jobDuties: "",
     fitnessImpact: "",
     reconsideration: "none", // 'none', 'notAllowed', 'allowed'
-    reconsiderationProcess: ""
+    reconsiderationProcess: "",
+    preliminaryDecision: "", // Add this line
+    employerTitle: "" // Add this line
   });
   const [isEditingFinalNotice, setIsEditingFinalNotice] = useState(false);
 
@@ -1051,82 +1053,64 @@ export default function AssessmentEvaluate() {
       <div className="space-y-6 max-h-[60vh] overflow-y-auto">
         <div className={!isEditingFinalNotice ? "space-y-4" : "hidden"}>
           <p>{finalNoticeData.date}</p>
-          <p className="font-semibold">Re: Final Decision to Revoke Job Offer Because of Conviction History</p>
-          <p>Dear {finalNoticeData.applicantName || "[APPLICANT NAME]"}:</p>
+          <p className="font-semibold">RE: Final Notice of Adverse Action</p>
+          <p>Dear {finalNoticeData.applicantName || "[CANDIDATE NAME]"}:</p>
           <p>
-            We are following up about our letter dated {finalNoticeData.initialNoticeDate || "[DATE OF NOTICE]"} which notified you of our initial decision to revoke (take back) the conditional job offer:
+            On {finalNoticeData.initialNoticeDate || "[DATE]"} we sent you a Preliminary Notice of Adverse Action, informing you of our preliminary decision to {finalNoticeData.preliminaryDecision || "[Identify the adverse action, i.e., withdraw job offer, deny promotion, termination, discipline, etc.]"}. This letter is to notify you that this decision is now final, as follows:
           </p>
-          <p>(Please check one:)</p>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Checkbox
                 checked={finalNoticeData.responseReceived === 'noResponse'}
                 onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, responseReceived: 'noResponse' }))}
               />
-              <span>We did not receive a timely response from you after sending you that letter, and our decision to revoke the job offer is now final.</span>
+              <span>We did not receive a timely response from you after sending you the Preliminary Notice of Adverse Action, and therefore, our decision to {finalNoticeData.preliminaryDecision || "[identify the adverse action]"} is now final.</span>
             </div>
             <div className="flex items-center gap-2">
               <Checkbox
                 checked={finalNoticeData.responseReceived === 'infoSubmitted'}
                 onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, responseReceived: 'infoSubmitted' }))}
               />
-              <span>We made a final decision to revoke the job offer after considering the information you submitted, which included: {finalNoticeData.responseDetails || "[LIST INFORMATION SUBMITTED]"}</span>
+              <span>We made a final decision to {finalNoticeData.preliminaryDecision || "[identify the adverse action]"}, after considering the information, documents and/or records you submitted in response to the Preliminary Notice of Adverse Action, and conducting a Second Individualized Assessment. A copy of the Second Individualized Assessment is enclosed.</span>
             </div>
           </div>
-          <div className="mt-4">
-            <span>After reviewing the information you submitted, we have determined that there </span>
-            <Checkbox
-              checked={finalNoticeData.convictionError === 'was'}
-              onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, convictionError: 'was' }))}
-            /> <span>was </span>
-            <Checkbox
-              checked={finalNoticeData.convictionError === 'wasNot'}
-              onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, convictionError: 'wasNot' }))}
-            /> <span>was not (check one) an error on your conviction history report. We have decided to revoke our job offer because of the following conviction(s):</span>
-          </div>
-          <ul className="list-disc pl-5">
-            {finalNoticeData.convictions.map((conv, idx) => (
-              <li key={idx}>{conv || <span className="text-muted-foreground">[LIST CONVICTION(S) THAT LED TO DECISION TO REVOKE OFFER]</span>}</li>
-            ))}
-          </ul>
-          <p className="font-semibold mt-4">Our Individualized Assessment:</p>
-          <p>We have individually assessed whether your conviction history is directly related to the duties of the job we offered you. We considered the following:</p>
+          <p className="font-semibold mt-4">Our final decision is based on the following criminal history:</p>
+          <p>Conviction or Unresolved Arrest & Date</p>
           <ol className="list-decimal pl-5">
-            <li>The nature and seriousness of the conduct that led to your conviction(s), which we assessed as follows: {finalNoticeData.assessmentNotes || "[DESCRIBE WHY CONSIDERED SERIOUS]"}</li>
-            <li>How long ago the conduct occurred that led to your conviction, which was: {finalNoticeData.timeSinceOffense || "[INSERT AMOUNT OF TIME PASSED]"} and how long ago you completed your sentence, which was: {finalNoticeData.timeSinceSentence || "[INSERT AMOUNT OF TIME PASSED]"}.</li>
-            <li>The specific duties and responsibilities of the position of {finalNoticeData.position || "[INSERT POSITION]"}, which are: {finalNoticeData.jobDuties || "[LIST JOB DUTIES]"}</li>
+            {finalNoticeData.convictions.map((conv, idx) => (
+              <li key={idx}>{conv || <span className="text-muted-foreground">[LIST CONVICTION(S) THAT LED TO DECISION]</span>}</li>
+            ))}
           </ol>
-          <p>We believe your conviction record lessens your fitness/ability to perform the job duties and have made a final decision to revoke the job offer because:</p>
-          <p>{finalNoticeData.fitnessImpact || <span className="text-muted-foreground">[reason]</span>}</p>
-          <p className="font-semibold mt-4">Request for Reconsideration:</p>
-          <p>(Please check one:)</p>
+          <p className="font-semibold mt-4">Request for Reconsideration with Employer (Please check one):</p>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Checkbox
                 checked={finalNoticeData.reconsideration === 'notAllowed'}
                 onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, reconsideration: 'notAllowed' }))}
               />
-              <span>We do not offer any way to challenge this decision or request reconsideration.</span>
+              <span>Unfortunately, we do not offer any other internal procedure to challenge or request reconsideration of this final decision.</span>
             </div>
             <div className="flex items-center gap-2">
               <Checkbox
                 checked={finalNoticeData.reconsideration === 'allowed'}
                 onCheckedChange={() => setFinalNoticeData(prev => ({ ...prev, reconsideration: 'allowed' }))}
               />
-              <span>If you would like to challenge this decision or request reconsideration, you may: {finalNoticeData.reconsiderationProcess || "[DESCRIBE INTERNAL PROCEDURE]"}</span>
+              <span>We do offer a way for you to challenge or request reconsideration of this final decision with us as follows: {finalNoticeData.reconsiderationProcess || "[describe internal procedure]"}</span>
             </div>
           </div>
-          <p className="font-semibold mt-4">Your Right to File a Complaint:</p>
-          <p>If you believe your rights under the California Fair Chance Act have been violated during this job application process, you have the right to file a complaint with the Civil Rights Department (CRD).</p>
-          <p>There are several ways to file a complaint:</p>
-          <ul className="list-disc pl-5">
-            <li>File a complaint online at the following link: <a href="https://ccrs.calcivilrights.ca.gov/s/" target="_blank" rel="noopener noreferrer">ccrs.calcivilrights.ca.gov/s/</a></li>
-            <li>Download an intake form at the following link: <a href="https://calcivilrights.ca.gov/complaintprocess/filebymail/" target="_blank" rel="noopener noreferrer">calcivilrights.ca.gov/complaintprocess/filebymail/</a> and email it to contact.center@calcivilrights.gov or mail it to 2218 Kausen Drive, Suite 100, Elk Grove, CA 95758.</li>
-            <li>Visit a CRD office. Click the following link for office locations: <a href="https://calcivilrights.ca.gov/locations/" target="_blank" rel="noopener noreferrer">calcivilrights.ca.gov/locations/</a></li>
-          </ul>
-          <p>For more information, visit <a href="https://calcivilrights.ca.gov/complaintprocess/" target="_blank" rel="noopener noreferrer">calcivilrights.ca.gov/complaintprocess/</a> or call (800) 884-1684.</p>
-          <p className="mt-4">Sincerely,<br />{finalNoticeData.employerContact || "[Employer contact person name]"}<br />{finalNoticeData.employerCompany || "[Employer company name]"}<br />{finalNoticeData.employerAddress || "[Employer address]"}<br />{finalNoticeData.employerPhone || "[Employer contact phone number]"}</p>
-          <p className="mt-6 text-xs text-muted-foreground">CRD-ENG / Final Notice to Revoke Job Offer / March 2023</p>
+          <p className="font-semibold mt-4">Your Right to File a Fair Chance Complaint with the County of Los Angeles and/or State</p>
+          <p className="font-semibold">County of Los Angeles:</p>
+          <p>If you believe your rights under the County's Fair Chance Ordinance for Employers have been violated during this process, you have the right to file a complaint with the Los Angeles County Department of Consumer & Business Affairs - Office of Labor Equity, as follows:</p>
+          <p>Online: Fair Chance Ordinance for Employers – Consumer & Business</p>
+          <p>Phone: 800.593.8222</p>
+          <p>Email: FairChance@dcba.lacounty.gov</p>
+          <p className="font-semibold mt-4">State:</p>
+          <p>If you believe your rights under California's Fair Chance Act have been violated during this process, you have the right to file a complaint with the State's Civil Rights Department (CRD). Information regarding how to file a complaint can be found on the following CRD link: <a href="https://calcivilrights.ca.gov/complaintprocess/how-to-file-a-complaint/" target="_blank" rel="noopener noreferrer">https://calcivilrights.ca.gov/complaintprocess/how-to-file-a-complaint/</a></p>
+          <div className="mt-6">
+            <p>Sincerely,</p>
+            <p>{finalNoticeData.employerContact || "[CONTACT NAME]"}</p>
+            <p>{finalNoticeData.employerTitle || "[CONTACT JOB TITLE]"}</p>
+          </div>
         </div>
         <div className={isEditingFinalNotice ? "space-y-4" : "hidden"}>
           <div className="space-y-2">
@@ -1135,140 +1119,50 @@ export default function AssessmentEvaluate() {
               id="date"
               type="date"
               value={finalNoticeData.date}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, date: e.target.value }))}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, date: e.target.value }))}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="applicantName">Applicant Name</Label>
+            <Label htmlFor="applicantName">Candidate Name</Label>
             <Input
               id="applicantName"
               value={finalNoticeData.applicantName}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, applicantName: e.target.value }))}
-              placeholder="Enter applicant name"
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, applicantName: e.target.value }))}
+              placeholder="Enter candidate name"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="employerContact">Employer Contact Person Name</Label>
-            <Input
-              id="employerContact"
-              value={finalNoticeData.employerContact}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerContact: e.target.value }))}
-              placeholder="Enter employer contact person name"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="employerCompany">Employer Company Name</Label>
-            <Input
-              id="employerCompany"
-              value={finalNoticeData.employerCompany}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerCompany: e.target.value }))}
-              placeholder="Enter employer company name"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="employerAddress">Employer Address</Label>
-            <Input
-              id="employerAddress"
-              value={finalNoticeData.employerAddress}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerAddress: e.target.value }))}
-              placeholder="Enter employer address"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="employerPhone">Employer Contact Phone Number</Label>
-            <Input
-              id="employerPhone"
-              value={finalNoticeData.employerPhone}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, employerPhone: e.target.value }))}
-              placeholder="Enter employer contact phone number"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="initialNoticeDate">Date of Notice</Label>
+            <Label htmlFor="initialNoticeDate">Initial Notice Date</Label>
             <Input
               id="initialNoticeDate"
               type="date"
               value={finalNoticeData.initialNoticeDate}
-              onChange={(e) => setFinalNoticeData(prev => ({ ...prev, initialNoticeDate: e.target.value }))}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, initialNoticeDate: e.target.value }))}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="preliminaryDecision">Preliminary Decision</Label>
+            <Input
+              id="preliminaryDecision"
+              value={finalNoticeData.preliminaryDecision}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, preliminaryDecision: e.target.value }))}
+              placeholder="Enter preliminary decision"
             />
           </div>
           <div className="space-y-2">
             <Label>Convictions</Label>
-            {finalNoticeData.convictions.map((conv, idx) => (
+            {finalNoticeData.convictions.map((conviction, index) => (
               <Input
-                key={idx}
-                value={conv}
-                onChange={e => setFinalNoticeData(prev => {
-                  const convictions = [...prev.convictions];
-                  convictions[idx] = e.target.value;
-                  return { ...prev, convictions };
-                })}
-                placeholder={`Conviction ${idx + 1}`}
+                key={index}
+                value={conviction}
+                onChange={e => {
+                  const newConvictions = [...finalNoticeData.convictions];
+                  newConvictions[index] = e.target.value;
+                  setFinalNoticeData(prev => ({ ...prev, convictions: newConvictions }));
+                }}
+                placeholder={`Enter conviction ${index + 1}`}
               />
             ))}
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="responseDetails">Information Submitted by Applicant</Label>
-            <Textarea
-              id="responseDetails"
-              value={finalNoticeData.responseDetails}
-              onChange={e => setFinalNoticeData(prev => ({ ...prev, responseDetails: e.target.value }))}
-              placeholder="List information submitted by applicant"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="assessmentNotes">Why Conduct Considered Serious</Label>
-            <Textarea
-              id="assessmentNotes"
-              value={finalNoticeData.assessmentNotes}
-              onChange={e => setFinalNoticeData(prev => ({ ...prev, assessmentNotes: e.target.value }))}
-              placeholder="Describe why considered serious"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="timeSinceOffense">How long ago did the conduct occur?</Label>
-            <Input
-              id="timeSinceOffense"
-              value={finalNoticeData.timeSinceOffense}
-              onChange={e => setFinalNoticeData(prev => ({ ...prev, timeSinceOffense: e.target.value }))}
-              placeholder="e.g. 2 years ago"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="timeSinceSentence">How long ago was sentence completed?</Label>
-            <Input
-              id="timeSinceSentence"
-              value={finalNoticeData.timeSinceSentence}
-              onChange={e => setFinalNoticeData(prev => ({ ...prev, timeSinceSentence: e.target.value }))}
-              placeholder="e.g. 1 year ago"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="position">Position</Label>
-            <Input
-              id="position"
-              value={finalNoticeData.position}
-              onChange={e => setFinalNoticeData(prev => ({ ...prev, position: e.target.value }))}
-              placeholder="Enter position"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="jobDuties">Job Duties</Label>
-            <Textarea
-              id="jobDuties"
-              value={finalNoticeData.jobDuties}
-              onChange={e => setFinalNoticeData(prev => ({ ...prev, jobDuties: e.target.value }))}
-              placeholder="List job duties"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="fitnessImpact">Reason for Revoking Offer</Label>
-            <Textarea
-              id="fitnessImpact"
-              value={finalNoticeData.fitnessImpact}
-              onChange={e => setFinalNoticeData(prev => ({ ...prev, fitnessImpact: e.target.value }))}
-              placeholder="Describe the link between the criminal history and job duties"
-            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="reconsiderationProcess">Internal Procedure for Reconsideration</Label>
@@ -1277,6 +1171,24 @@ export default function AssessmentEvaluate() {
               value={finalNoticeData.reconsiderationProcess}
               onChange={e => setFinalNoticeData(prev => ({ ...prev, reconsiderationProcess: e.target.value }))}
               placeholder="Describe internal procedure for reconsideration"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="employerContact">Contact Name</Label>
+            <Input
+              id="employerContact"
+              value={finalNoticeData.employerContact}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, employerContact: e.target.value }))}
+              placeholder="Enter contact name"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="employerTitle">Contact Job Title</Label>
+            <Input
+              id="employerTitle"
+              value={finalNoticeData.employerTitle}
+              onChange={e => setFinalNoticeData(prev => ({ ...prev, employerTitle: e.target.value }))}
+              placeholder="Enter contact job title"
             />
           </div>
         </div>
@@ -2177,7 +2089,7 @@ export default function AssessmentEvaluate() {
       <Dialog open={showReassessmentReminder} onOpenChange={setShowReassessmentReminder}>
         <DialogContent className="max-w-[90vw] max-h-[90vh] overflow-y-auto">
           <DialogHeader className="sticky top-0 bg-background z-10 pb-4 border-b">
-            <DialogTitle>Adverse Action Notice Issued</DialogTitle>
+            <DialogTitle>Second Individualized Assessment</DialogTitle>
           </DialogHeader>
           <DialogDescription className="pt-4">
             <div className="space-y-6 text-gray-700 text-base">
@@ -2186,123 +2098,183 @@ export default function AssessmentEvaluate() {
               </p>
               
               <p>
-                Per compliance requirements, the candidate must be given 5 business days to respond. During this time, they may dispute the background information or submit mitigating evidence. When this information is provided by the candidate, your system will be updated with this content.
+                Per compliance requirements, the candidate shall have at least five (5) business days to respond to the preliminary notice of adverse action before the employer can make a final decision.
               </p>
 
+              <p>Within the 5-day period, if the individual notifies the employer in writing that they:</p>
+              <ol className="list-decimal pl-6 space-y-2">
+                <li>dispute the accuracy of the criminal history information and is taking steps to obtain evidence supporting that assertion, or</li>
+                <li>needs additional time to obtain written evidence of rehabilitation or mitigating circumstances, the individual will be provided at least ten (10) additional business days;</li>
+              </ol>
+
+              <p>In lieu of submission of any written materials, upon request, and employer shall provide the applicant or employee with an opportunity present evidence of rehabilitation or mitigating circumstance orally to the employer, via in-person, virtual, or telephone contact.</p>
+
+              <p>When this information is provided by the candidate, your system will be updated with this content and you can perform a second individualized assessment, documented in writing, assessing the same factors contained in the initial individualized assessment.</p>
+
               <div className="space-y-6">
-                <h3 className="font-semibold text-gray-900">INFORMATION</h3>
-                <div className="grid grid-cols-3 gap-4">
+                <h3 className="font-semibold text-gray-900">FAIR CHANCE ORDINANCE FOR EMPLOYERS</h3>
+                <p>County Code Section 8.300 et. seq.</p>
+                <h3 className="font-semibold text-gray-900">SECOND INDIVIDUALIZED ASSESSMENT FORM</h3>
+
+                <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="employerName">Employer Name</Label>
                     <Input id="employerName" className="mt-1" />
                   </div>
                   <div>
-                    <Label htmlFor="applicantName">Applicant Name</Label>
+                    <Label htmlFor="applicantName">Applicant/Employee Name</Label>
                     <Input id="applicantName" className="mt-1" />
                   </div>
                   <div>
-                    <Label htmlFor="position">Position Applied For</Label>
+                    <Label htmlFor="position">Position Applied For/Under Review</Label>
                     <Input id="position" className="mt-1" />
                   </div>
                   <div>
-                    <Label htmlFor="conditionalOfferDate">Date of Conditional Offer</Label>
+                    <Label htmlFor="conditionalOfferDate">Date of Conditional Job Offer</Label>
                     <Input id="conditionalOfferDate" type="date" className="mt-1" />
                   </div>
                   <div>
-                    <Label htmlFor="reassessmentDate">Date of Reassessment</Label>
-                    <Input id="reassessmentDate" type="date" className="mt-1" />
+                    <Label htmlFor="initialAssessmentDate">Date of Initial Individualized Assessment</Label>
+                    <Input id="initialAssessmentDate" type="date" className="mt-1" />
                   </div>
                   <div>
-                    <Label htmlFor="criminalHistoryDate">Date of Criminal History Report</Label>
-                    <Input id="criminalHistoryDate" type="date" className="mt-1" />
+                    <Label htmlFor="secondAssessmentDate">Date of Second Individualized Assessment</Label>
+                    <Input id="secondAssessmentDate" type="date" className="mt-1" />
                   </div>
                   <div>
-                    <Label htmlFor="assessor">Assessment Performed by</Label>
+                    <Label htmlFor="assessor">Second Individualized Assessment Performed by</Label>
                     <Input id="assessor" className="mt-1" />
                   </div>
                 </div>
 
                 <div className="space-y-6">
-                  <h3 className="font-semibold text-gray-900">REASSESSMENT</h3>
+                  <h3 className="font-semibold text-gray-900">SECTION 1. DOCUMENTS, RECORDS AND INFORMATION PROVIDED BY THE APPLICANT OR EMPLOYEE IN RESPONSE TO PRELIMINARY NOTICE OF ADVERSE ACTION</h3>
                   
                   <div className="space-y-4">
                     <div>
-                      <Label>1. Was there an error in the Criminal History Report?</Label>
-                      <RadioGroup
-                        value={reassessmentData.hasError}
-                        onValueChange={(value) => setReassessmentData(prev => ({ ...prev, hasError: value }))}
-                        className="flex gap-4 mt-2"
-                      >
-                        <div className="flex items-center gap-2">
-                          <RadioGroupItem value="yes" id="error-yes" />
-                          <Label htmlFor="error-yes">Yes</Label>
+                      <h4 className="font-semibold">A. CRIMINAL HISTORY INFORMATION</h4>
+                      <p className="text-sm text-muted-foreground">List any documents or records provided by the applicant or employee disputing the accuracy of the criminal background check report or criminal history information, and/or providing an explanation regarding criminal history:</p>
+                      
+                      <div className="grid grid-cols-3 gap-4 mt-2">
+                        <div>
+                          <Label>Name/Title of Document or Record</Label>
+                          <Input className="mt-1" />
                         </div>
-                        <div className="flex items-center gap-2">
-                          <RadioGroupItem value="no" id="error-no" />
-                          <Label htmlFor="error-no">No</Label>
+                        <div>
+                          <Label>Date of Document or Record</Label>
+                          <Input type="date" className="mt-1" />
                         </div>
-                      </RadioGroup>
+                        <div>
+                          <Label>Description of Error or Explanation</Label>
+                          <Textarea className="mt-1" />
+                        </div>
+                      </div>
                     </div>
 
-                    {reassessmentData.hasError === "yes" && (
-                      <div>
-                        <Label htmlFor="errorDescription">If yes, describe the error:</Label>
-                        <Textarea
-                          id="errorDescription"
-                          value={reassessmentData.errorDescription}
-                          onChange={(e) => setReassessmentData(prev => ({ ...prev, errorDescription: e.target.value }))}
-                          className="mt-1"
-                          placeholder="Describe any errors found in the criminal history report..."
-                        />
-                      </div>
-                    )}
-
                     <div>
-                      <Label>2. Evidence of rehabilitation and good conduct</Label>
-                      <p className="text-sm text-muted-foreground mt-1 mb-2">
-                        This evidence may include, but is not limited to, documents or other information demonstrating that the Applicant attended school, a religious institution, job training, or counseling, or is involved with the community. This evidence can include letters from people who know the Applicant, such as teachers, counselors, supervisors, clergy, and parole or probation officers.
-                      </p>
-                      <div className="grid grid-cols-2 gap-4">
-                        {['a', 'b', 'c', 'd'].map((letter, index) => (
-                          <div key={letter}>
-                            <Label htmlFor={`evidence-${letter}`}>{letter}.</Label>
-                            <Textarea
-                              id={`evidence-${letter}`}
-                              value={reassessmentData.evidence[index]}
-                              onChange={(e) => {
-                                const newEvidence = [...reassessmentData.evidence];
-                                newEvidence[index] = e.target.value;
-                                setReassessmentData(prev => ({ ...prev, evidence: newEvidence }));
-                              }}
-                              className="mt-1"
-                              placeholder={`Enter evidence ${letter}...`}
-                            />
+                      <h4 className="font-semibold">B. EVIDENCE OF REHABILITATION OR MITIGATING CIRCUMSTANCES</h4>
+                      <p className="text-sm text-muted-foreground">Name/Title of Document, Record or Information Evidencing Rehabilitation or Mitigating Circumstances:</p>
+                      
+                      {[1, 2, 3].map((num) => (
+                        <div key={num} className="grid grid-cols-3 gap-4 mt-2">
+                          <div>
+                            <Label>Document {num}</Label>
+                            <Input className="mt-1" />
                           </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="rescindReason" className="font-semibold">
-                        BASED ON THE FACTORS ABOVE, WE ARE RESCINDING OUR OFFER OF EMPLOYMENT BECAUSE
-                      </Label>
-                      <p className="text-sm text-muted-foreground mt-1 mb-2">
-                        (describe the link between the specific aspects of the Applicant's criminal history with risks inherent in the duties of the employment position):
-                      </p>
-                      <Textarea
-                        id="rescindReason"
-                        value={reassessmentData.rescindReason}
-                        onChange={(e) => setReassessmentData(prev => ({ ...prev, rescindReason: e.target.value }))}
-                        className="mt-1"
-                        placeholder="Describe the link between criminal history and job duties..."
-                      />
+                          <div>
+                            <Label>Date</Label>
+                            <Input type="date" className="mt-1" />
+                          </div>
+                          <div>
+                            <Label>Description/Explanation</Label>
+                            <Textarea className="mt-1" />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
 
-                <p className="text-xs text-muted-foreground">
-                  CRD-ENG / Criminal History Reassessment Form / March 2023
-                </p>
+                  <div className="space-y-6">
+                    <h3 className="font-semibold text-gray-900">SECTION 2. SECOND INDIVIDUALIZED ASSESSMENT - FACTORS</h3>
+                    <p className="text-sm text-muted-foreground">INSTRUCTIONS: For each Conviction or Unresolved Arrest that was the basis for the Employer's Preliminary Notice of Adverse Action, reassess whether the individual's Criminal History has a direct, adverse and negative bearing on their ability to perform the duties or responsibilities of the position, by taking into account the information, documents and/or records provided by the applicant or employee as identified in SECTION 1.</p>
+
+                    <div className="space-y-4">
+                      <div>
+                        <Label>Conviction or Unresolved Arrest</Label>
+                        <Input className="mt-1" />
+                      </div>
+                      <div>
+                        <Label>Date of Conviction or Unresolved Arrest</Label>
+                        <Input type="date" className="mt-1" />
+                      </div>
+
+                      <div>
+                        <Label>1. The seriousness and type of criminal conduct</Label>
+                        <p className="text-sm text-muted-foreground">Factors may include: the individual's specific personal conduct, whether the harm was to property or people; the level or degree of injury or loss; the permanence of the harm; the person's age when the conduct occurred; the context in which the offense occurred</p>
+                        <Textarea className="mt-1" />
+                      </div>
+
+                      <div>
+                        <Label>2. The time that has passed since the criminal conduct and/or completion of the sentence</Label>
+                        <p className="text-sm text-muted-foreground">Factors may include: the amount of time that has passed since the conduct/incident underlying the conviction, and/or the amount of time that has passed since the person's release from incarceration</p>
+                        <Textarea className="mt-1" />
+                      </div>
+
+                      <div>
+                        <Label>3. The nature of the job sought or held by the applicant or employee</Label>
+                        <div className="space-y-2">
+                          <Label>A. List the specific duties and responsibilities of the job position</Label>
+                          <Textarea className="mt-1" />
+                          
+                          <Label>B. Assess the likelihood of a recurrence in the job position</Label>
+                          <p className="text-sm text-muted-foreground">Factors may include: Whether the job offers the opportunity for the same or a similar offense to occur; whether circumstances leading to the conduct for which the person was convicted or that is the subject of an unresolved arrest will recur in the job; whether the context in which the conviction occurred is likely to arise in the workplace; whether the type or degree of harm that resulted from the conviction is likely to occur in the workplace.</p>
+                          <Textarea className="mt-1" />
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label>4. List any relevant work experience or job training of the applicant or employee following the criminal conduct</Label>
+                        <Textarea className="mt-1" />
+                      </div>
+
+                      <div>
+                        <Label>5. List any other relevant Section 1 information or documentation provided by the applicant or employee in response to the Preliminary Notice of Adverse Action that was considered for the Employer's Second Individualized Assessment</Label>
+                        <Textarea className="mt-1" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <h3 className="font-semibold text-gray-900">SECTION 3. Final Determination</h3>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-start space-x-2">
+                        <Checkbox id="optionA" />
+                        <div>
+                          <Label htmlFor="optionA">Option A: (Criminal History has no direct, adverse and negative bearing on job position)</Label>
+                          <p className="text-sm text-muted-foreground">Based on the Second Individualized Assessment, the criminal history information does not have a direct, adverse and negative bearing on the individual's ability to perform the duties or responsibilities necessarily related to the job position</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start space-x-2">
+                        <Checkbox id="optionB" />
+                        <div>
+                          <Label htmlFor="optionB">Option B: (Final Decision to Rescind Conditional Job offer or Take Adverse Action)</Label>
+                          <p className="text-sm text-muted-foreground">Based on the Second Individualized Assessment, the Employer has determined that the criminal history information has a direct, adverse and negative bearing on the individual's ability to perform the duties or responsibilities necessarily related to the job position such that it justifies a final decision to rescind the conditional job offer or take adverse action for the following reasons:</p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label>Explain the link between the specific aspects of the individual's criminal history with risks inherent in the duties or responsibilities of the job position</Label>
+                        <Textarea className="mt-1" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-muted-foreground">
+                    320W. TempleSt.,Room G-10 • LosAngeles,CA,90012-2706 • toll-free800.593.82.22 • fax 13.687.1137
+                  </p>
+                </div>
               </div>
             </div>
           </DialogDescription>
