@@ -631,9 +631,13 @@ export default function AssessmentEvaluate() {
           </ul>
           <p>In addition to your criminal history information, we will also be reviewing the following information, background or history as part of the overall background check process before your job offer becomes final:</p>
           <ul className="list-disc pl-5 space-y-2">
-            {offerLetterData.additionalChecks.map((check, index) => (
-              <li key={index}>{check || "______________________________________"}</li>
-            ))}
+            {offerLetterData.additionalChecks && offerLetterData.additionalChecks.length > 0 ? (
+              offerLetterData.additionalChecks.map((check, index) => (
+                <li key={index}>{check || "______________________________________"}</li>
+              ))
+            ) : (
+              <li>______________________________________</li>
+            )}
           </ul>
           <div className="mt-6">
             <p>Sincerely,</p>
@@ -692,12 +696,12 @@ export default function AssessmentEvaluate() {
           </div>
           <div className="space-y-2">
             <Label>Additional Background Checks</Label>
-            {offerLetterData.additionalChecks.map((check, index) => (
+            {offerLetterData.additionalChecks && offerLetterData.additionalChecks.map((check, index) => (
               <div key={index} className="flex gap-2">
                 <Input
                   value={check}
                   onChange={(e) => {
-                    const newChecks = [...offerLetterData.additionalChecks];
+                    const newChecks = [...(offerLetterData.additionalChecks || [])];
                     newChecks[index] = e.target.value;
                     setOfferLetterData(prev => ({ ...prev, additionalChecks: newChecks }));
                   }}
@@ -707,7 +711,7 @@ export default function AssessmentEvaluate() {
                   variant="outline"
                   size="icon"
                   onClick={() => {
-                    const newChecks = offerLetterData.additionalChecks.filter((_, i) => i !== index);
+                    const newChecks = (offerLetterData.additionalChecks || []).filter((_, i) => i !== index);
                     setOfferLetterData(prev => ({ ...prev, additionalChecks: newChecks }));
                   }}
                 >
@@ -719,7 +723,7 @@ export default function AssessmentEvaluate() {
               variant="outline"
               onClick={() => setOfferLetterData(prev => ({
                 ...prev,
-                additionalChecks: [...prev.additionalChecks, ""]
+                additionalChecks: [...(prev.additionalChecks || []), ""]
               }))}
             >
               Add Check
