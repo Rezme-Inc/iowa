@@ -95,18 +95,21 @@ export default function AssessmentEvaluate() {
   const [showNoticeDialog, setShowNoticeDialog] = useState(false);
   const [noticeData, setNoticeData] = useState({
     date: new Date().toISOString().split('T')[0],
-    employerName: "",
     applicantName: "",
     position: "",
-    dateOfConditionalOffer: "",
-    dateOfAssessment: "",
-    dateOfCriminalHistoryReport: "",
-    assessmentPerformedBy: "",
-    jobDuties: ["", "", "", ""],
-    conductDescription: "",
-    timeSinceActivity: "",
-    activitiesSince: ["", "", "", ""],
-    rescindReason: ""
+    preliminaryDecision: "",
+    convictions: ["", "", ""],
+    additionalDocuments: "",
+    employerName: "",
+    employerAddress: "",
+    employerEmail: "",
+    employerPhone: "",
+    employerContact: "",
+    contactInfo: {
+      name: "",
+      mailingAddress: "",
+      emailAddress: ""
+    }
   });
   const [isEditingNotice, setIsEditingNotice] = useState(false);
 
@@ -783,57 +786,127 @@ export default function AssessmentEvaluate() {
     return (
       <div className="space-y-6 max-h-[60vh] overflow-y-auto">
         <div className={!isEditingNotice ? "space-y-4" : "hidden"}>
-          <h3 className="font-semibold">INFORMATION</h3>
-          <p>Employer Name: {noticeData.employerName || "[EMPLOYER NAME]"}</p>
-          <p>Applicant Name: {noticeData.applicantName || "[APPLICANT NAME]"}</p>
-          <p>Position Applied For: {noticeData.position || "[POSITION]"}</p>
-          <p>Date of Conditional Offer: {noticeData.dateOfConditionalOffer || "[DATE OF CONDITIONAL OFFER]"}</p>
-          <p>Date of Assessment: {noticeData.dateOfAssessment || "[DATE OF ASSESSMENT]"}</p>
-          <p>Date of Criminal History Report: {noticeData.dateOfCriminalHistoryReport || "[DATE OF CRIMINAL HISTORY REPORT]"}</p>
-          <p>Assessment Performed by: {noticeData.assessmentPerformedBy || "[ASSESSOR]"}</p>
-
-          <h3 className="font-semibold mt-6">ASSESSMENT</h3>
-          <p>1. The specific duties and responsibilities of the job are:</p>
+          <p>{noticeData.date}</p>
+          <p className="font-semibold">RE: Preliminary Notice of Adverse Action</p>
+          <p>Dear {noticeData.applicantName || "[APPLICANT/EMPLOYEE NAME]"},</p>
+          
+          <p>After reviewing the results of your criminal background check, we have made a preliminary (nonfinal) decision to take the following action:</p>
+          
+          <p>{noticeData.preliminaryDecision || "[Identify the preliminary decision for adverse action, i.e., withdrawal of conditional job offer, denial of promotion, discharge, transfer or discipline. Example: 'We intend to withdraw our conditional job offer for the position of [JOB POSITION]'; or, 'We intend to deny your promotion to the position of [JOB POSITION].']"}</p>
+          
+          <p>This decision was based on the following convictions or unresolved arrests:</p>
+          
           <ul className="list-disc pl-5">
-            {noticeData.jobDuties.map((duty, idx) => (
-              <li key={idx}>{duty || <span className="text-muted-foreground">[duty]</span>}</li>
+            {noticeData.convictions.map((conviction, idx) => (
+              <li key={idx}>{conviction || "____________________________________"}</li>
             ))}
           </ul>
-          <p className="mt-4">2. Description of the criminal conduct and why the conduct is of concern with respect to the position in question (conduct that can't be considered includes infractions or arrests that didn't lead to a conviction, convictions that have been sealed or expunged, adjudications in the juvenile justice system, or participation in a pre- or post-trial diversion program):</p>
-          <p>{noticeData.conductDescription || <span className="text-muted-foreground">[description]</span>}</p>
-          <p className="mt-4">3. How long ago did the criminal activity occur:</p>
-          <p>{noticeData.timeSinceActivity || <span className="text-muted-foreground">[time since activity]</span>}</p>
-          <p className="mt-4">4. Activities since criminal activity, such as work experience, job training, rehabilitation, community service, etc.:</p>
+          
+          <p>Attached to this Preliminary Notice are the following documents:</p>
+          
           <ul className="list-disc pl-5">
-            {noticeData.activitiesSince.map((activity, idx) => (
-              <li key={idx}>{activity || <span className="text-muted-foreground">[activity]</span>}</li>
-            ))}
+            <li>A copy of your Criminal Background Check Report.</li>
+            <li>{noticeData.additionalDocuments || "[If applicable, identify any other information or documentation relating to the applicant's or employee's criminal history obtained by the employer, including but not limited to, internet searches, court records, news articles, and/or social media content]"}</li>
+            <li>A copy of our Initial Individualized Assessment, which explains in detail our concerns regarding how your criminal history has a direct, adverse and negative bearing on your ability to perform the duties of the job position.</li>
           </ul>
-          <p className="mt-4 font-semibold">BASED ON THE FACTORS ABOVE, WE ARE CONSIDERING RESCINDING OUR OFFER OF EMPLOYMENT BECAUSE (describe the link between the specific aspects of the applicant's criminal history with risks inherent in the duties of the employment position):</p>
-          <p>{noticeData.rescindReason || <span className="text-muted-foreground">[reason]</span>}</p>
-          <p className="mt-6 text-xs text-muted-foreground">CRD-ENG / Criminal History Assessment Form / March 2023</p>
+          
+          <div className="mt-6">
+            <h3 className="font-semibold">YOUR RIGHT TO RESPOND TO THIS PRELIMINARY NOTICE AND IMPORTANT DEADLINES:</h3>
+            
+            <p>You may respond to this Preliminary Notice before our decision becomes final.</p>
+            
+            <p>You have FIVE (5) BUSINESS DAYS from the receipt of this Preliminary Notice to do one of the following:</p>
+            
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>Submit a written Response to this Preliminary Notice containing:
+                <ul className="list-disc pl-5 mt-1">
+                  <li>Information challenging the accuracy of the criminal background check report or other criminal history information; and/or</li>
+                  <li>Evidence of rehabilitation or mitigating circumstances.</li>
+                </ul>
+              </li>
+              <li>Submit a written request to extend the deadline to submit your Response for TEN (10) ADDITIONAL BUSINESS DAYS, affirming that you need additional time to gather or obtain relevant information, evidence and/or documents for your Response.</li>
+              <li>Notify us that you will NOT be submitting a written Response but are instead electing to present evidence of rehabilitation or mitigating circumstances orally, via in-person, virtual or telephone contact. The meeting will take place within ten (10) Business Days of your request.</li>
+            </ol>
+            
+            <p className="mt-4 font-semibold">NOTE: If you do not take any of the above actions within FIVE (5) BUSINESS DAYS from the receipt of this Preliminary Notice, the decision contained in this Preliminary Notice will become final.</p>
+          </div>
+          
+          <div className="mt-6">
+            <h3 className="font-semibold">RESPONSE EXAMPLES: Below are examples of information and records you may send us for our consideration:</h3>
+            
+            <h4 className="font-semibold mt-4">Information Challenging the Accuracy of the Criminal History Record or Criminal Background Check:</h4>
+            <ul className="list-disc pl-5">
+              <li>Evidence that you were not convicted or not arrested of one or more of the offenses we listed above.</li>
+              <li>Evidence that the criminal history report or background check record is inaccurate (i.e., data errors, single criminal charge is listed multiple times, expunged or sealed records listed, etc.).</li>
+            </ul>
+            
+            <h4 className="font-semibold mt-4">Evidence of Rehabilitation or Mitigating Circumstances:</h4>
+            <ul className="list-disc pl-5">
+              <li>Facts or circumstances surrounding the offense or conduct, showing that the conduct was less serious than the conviction seems.</li>
+              <li>The time that has passed since the conduct that led to your conviction(s) or since your release from incarceration.</li>
+              <li>The length and consistency of employment history or community involvement (such as volunteer activities) before and after the offense(s).</li>
+              <li>Employer recommendations, especially concerning post-conviction employment.</li>
+              <li>Employment or character references from people who know you, such as letters from teachers, counselors, supervisors, clergy, and probation or parole officers.</li>
+              <li>Educational attainment or vocational or professional training since the conviction, including training received while incarcerated.</li>
+              <li>Evidence that you attended school, job training, or counseling.</li>
+              <li>Completion of or active participation in rehabilitative treatment.</li>
+              <li>Evidence that you have performed the same type of work since your conviction.</li>
+              <li>Whether you are bonded under a federal, state, or local bonding program.</li>
+              <li>Your satisfactory compliance with all terms and conditions of parole and/or probation.</li>
+              <li>Any other evidence of your rehabilitation efforts or evidence showing your present fitness for the job position.</li>
+            </ul>
+          </div>
+          
+          <div className="mt-6">
+            <h3 className="font-semibold">CONTACT INFO: Please send your Response, requests for extension, submissions and/or any additional information you would like us to consider to:</h3>
+            
+            <p>{noticeData.contactInfo.name || "[INSERT NAME AND MAILING ADDRESS, EMAIL ADDRESS]"}</p>
+          </div>
+          
+          <div className="mt-6">
+            <h3 className="font-semibold">NEXT STEPS AFTER SUBMISSION OF RESPONSE: Second Individualized Assessment and Final Notice</h3>
+            
+            <p>Within THIRTY (30) CALENDAR DAYS of receipt of your Response to this Preliminary Notice, we will do the following:</p>
+            
+            <ul className="list-disc pl-5">
+              <li>We will review your Response, including any information and records you timely submit to us, and conduct a Second Individualized Assessment, in order to reassess whether your criminal history has a direct, adverse and negative bearing on your ability to perform the duties of the job position.</li>
+              <li>If after conducting the Second Individualized Assessment, we make a final decision to {noticeData.preliminaryDecision || "[Identify the adverse action, i.e., withdraw the conditional job offer, deny the promotion, discharge, etc.]"}, we will send you a Final Notice of Adverse Action.</li>
+            </ul>
+          </div>
+          
+          <div className="mt-6">
+            <p>Sincerely,</p>
+            <p>{noticeData.employerName || "[EMPLOYER COMPANY NAME]"}</p>
+            <p>{noticeData.employerContact || "[H.R CONTACT NAME]"}</p>
+            <p>{noticeData.employerAddress || "[EMPLOYER ADDRESS]"}</p>
+            <p>{noticeData.employerEmail || "[CONTACT'S EMAIL]"}</p>
+            <p>{noticeData.employerPhone || "[CONTACT'S PHONE NUMBER]"}</p>
+          </div>
         </div>
+        
         <div className={isEditingNotice ? "space-y-4" : "hidden"}>
           <div className="space-y-2">
-            <Label htmlFor="employerName">Employer Name</Label>
+            <Label htmlFor="date">Date</Label>
             <Input
-              id="employerName"
-              value={noticeData.employerName}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, employerName: e.target.value }))}
-              placeholder="Enter employer name"
+              id="date"
+              type="date"
+              value={noticeData.date}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, date: e.target.value }))}
             />
           </div>
+          
           <div className="space-y-2">
-            <Label htmlFor="applicantName">Applicant Name</Label>
+            <Label htmlFor="applicantName">Applicant/Employee Name</Label>
             <Input
               id="applicantName"
               value={noticeData.applicantName}
               onChange={(e) => setNoticeData(prev => ({ ...prev, applicantName: e.target.value }))}
-              placeholder="Enter applicant name"
+              placeholder="Enter applicant/employee name"
             />
           </div>
+          
           <div className="space-y-2">
-            <Label htmlFor="position">Position Applied For</Label>
+            <Label htmlFor="position">Position</Label>
             <Input
               id="position"
               value={noticeData.position}
@@ -841,97 +914,131 @@ export default function AssessmentEvaluate() {
               placeholder="Enter position"
             />
           </div>
+          
           <div className="space-y-2">
-            <Label htmlFor="dateOfConditionalOffer">Date of Conditional Offer</Label>
-            <Input
-              id="dateOfConditionalOffer"
-              type="date"
-              value={noticeData.dateOfConditionalOffer}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, dateOfConditionalOffer: e.target.value }))}
+            <Label htmlFor="preliminaryDecision">Preliminary Decision</Label>
+            <Textarea
+              id="preliminaryDecision"
+              value={noticeData.preliminaryDecision}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, preliminaryDecision: e.target.value }))}
+              placeholder="Describe the preliminary decision"
             />
           </div>
+          
           <div className="space-y-2">
-            <Label htmlFor="dateOfAssessment">Date of Assessment</Label>
-            <Input
-              id="dateOfAssessment"
-              type="date"
-              value={noticeData.dateOfAssessment}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, dateOfAssessment: e.target.value }))}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="dateOfCriminalHistoryReport">Date of Criminal History Report</Label>
-            <Input
-              id="dateOfCriminalHistoryReport"
-              type="date"
-              value={noticeData.dateOfCriminalHistoryReport}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, dateOfCriminalHistoryReport: e.target.value }))}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="assessmentPerformedBy">Assessment Performed by</Label>
-            <Input
-              id="assessmentPerformedBy"
-              value={noticeData.assessmentPerformedBy}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, assessmentPerformedBy: e.target.value }))}
-              placeholder="Enter assessor name"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Job Duties</Label>
-            {noticeData.jobDuties.map((duty, idx) => (
+            <Label>Convictions or Unresolved Arrests</Label>
+            {noticeData.convictions.map((conviction, idx) => (
               <Input
                 key={idx}
-                value={duty}
+                value={conviction}
                 onChange={e => setNoticeData(prev => {
-                  const duties = [...prev.jobDuties];
-                  duties[idx] = e.target.value;
-                  return { ...prev, jobDuties: duties };
+                  const convictions = [...prev.convictions];
+                  convictions[idx] = e.target.value;
+                  return { ...prev, convictions };
                 })}
-                placeholder={`Duty ${String.fromCharCode(97 + idx)}`}
+                placeholder={`Conviction ${idx + 1}`}
               />
             ))}
           </div>
+          
           <div className="space-y-2">
-            <Label htmlFor="conductDescription">Description of Criminal Conduct</Label>
+            <Label htmlFor="additionalDocuments">Additional Documents</Label>
             <Textarea
-              id="conductDescription"
-              value={noticeData.conductDescription}
-              onChange={e => setNoticeData(prev => ({ ...prev, conductDescription: e.target.value }))}
-              placeholder="Describe the conduct and why it is of concern"
+              id="additionalDocuments"
+              value={noticeData.additionalDocuments}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, additionalDocuments: e.target.value }))}
+              placeholder="List any additional documents"
             />
           </div>
+          
           <div className="space-y-2">
-            <Label htmlFor="timeSinceActivity">How long ago did the criminal activity occur?</Label>
+            <Label htmlFor="employerName">Employer Company Name</Label>
             <Input
-              id="timeSinceActivity"
-              value={noticeData.timeSinceActivity}
-              onChange={e => setNoticeData(prev => ({ ...prev, timeSinceActivity: e.target.value }))}
-              placeholder="e.g. 2 years ago"
+              id="employerName"
+              value={noticeData.employerName}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, employerName: e.target.value }))}
+              placeholder="Enter employer company name"
             />
           </div>
+          
           <div className="space-y-2">
-            <Label>Activities Since Criminal Activity</Label>
-            {noticeData.activitiesSince.map((activity, idx) => (
-              <Input
-                key={idx}
-                value={activity}
-                onChange={e => setNoticeData(prev => {
-                  const activities = [...prev.activitiesSince];
-                  activities[idx] = e.target.value;
-                  return { ...prev, activitiesSince: activities };
-                })}
-                placeholder={`Activity ${String.fromCharCode(97 + idx)}`}
-              />
-            ))}
+            <Label htmlFor="employerContact">H.R Contact Name</Label>
+            <Input
+              id="employerContact"
+              value={noticeData.employerContact}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, employerContact: e.target.value }))}
+              placeholder="Enter H.R contact name"
+            />
           </div>
+          
           <div className="space-y-2">
-            <Label htmlFor="rescindReason">Reason for Considering Rescinding Offer</Label>
-            <Textarea
-              id="rescindReason"
-              value={noticeData.rescindReason}
-              onChange={e => setNoticeData(prev => ({ ...prev, rescindReason: e.target.value }))}
-              placeholder="Describe the link between the criminal history and job duties"
+            <Label htmlFor="employerAddress">Employer Address</Label>
+            <Input
+              id="employerAddress"
+              value={noticeData.employerAddress}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, employerAddress: e.target.value }))}
+              placeholder="Enter employer address"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="employerEmail">Contact's Email</Label>
+            <Input
+              id="employerEmail"
+              type="email"
+              value={noticeData.employerEmail}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, employerEmail: e.target.value }))}
+              placeholder="Enter contact's email"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="employerPhone">Contact's Phone Number</Label>
+            <Input
+              id="employerPhone"
+              value={noticeData.employerPhone}
+              onChange={(e) => setNoticeData(prev => ({ ...prev, employerPhone: e.target.value }))}
+              placeholder="Enter contact's phone number"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="contactInfoName">Response Contact Name</Label>
+            <Input
+              id="contactInfoName"
+              value={noticeData.contactInfo.name}
+              onChange={(e) => setNoticeData(prev => ({
+                ...prev,
+                contactInfo: { ...prev.contactInfo, name: e.target.value }
+              }))}
+              placeholder="Enter response contact name"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="contactInfoMailingAddress">Response Contact Mailing Address</Label>
+            <Input
+              id="contactInfoMailingAddress"
+              value={noticeData.contactInfo.mailingAddress}
+              onChange={(e) => setNoticeData(prev => ({
+                ...prev,
+                contactInfo: { ...prev.contactInfo, mailingAddress: e.target.value }
+              }))}
+              placeholder="Enter response contact mailing address"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="contactInfoEmail">Response Contact Email</Label>
+            <Input
+              id="contactInfoEmail"
+              type="email"
+              value={noticeData.contactInfo.emailAddress}
+              onChange={(e) => setNoticeData(prev => ({
+                ...prev,
+                contactInfo: { ...prev.contactInfo, emailAddress: e.target.value }
+              }))}
+              placeholder="Enter response contact email"
             />
           </div>
         </div>
