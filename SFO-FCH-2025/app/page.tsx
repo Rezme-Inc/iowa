@@ -9,29 +9,29 @@ import { useRouter } from "next/navigation";
 
 const stepsRow1 = [
 	{
-		title: "Application",
+		title: "Remove Blanket Exclusions",
 		icon: <FileText className="w-6 h-6" />,
 	},
 	{
-		title: "Conditional Offer of Employment",
+		title: "Train Your Team",
 		icon: <ClipboardList className="w-6 h-6" />,
 	},
 	{
-		title: "Criminal Background Check",
+		title: "Establish a Written Policy",
 		icon: <Scale className="w-6 h-6" />,
 	},
 ];
 const stepsRow2 = [
 	{
-		title: "Individualized Assessment",
+		title: "Implement Individualized Assessments",
 		icon: <AlertTriangle className="w-6 h-6" />,
 	},
 	{
-		title: "Fair Chance Process",
+		title: "Ensure Job Relevance",
 		icon: <Users className="w-6 h-6" />,
 	},
 	{
-		title: "Reassessment & Final Decision",
+		title: "Safeguard Confidentiality",
 		icon: <CheckCircle2 className="w-6 h-6" />,
 	},
 ];
@@ -54,7 +54,7 @@ export default function Home() {
 			<div className="mx-auto max-w-7xl space-y-8 px-8 pb-8">
 				<h1 className="text-4xl font-bold text-foreground">
 					Fair Chance Hiring Compliance Platform Demo:{" "}
-					<span className="text-cinnabar">Los Angeles County</span>
+					<span className="text-cinnabar">U.S. Equal Employment Opportunity Commission (EEOC)</span>
 				</h1>
 				<div className="flex gap-8">
 					{/* Legal Overview Panel */}
@@ -62,28 +62,37 @@ export default function Home() {
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-foreground">
 								<Scale className="h-6 w-6 text-cinnabar" />
-								Los Angeles Fair Chance Initiative for Hiring Ordinance
+								EEOC Enforcement Guidance
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<p className="text-gray35">
-								It is the policy of the County to overcome the stigma and unfair biases associated with persons with criminal records when employers are making hiring and employment decisions, and to ensure individuals with criminal history have fair and equitable access to opportunities for gainful employment in Los Angeles County. The Fair Chance Ordinance for Employers has been enacted to achieve this policy, which enhances public health, makes communities safer, and achieves rehabilitative outcomes.
+								Enforcement Guidance on the Consideration of Arrest and Conviction Records in Employment Decisions under Title VII of the Civil Rights Act
 							</p>
 							<div className="space-y-2">
-								<h3 className="font-semibold text-gray35">Key Requirements:</h3>
-								<ul className="list-disc pl-5 space-y-1 text-sm text-foreground font-poppins">
-									<li>Applies to employers with 5 or more employees and positions involving at least 2 hours/week in unincorporated areas of Los Angeles County.</li>
-									<li>Criminal history inquiries are prohibited before making a conditional job offer (with limited exceptions).</li>
-									<li>Employers may not consider convictions older than 7 years (with limited exceptions).</li>
-									<li>Employers must complete a Fair Chance Process before withdrawing a conditional offer or taking any adverse action based on criminal history.</li>
-								</ul>
+								<h3 className="font-semibold text-gray35">Issuing Authority</h3>
+								<p className="text-sm text-foreground font-poppins">
+									SUBJECT: Enforcement Guidance on the Consideration of Arrest and Conviction Records in Employment Decisions Under Title VII of the Civil Rights Act of 1964, as amended, 42 U.S.C. § 2000e et seq.
+								</p>
+								<p className="text-sm text-foreground font-poppins">
+									PURPOSE: The purpose of this Enforcement Guidance is to consolidate and update the U.S. Equal Employment Opportunity Commission's guidance documents regarding the use of arrest or conviction records in employment decisions under Title VII of the Civil Rights Act of 1964, as amended, 42 U.S.C. § 2000e et seq.
+								</p>
+								<p className="text-sm text-foreground font-poppins">
+									EFFECTIVE DATE: Upon receipt
+								</p>
+								<p className="text-sm text-foreground font-poppins">
+									EXPIRATION DATE: This Notice will remain in effect until rescinded or superseded.
+								</p>
+								<p className="text-sm text-foreground font-poppins">
+									ORIGINATOR: Office of Legal Counsel.
+								</p>
 							</div>
 							<Button
 								variant="outline"
 								className="w-full border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins"
 								onClick={() => router.push("/ordinance")}
 							>
-								View Los Angeles Fair Chance Initiative for Hiring Ordinance
+								View EEOC Enforcement Guidance Summary
 							</Button>
 						</CardContent>
 					</Card>
@@ -99,8 +108,7 @@ export default function Home() {
 					  <CardContent className="space-y-4">
 					    <p className="text-gray35">
 					      Start a structured workflow to evaluate conviction history in
-					      compliance with Fair Chance requirements. This process will guide
-					      you through:
+					      alignment the EEOC guidance. This process will provide clarity to the public regarding existing requirements under the law or agency policies.
 					    </p>
 					    {/* Steps Row (Icons + Arrows) */}
 					    <div className="relative w-full mt-6 space-y-6">

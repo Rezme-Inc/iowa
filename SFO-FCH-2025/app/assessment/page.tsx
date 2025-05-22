@@ -108,7 +108,7 @@ export default function AssessmentIntake() {
 
     toast({
       title: "Configuring your Fair Chance Compliance Protocol…",
-      description: "Please wait while we prepare your assessment.",
+      description: "Please wait while we prepare your assessment workflow.",
     });
 
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -169,7 +169,7 @@ export default function AssessmentIntake() {
                         1. Job Description
                       </Label>
                       <p className="ia-text text-gray35 mt-1">
-                        Attach the job posting or internal job description for this role. This will help determine whether the offense is job-related as required by the Los Angeles County Fair Chance Ordinance.
+                        Attach the job posting or internal job description for this role. This will help in determining whether the offense is job-related per the guidance of the EEOC.
                       </p>
                     </div>
                     <div className="grid gap-4">
@@ -191,7 +191,7 @@ export default function AssessmentIntake() {
                         2. Background Check Report
                       </Label>
                       <p className="ia-text text-gray35 mt-1">
-                        Upload the candidate's background check results that triggered this individualized assessment. The system will ensure only permissible data is considered.
+                        Upload the candidate's background check results that triggered this individualized assessment. The system will help to highlight how permissible background check data should be considered.
                       </p>
                     </div>
                     <div className="grid gap-4">
@@ -213,7 +213,7 @@ export default function AssessmentIntake() {
                         3. Restorative Record or Candidate Response
                       </Label>
                       <p className="ia-text text-gray35 mt-1">
-                        If the candidate submitted documentation regarding rehabilitation, mitigating factors, or inaccuracies, upload it here. This is required before making any adverse decision.
+                        If the candidate submitted documentation regarding rehabilitation, mitigating factors, or inaccuracies, upload it here. This helps employers avoid Title VII liability.
                       </p>
                     </div>
                     <div className="grid gap-4">
@@ -279,7 +279,7 @@ export default function AssessmentIntake() {
                         </Button>
                         {contactOptions.find(o => o.id === "request")?.selected && (
                           <div className="ia-text text-gray35 pl-4 border-l-2">
-                            Send an automated email request to the candidate for documentation of rehabilitation, training certificates, or character references.
+                            Send an automated request to the candidate for documentation of rehabilitation, training certificates, or character references.
                           </div>
                         )}
                       </div>
@@ -306,12 +306,12 @@ export default function AssessmentIntake() {
           <DialogContent className="max-w-2xl md:max-w-3xl h-[80vh] overflow-y-auto font-poppins rounded-xl shadow-lg">
             <DialogHeader>
               <DialogTitle className="text-2xl md:text-3xl font-bold text-foreground mb-2 font-poppins">
-                Protocol Compiled Successfully
+                Fair Chance Protocol Compiled Successfully
               </DialogTitle>
               <DialogDescription className="space-y-6 pt-2 ia-text text-gray-700">
                 <div className="bg-muted p-4 rounded-lg border border-cinnabar">
                   <p>
-                    All materials have been ingested to power your real-time intelligence system. You're about to review <span className="font-bold text-foreground">Jacobi Iverson</span> for a Sales Associate role located in <span className="font-bold text-foreground">Universal City, CA</span> that is governed by the <span className="font-bold text-foreground">Los Angeles County Fair Chance Ordinance</span>. We will walk you through an individualized assessment informed by your company policy, applicable laws, and background check data that has been ingested to create your hiring protocol and agentic workflows. Below you will find a summary of the background report and the job requisition you are looking to fill at your organization:
+                    All materials have been ingested to power your real-time intelligence system. You're about to review <span className="font-bold text-foreground">Jacobi Iverson</span> for a Sales Associate role located in <span className="font-bold text-foreground">Stockton, CA</span> under the enforcement guidance of the <span className="font-bold text-foreground">U.S. Equal Employment Opportunity Commission</span>. We will walk you through an individualized assessment informed by your company policy, applicable laws, and background check data that has been ingested to create your hiring protocol and agentic workflows. Below you will find a summary of the background report and the job requisition you are looking to fill at your organization:
                   </p>
                 </div>
                 <Collapsible defaultOpen>
@@ -325,7 +325,7 @@ export default function AssessmentIntake() {
                       <ul className="list-disc pl-6 space-y-2 ia-text">
                         <li>Conviction: Possession with Intent to Sell a Controlled Substance (Class B felony)</li>
                         <li>Date of Conviction: May 12, 2018</li>
-                        <li>Jurisdiction: Kings County, NY</li>
+                        <li>Jurisdiction: Sacramento County, CA</li>
                         <li>Sentence: Indeterminate 1–9 years; served four years in state custody (June 2019 – June 2023)</li>
                         <li>Release & Supervision: Paroled in June 2023; completed all parole and probation requirements by May 2025</li>
                         <li>Parole Violation: One curfew violation recorded in September 2023; resulted in a formal warning and no further sanctions</li>
@@ -365,9 +365,9 @@ export default function AssessmentIntake() {
                   <CollapsibleContent>
                     <div className="bg-muted p-4 rounded-b-lg border-b border-x border-border">
                       <ul className="list-disc pl-6 space-y-2 ia-text">
-                        <li>Your reviewers can now begin conducting individualized assessments with intelligent support from your own policies</li>
+                        <li>Your reviewers can now begin conducting individualized assessments with intelligent support from your own policies and the EEOC's enforcement guidance</li>
                         <li>As they evaluate candidates with criminal histories, relevant guidance from your uploaded documents will automatically appear</li>
-                        <li>Each assessment question will be accompanied by applicable content from your policies, ensuring compliance with both the Fair Chance Ordinance and your internal protocols</li>
+                        <li>Each assessment question will be accompanied by applicable content from your policies, ensuring adherence with both the EEOC's enforcement guidance and your internal protocols</li>
                       </ul>
                     </div>
                   </CollapsibleContent>

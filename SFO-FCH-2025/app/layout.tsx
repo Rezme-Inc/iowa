@@ -5,8 +5,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Rézme's Los Angeles Fair Chance Initiative for Hiring Ordinance Demo",
-  description: "Compliance framework for the Los Angeles Fair Chance Initiative for Hiring Ordinance",
+  title: "U.S. Equal Employment Opportunity Commission (EEOC) Framework",
+  description: "Comprehensive compliance and assessment framework for the U.S. Equal Employment Opportunity Commission (EEOC) regulations and guidelines",
 };
 
 export default function RootLayout({

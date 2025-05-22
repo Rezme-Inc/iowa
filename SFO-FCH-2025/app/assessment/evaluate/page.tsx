@@ -60,7 +60,7 @@ export default function AssessmentEvaluate() {
   const [showWOTCSigningScreen, setShowWOTCSigningScreen] = useState(false);
   const [steps, setSteps] = useState<Step[]>([
     { id: 1, title: "Confirm Conditional Offer", completed: false },
-    { id: 2, title: "Validate Document Basis", completed: false },
+    { id: 2, title: "Background Check", completed: false },
     { id: 3, title: "Direct Job-Relation Inquiry", completed: false },
     { id: 4, title: "Time Elapsed Analysis", completed: false },
     { id: 5, title: "Evidence of Rehabilitation", completed: false },
@@ -75,6 +75,9 @@ export default function AssessmentEvaluate() {
     isOld: false,
     isJuvenile: false,
     isDecriminalized: false,
+    isArrest: false,
+    isConviction: false,
+    isChallenged: false,
   });
 
   const [jobRelation, setJobRelation] = useState({
@@ -149,9 +152,6 @@ export default function AssessmentEvaluate() {
     restorativeRecord: { type: "restorativeRecord", file: null, notes: "" },
   });
 
-  // Add state for the modal
-  const [showComplianceModal, setShowComplianceModal] = useState(false);
-
   const [showReassessmentReminder, setShowReassessmentReminder] = useState(false);
 
   const [reassessmentData, setReassessmentData] = useState({
@@ -159,6 +159,21 @@ export default function AssessmentEvaluate() {
     errorDescription: "",
     evidence: ["", "", "", ""],
     rescindReason: ""
+  });
+
+  const [showEEOCGuidanceModal, setShowEEOCGuidanceModal] = useState(false);
+
+  const [showGreenFactorsModal, setShowGreenFactorsModal] = useState(false);
+  const [showPDFViewerModal, setShowPDFViewerModal] = useState(false);
+  const [greenFactorsAnalysis, setGreenFactorsAnalysis] = useState({
+    natureAndGravity: "",
+    timeElapsed: "",
+    jobNature: "",
+    jobDuties: "",
+    essentialFunctions: "",
+    workEnvironment: "",
+    supervisionLevel: "",
+    riskAssessment: ""
   });
 
   useEffect(() => {
@@ -210,7 +225,7 @@ export default function AssessmentEvaluate() {
 
   const handleNext = () => {
     if (currentStep === 1 && hasConditionalOffer === "no") {
-      setShowOfferLetterDialog(true);
+      setShowEEOCGuidanceModal(true);
       return;
     }
 
@@ -530,15 +545,73 @@ export default function AssessmentEvaluate() {
         );
         case 2:
         return (
-          <div className="space-y-4">
-            <h3 className="font-semibold">Nature & Circumstances of the Offense</h3>
-            <ul className="text-sm text-muted-foreground space-y-2">
-              <li>• Offense: Possession with Intent to Sell a Controlled Substance (Class B felony)</li>
-              <li>• Jurisdiction & Disposition: Kings County, NY; convicted 12 May 2018; indeterminate 1–9 year sentence</li>
-              <li>• Custody Period: Served 4 years in state prison (Jun 2019 – Jun 2023)</li>
-              <li>• Supervision: Paroled Jun 2023; completed all parole obligations May 2025</li>
-              <li>• Conduct on Supervision: One curfew violation (Sep 2023) resulted in a formal warning; no sanctions or subsequent incidents</li>
-            </ul>
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold">Background Check</h2>
+            <p className="text-muted-foreground">
+              Review the following criteria to ensure only legally permissible information is considered.
+            </p>
+            <div className="space-y-6">
+              {/* Checklist Item 1 */}
+              <div className="flex items-center gap-4">
+                <Checkbox
+                  id="arrest"
+                  checked={documentValidation.isArrest}
+                  onCheckedChange={(checked) =>
+                    setDocumentValidation(prev => ({ ...prev, isArrest: checked as boolean }))
+                  }
+                  className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
+                  style={{ borderColor: "#d1d5db" }}
+                />
+                <div>
+                  <div className="text-base font-bold font-poppins leading-tight">
+                    Was it an arrest?
+                  </div>
+                  <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
+                    The fact of an arrest does not establish that criminal conduct has occurred. Arrests are not proof of criminal conduct.
+                  </div>
+                </div>
+              </div>
+              {/* Checklist Item 2 */}
+              <div className="flex items-center gap-4">
+                <Checkbox
+                  id="conviction"
+                  checked={documentValidation.isConviction}
+                  onCheckedChange={(checked) =>
+                    setDocumentValidation(prev => ({ ...prev, isConviction: checked as boolean }))
+                  }
+                  className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
+                  style={{ borderColor: "#d1d5db" }}
+                />
+                <div>
+                  <div className="text-base font-bold font-poppins leading-tight">
+                    Was it a record of a conviction?
+                  </div>
+                  <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
+                    A record of a conviction will usually serve as sufficient evidence that a person engaged in particular conduct, given the procedural safeguards associated with trials and guilty pleas.
+                  </div>
+                </div>
+              </div>
+              {/* Checklist Item 3 */}
+              <div className="flex items-center gap-4">
+                <Checkbox
+                  id="challenged"
+                  checked={documentValidation.isChallenged}
+                  onCheckedChange={(checked) =>
+                    setDocumentValidation(prev => ({ ...prev, isChallenged: checked as boolean }))
+                  }
+                  className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
+                  style={{ borderColor: "#d1d5db" }}
+                />
+                <div>
+                  <div className="text-base font-bold font-poppins leading-tight">
+                    Has the candidate challenged the Background Report accuracy?
+                  </div>
+                  <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
+                    Records also may include inaccuracies or may continue to be reported even if expunged or sealed. A database may continue to report a conviction that was later expunged, or may continue to report as a felony an offense that was subsequently downgraded to a misdemeanor.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         );
       case 4:
@@ -557,57 +630,176 @@ export default function AssessmentEvaluate() {
         );
       case 5:
         return (
-          <div className="space-y-4">
-            <h3 className="font-semibold">Evidence of Rehabilitation & Good Conduct</h3>
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold">Evidence of Rehabilitation</h2>
+            <RadioGroup
+              value={rehabilitation.hasEvidence === null ? "" : rehabilitation.hasEvidence.toString()}
+              onValueChange={(value) => {
+                const hasEvidence = value === "true";
+                setRehabilitation(prev => ({ ...prev, hasEvidence }));
+                if (!hasEvidence) {
+                  setShowPDFViewerModal(true);
+                }
+              }}
+            >
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="true" id="evidence-yes" />
+                  <Label htmlFor="evidence-yes">Yes, evidence was provided</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="false" id="evidence-no" />
+                  <Label htmlFor="evidence-no">No evidence was provided</Label>
+                </div>
+              </div>
+            </RadioGroup>
+
+              <div>
+              <Label>Rehabilitation Notes</Label>
+              <Textarea
+                value={rehabilitation.notes}
+                onChange={(e) => setRehabilitation(prev => ({ ...prev, notes: e.target.value }))}
+                placeholder="Document any evidence of rehabilitation or mitigating factors..."
+              />
+            </div>
+          </div>
+        );
+      case 6:
+        return (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold">Assessment Summary</h2>
             <div className="space-y-4">
-              <div>
-                <h4 className="text-sm font-medium mb-2">Recovery & Support</h4>
-                <p className="text-sm text-muted-foreground">
-                  • 18‑month verified sobriety; Narcotics Anonymous sponsor support
-                </p>
+              <div className="rounded-lg border p-4">
+                <h3 className="font-semibold mb-2">Job-relatedness</h3>
+                <p>{jobRelation.isRelated ? "Directly related" : "Not directly related"}</p>
+                {jobRelation.isRelated && (
+                  <>
+                    <p className="text-sm text-muted-foreground mt-2">Related duties:</p>
+                    <ul className="list-disc pl-5">
+                      {jobRelation.duties.map(duty => (
+                        <li key={duty}>{duty}</li>
+                      ))}
+                </ul>
+                  </>
+                )}
               </div>
 
-              <div>
-                <h4 className="text-sm font-medium mb-2">Education</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• GED with honors</li>
-                  <li>• A.A.S., Business Administration – Borough of Manhattan CC (CUNY)</li>
-                </ul>
+              <div className="rounded-lg border p-4">
+                <h3 className="font-semibold mb-2">Time Elapsed</h3>
+                <p>{timeElapsed.replace("-", " to ")}</p>
               </div>
 
-              <div>
-                <h4 className="text-sm font-medium mb-2">Industry Credentials</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• OSHA 10‑Hour General Industry (Mar 2020)</li>
-                  <li>• NY Dept. of Public Health – Food Handler Certificate (valid through Apr 2023)</li>
-                </ul>
+              <div className="rounded-lg border p-4">
+                <h3 className="font-semibold mb-2">Rehabilitation Evidence</h3>
+                <p>{rehabilitation.hasEvidence ? "Evidence provided" : "No evidence provided"}</p>
+                {rehabilitation.notes && (
+                  <p className="text-sm text-muted-foreground mt-2">{rehabilitation.notes}</p>
+                )}
               </div>
 
-              <div>
-                <h4 className="text-sm font-medium mb-2">Professional Development</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Self‑taught data analysis (Excel, SQL basics)</li>
-                  <li>• Project management coursework</li>
-                  <li>• Bilingual (English/Spanish)</li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium mb-2">Community Service</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Reentry Coordinator, Osborne Association – founded 20‑student mentorship program for children of incarcerated parents</li>
-                  <li>• Facilitator of restorative‑justice circles inside custody</li>
-                </ul>
+              <div className="flex items-start space-x-3 mt-6">
+                <Checkbox
+                  id="certification"
+                  checked={certificationChecked}
+                  onCheckedChange={(checked) => setCertificationChecked(checked as boolean)}
+                />
+                <Label htmlFor="certification" className="text-sm">
+                  I certify that this decision complies with the Fair Chance Ordinance and is based solely on legally permissible information.
+                </Label>
               </div>
             </div>
           </div>
         );
-      default:
+
+      case 7:
         return (
-          <div className="text-sm text-muted-foreground">
-            The candidate holds a Certificate of Rehabilitation—a court-issued order affirming that an individual convicted of a felony and previously incarcerated in state or local prison has demonstrated rehabilitation under the law.
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold">Candidate Notification</h2>
+            <div className="rounded-lg border p-4 bg-muted">
+              <h3 className="font-semibold mb-2">Notice of Intent to Take Adverse Action</h3>
+              <p className="text-sm text-muted-foreground">
+                You must give the candidate 7 days to respond before proceeding with any adverse action. During this time, no hiring decision may be finalized.
+              </p>
+            </div>
+            <Button
+              onClick={() => setShowNoticeDialog(true)}
+            >
+              Preview & Send Notice
+            </Button>
           </div>
         );
+
+      case 8:
+        if (showWOTCSigningScreen) {
+          return (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold">WOTC Tax Credit Details</h2>
+              
+              <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg border border-green-200 dark:border-green-800">
+                <h3 className="text-xl font-semibold text-green-800 dark:text-green-300 mb-2">
+                  Tax Credit Value
+                </h3>
+                <p className="text-green-700 dark:text-green-400 text-lg">
+                  You are eligible for <span className="font-bold">40% of first-year wages</span> (up to $6,000) if the person works at least 400 hours as part of a WOTC targeted group.
+                </p>
+              </div>
+
+              <Card className="p-6 bg-secondary">
+                <div className="flex items-start gap-3">
+                  <Info className="h-5 w-5 mt-1 flex-shrink-0" />
+                  <div className="space-y-3">
+                    <h4 className="font-semibold">Policy Information</h4>
+                    <p className="text-sm text-muted-foreground">
+                      The Work Opportunity Tax Credit (WOTC) is a federal tax credit available to employers who invest in American job seekers who have consistently faced barriers to employment. Employers may meet their business needs and claim a tax credit if they hire an individual who is in a WOTC targeted group.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Employers must apply for and receive a certification verifying the new hire is a member of a targeted group before they can claim the tax credit. After the required certification is secured, taxable employers claim the WOTC as a general business credit against their income taxes, and tax-exempt employers claim the WOTC against their payroll taxes.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      WOTC is authorized until December 31, 2025 (Section 113 of Division EE of P.L. 116-260 -- Consolidated Appropriations Act, 2021).
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              <div className="flex justify-end mt-6">
+                <Button onClick={handleSignAndSend}>
+                  SIGN & SEND FOR REVIEW
+                </Button>
+              </div>
+          </div>
+        );
+        }
+
+        return (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold">Final Decision</h2>
+            <div className="space-y-4">
+              <Textarea
+                placeholder="Provide final justification for the hiring decision..."
+              />
+              <div className="flex gap-4">
+                <Button 
+                  variant="outline" 
+                  className="flex-1 ia-button-outline px-5 py-2 rounded-md text-base font-poppins"
+                  onClick={handleProceedWithHire}
+                >
+                  Proceed with Hire
+                </Button>
+                <Button 
+                  variant="destructive" 
+                  className="flex-1 ia-button-primary bg-cinnabar text-white hover:bg-cinnabar-600 px-5 py-2 rounded-md text-base font-poppins"
+                  onClick={() => setShowFinalNoticeDialog(true)}
+                >
+                  Take Adverse Action
+                </Button>
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
     }
   };
 
@@ -1244,7 +1436,7 @@ export default function AssessmentEvaluate() {
       case 2:
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Validate Document Basis</h2>
+            <h2 className="text-2xl font-bold">Background Check</h2>
             <p className="text-muted-foreground">
               Review the following criteria to ensure only legally permissible information is considered.
             </p>
@@ -1252,60 +1444,60 @@ export default function AssessmentEvaluate() {
               {/* Checklist Item 1 */}
               <div className="flex items-center gap-4">
                 <Checkbox
-                  id="old"
-                  checked={documentValidation.isOld}
+                  id="arrest"
+                  checked={documentValidation.isArrest}
                   onCheckedChange={(checked) =>
-                    setDocumentValidation(prev => ({ ...prev, isOld: checked as boolean }))
+                    setDocumentValidation(prev => ({ ...prev, isArrest: checked as boolean }))
                   }
                   className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
                   style={{ borderColor: "#d1d5db" }}
                 />
                 <div>
                   <div className="text-base font-bold font-poppins leading-tight">
-                    Is the conviction more than 7 years old?
+                    Was it an arrest?
                   </div>
                   <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
-                    Unless supervising minors/dependent adults, convictions older than 7 years cannot be considered.
+                    The fact of an arrest does not establish that criminal conduct has occurred. Arrests are not proof of criminal conduct.
                   </div>
                 </div>
               </div>
               {/* Checklist Item 2 */}
               <div className="flex items-center gap-4">
                 <Checkbox
-                  id="juvenile"
-                  checked={documentValidation.isJuvenile}
+                  id="conviction"
+                  checked={documentValidation.isConviction}
                   onCheckedChange={(checked) =>
-                    setDocumentValidation(prev => ({ ...prev, isJuvenile: checked as boolean }))
+                    setDocumentValidation(prev => ({ ...prev, isConviction: checked as boolean }))
                   }
                   className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
                   style={{ borderColor: "#d1d5db" }}
                 />
                 <div>
                   <div className="text-base font-bold font-poppins leading-tight">
-                    Is the offense juvenile-related?
+                    Was it a record of a conviction?
                   </div>
                   <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
-                    Juvenile records cannot be considered in employment decisions.
+                    A record of a conviction will usually serve as sufficient evidence that a person engaged in particular conduct, given the procedural safeguards associated with trials and guilty pleas.
                   </div>
                 </div>
               </div>
               {/* Checklist Item 3 */}
               <div className="flex items-center gap-4">
                 <Checkbox
-                  id="decriminalized"
-                  checked={documentValidation.isDecriminalized}
+                  id="challenged"
+                  checked={documentValidation.isChallenged}
                   onCheckedChange={(checked) =>
-                    setDocumentValidation(prev => ({ ...prev, isDecriminalized: checked as boolean }))
+                    setDocumentValidation(prev => ({ ...prev, isChallenged: checked as boolean }))
                   }
                   className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
                   style={{ borderColor: "#d1d5db" }}
                 />
                 <div>
                   <div className="text-base font-bold font-poppins leading-tight">
-                    Is the conduct now decriminalized?
+                    Has the candidate challenged the Background Report accuracy?
                   </div>
                   <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
-                    Decriminalized conduct (e.g., cannabis-related) cannot be considered.
+                    Records also may include inaccuracies or may continue to be reported even if expunged or sealed. A database may continue to report a conviction that was later expunged, or may continue to report as a felony an offense that was subsequently downgraded to a misdemeanor.
                   </div>
                 </div>
               </div>
@@ -1319,7 +1511,10 @@ export default function AssessmentEvaluate() {
             <h2 className="text-2xl font-bold">Direct Job-Relation Inquiry</h2>
             <RadioGroup
               value={jobRelation.isRelated === null ? "" : jobRelation.isRelated.toString()}
-              onValueChange={(value) => setJobRelation(prev => ({ ...prev, isRelated: value === "true" }))}
+              onValueChange={(value) => {
+                setJobRelation(prev => ({ ...prev, isRelated: value === "true" }));
+                setShowGreenFactorsModal(true);
+              }}
             >
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
@@ -1332,36 +1527,6 @@ export default function AssessmentEvaluate() {
                 </div>
               </div>
             </RadioGroup>
-
-            {jobRelation.isRelated && (
-              <div className="space-y-4">
-                <div>
-                  <Label>Select Related Job Duties</Label>
-                  <Select
-                    value={jobRelation.duties[0]}
-                    onValueChange={(value) => setJobRelation(prev => ({ ...prev, duties: [value] }))}
-                  >
-                    <SelectTrigger className="bg-white">
-                      <SelectValue placeholder="Choose a job duty" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      <SelectItem value="financial">Financial Management</SelectItem>
-                      <SelectItem value="sensitive">Access to Sensitive Data</SelectItem>
-                      <SelectItem value="supervision">Supervision of Others</SelectItem>
-                      <SelectItem value="security">Security Responsibilities</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label>Explain the Direct Relationship</Label>
-                  <Textarea
-                    value={jobRelation.explanation}
-                    onChange={(e) => setJobRelation(prev => ({ ...prev, explanation: e.target.value }))}
-                    placeholder="Describe how the conviction directly relates to job responsibilities..."
-                  />
-                </div>
-              </div>
-            )}
           </div>
         );
 
@@ -1392,7 +1557,13 @@ export default function AssessmentEvaluate() {
             <h2 className="text-2xl font-bold">Evidence of Rehabilitation</h2>
             <RadioGroup
               value={rehabilitation.hasEvidence === null ? "" : rehabilitation.hasEvidence.toString()}
-              onValueChange={(value) => setRehabilitation(prev => ({ ...prev, hasEvidence: value === "true" }))}
+              onValueChange={(value) => {
+                const hasEvidence = value === "true";
+                setRehabilitation(prev => ({ ...prev, hasEvidence }));
+                if (!hasEvidence) {
+                  setShowPDFViewerModal(true);
+                }
+              }}
             >
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
@@ -1457,7 +1628,7 @@ export default function AssessmentEvaluate() {
                   onCheckedChange={(checked) => setCertificationChecked(checked as boolean)}
                 />
                 <Label htmlFor="certification" className="text-sm">
-                  I certify that this decision complies with the Fair Chance Ordinance and is based solely on legally permissible information.
+                  I certify that this decision is in alignment with the EEOC's guidance and is based solely on legally permissible information.
                 </Label>
               </div>
             </div>
@@ -1520,8 +1691,8 @@ export default function AssessmentEvaluate() {
                   SIGN & SEND FOR REVIEW
                 </Button>
               </div>
-            </div>
-          );
+          </div>
+        );
         }
 
         return (
@@ -1612,65 +1783,7 @@ export default function AssessmentEvaluate() {
           </Button>
 
           <div className="space-y-6">
-            <Card className="mb-6 p-4 flex flex-col items-center">
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-cinnabar text-white">
-                  <FileText className="w-8 h-8" />
-                </div>
-                <span className="text-lg font-bold text-foreground text-center break-words leading-tight mt-2 max-w-[200px]">
-                  Regulations regarding job postings or job bulletins
-                </span>
-                <Button className="mt-4 border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins" variant="outline" onClick={() => setShowComplianceModal(true)}>
-                  View Regulations
-                </Button>
-              </div>
-            </Card>
-
-            {/* Compliance Statement Modal */}
-            <Dialog open={showComplianceModal} onOpenChange={setShowComplianceModal}>
-              <DialogContent className="max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle>Regulations regarding job postings or job bulletins</DialogTitle>
-                </DialogHeader>
-                <DialogDescription>
-                  <div className="space-y-4 mt-2 text-gray-700 text-base">
-                    <div className="bg-muted p-4 rounded-md border text-gray-900 space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-cinnabar mb-2">Prohibited Language</h3>
-                        <p className="mb-2">In job postings, employers can NOT include language such as:</p>
-                        <ul className="list-disc pl-6 space-y-1">
-                          <li>No Felons</li>
-                          <li>No Convictions</li>
-                          <li>Must Have Clean Background</li>
-                          <li>Must Pass Background Check</li>
-                          <li>etc.</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h3 className="font-semibold text-cinnabar mb-2">Required Language</h3>
-                        <p>In all job postings, employers MUST include language stating that qualified applications with arrest or conviction records will be considered for employment in accordance with the Los Angeles County Fair Chance Ordinance for Employers and the California Fair Chance Act.</p>
-                      </div>
-
-                      <div>
-                        <h3 className="font-semibold text-cinnabar mb-2">Legal Restrictions</h3>
-                        <p>If an organization prevents the hiring of individuals with a criminal history as required by law, the organization must specify the laws or regulation that impose these restrictions.</p>
-                      </div>
-
-                      <div>
-                        <h3 className="font-semibold text-cinnabar mb-2">Criminal History Review Notice</h3>
-                        <p>If your organization plans to conduct a review of criminal history after the interview process, the job posting must include a list of all material job duties of the specific position in which you believe a criminal history may have a direct, adverse, and negative relationship potentially resulting in the withdrawal of a conditional offer of employment.</p>
-                      </div>
-                    </div>
-                  </div>
-                </DialogDescription>
-                <div className="flex justify-end mt-4">
-                  <Button onClick={() => setShowComplianceModal(false)} variant="outline">Close</Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-
-            <Card className="p-6">
+            {/* Removing the Assessment Steps card */}
               {renderStepContent()}
 
               <div className="flex justify-between mt-8">
@@ -1700,7 +1813,7 @@ export default function AssessmentEvaluate() {
                   </Button>
                 )}
               </div>
-            </Card>
+          </div>
 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
@@ -1755,7 +1868,6 @@ export default function AssessmentEvaluate() {
                   {getCandidateContext()}
                 </TabsContent>
               </Tabs>
-            </div>
           </div>
         </div>
       </div>
@@ -2284,6 +2396,188 @@ export default function AssessmentEvaluate() {
             </Button>
             <Button onClick={() => { setShowReassessmentReminder(false); handleNext(); }}>
               Complete Reassessment
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add the new EEOC Guidance Modal */}
+      <Dialog open={showEEOCGuidanceModal} onOpenChange={setShowEEOCGuidanceModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-cinnabar mb-4">EEOC Best Practices Guidance</DialogTitle>
+            <DialogDescription className="space-y-6">
+              <div className="bg-[#fff5f5] p-6 rounded-lg border border-[#ffeceb]">
+                <p className="text-lg leading-relaxed mb-6">
+                  Some states require employers to wait until late in the selection process to ask about convictions. The policy rationale is that an employer is more likely to objectively assess the relevance of an applicant's conviction if it becomes known when the employer is already knowledgeable about the applicant's qualifications and experience.
+                </p>
+                <div className="border-l-4 border-cinnabar pl-4">
+                  <p className="text-lg leading-relaxed">
+                    As a best practice, and consistent with applicable laws, the Commission recommends that employers not ask about convictions on job applications and that, if and when they make such inquiries, the inquiries be limited to convictions for which exclusion would be job related for the position in question and consistent with business necessity.
+                  </p>
+                </div>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-3 mt-6">
+            <Button
+              className="bg-cinnabar text-white hover:bg-cinnabar-600"
+              onClick={() => {
+                setShowEEOCGuidanceModal(false);
+                setSteps(prev => prev.map(step => 
+                  step.id === currentStep ? { ...step, completed: true } : step
+                ));
+                setCurrentStep(prev => prev + 1);
+              }}
+            >
+              I Understand
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showGreenFactorsModal} onOpenChange={setShowGreenFactorsModal}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-cinnabar mb-4">Green Factors Analysis</DialogTitle>
+            <DialogDescription className="space-y-6">
+              <div className="bg-[#fff5f5] p-6 rounded-lg border border-[#ffeceb] mb-6">
+                <p className="text-lg leading-relaxed">
+                  Absent a validation study that meets the Uniform Guidelines' standards, the Green factors provide the starting point for analyzing how specific criminal conduct may be linked to particular positions. The three Green factors are:
+                </p>
+                <ul className="list-decimal pl-6 mt-4 space-y-2">
+                  <li>The nature and gravity of the offense or conduct;</li>
+                  <li>The time that has passed since the offense, conduct and/or completion of the sentence; and</li>
+                  <li>The nature of the job held or sought.</li>
+                </ul>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">a. The Nature and Gravity of the Offense or Conduct</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Careful consideration of the nature and gravity of the offense or conduct is the first step in determining whether a specific crime may be relevant to concerns about risks in a particular position. The nature of the offense or conduct may be assessed with reference to the harm caused by the crime (e.g., theft causes property loss). The legal elements of a crime also may be instructive.
+                  </p>
+                  <Textarea
+                    value={greenFactorsAnalysis.natureAndGravity}
+                    onChange={(e) => setGreenFactorsAnalysis(prev => ({ ...prev, natureAndGravity: e.target.value }))}
+                    placeholder="Describe the nature and gravity of the offense..."
+                    className="min-h-[100px]"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">b. The Time that Has Passed Since the Offense</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Employer policies typically specify the duration of a criminal conduct exclusion. While the Green court did not endorse a specific timeframe for criminal conduct exclusions, it did acknowledge that permanent exclusions from all employment based on any and all offenses were not consistent with the business necessity standard.
+                  </p>
+                  <Textarea
+                    value={greenFactorsAnalysis.timeElapsed}
+                    onChange={(e) => setGreenFactorsAnalysis(prev => ({ ...prev, timeElapsed: e.target.value }))}
+                    placeholder="Describe the time elapsed since the offense..."
+                    className="min-h-[100px]"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">c. The Nature of the Job Held or Sought</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Identify the particular job(s) subject to the exclusion, including the nature of the job's duties, essential functions, circumstances under which the job is performed, and the environment in which the job's duties are performed.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <Label>Job Duties</Label>
+                      <Textarea
+                        value={greenFactorsAnalysis.jobDuties}
+                        onChange={(e) => setGreenFactorsAnalysis(prev => ({ ...prev, jobDuties: e.target.value }))}
+                        placeholder="Describe the job duties..."
+                        className="min-h-[80px]"
+                      />
+                    </div>
+
+                    <div>
+                      <Label>Essential Functions</Label>
+                      <Textarea
+                        value={greenFactorsAnalysis.essentialFunctions}
+                        onChange={(e) => setGreenFactorsAnalysis(prev => ({ ...prev, essentialFunctions: e.target.value }))}
+                        placeholder="List the essential functions of the position..."
+                        className="min-h-[80px]"
+                      />
+                    </div>
+
+                    <div>
+                      <Label>Work Environment</Label>
+                      <Textarea
+                        value={greenFactorsAnalysis.workEnvironment}
+                        onChange={(e) => setGreenFactorsAnalysis(prev => ({ ...prev, workEnvironment: e.target.value }))}
+                        placeholder="Describe the work environment..."
+                        className="min-h-[80px]"
+                      />
+                    </div>
+
+                    <div>
+                      <Label>Level of Supervision</Label>
+                      <Textarea
+                        value={greenFactorsAnalysis.supervisionLevel}
+                        onChange={(e) => setGreenFactorsAnalysis(prev => ({ ...prev, supervisionLevel: e.target.value }))}
+                        placeholder="Describe the level of supervision..."
+                        className="min-h-[80px]"
+                      />
+                    </div>
+
+                    <div>
+                      <Label>Risk Assessment</Label>
+                      <Textarea
+                        value={greenFactorsAnalysis.riskAssessment}
+                        onChange={(e) => setGreenFactorsAnalysis(prev => ({ ...prev, riskAssessment: e.target.value }))}
+                        placeholder="Assess the risks and their relationship to the position..."
+                        className="min-h-[100px]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-3 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setShowGreenFactorsModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="bg-cinnabar text-white hover:bg-cinnabar-600"
+              onClick={() => {
+                setShowGreenFactorsModal(false);
+                handleNext();
+              }}
+            >
+              Complete Analysis
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showPDFViewerModal} onOpenChange={setShowPDFViewerModal}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-cinnabar mb-4">Candidate Response for Rehabilitative Evidence</DialogTitle>
+          </DialogHeader>
+          <div className="w-full h-[70vh] overflow-hidden rounded-lg border">
+            <iframe
+              src="/Rehab%20Evidence.pdf"
+              className="w-full h-full"
+              title="Candidate Response for Rehabilitative Evidence"
+            />
+          </div>
+          <div className="flex justify-end gap-3 mt-4">
+            <Button
+              className="bg-cinnabar text-white hover:bg-cinnabar-600"
+              onClick={() => setShowPDFViewerModal(false)}
+            >
+              Close
             </Button>
           </div>
         </DialogContent>

@@ -22,131 +22,84 @@ export default function OrdinancePage() {
 
         <div className="space-y-8">
           <h1 className="text-3xl font-bold text-foreground">
-            Los Angeles Fair Chance Initiative for Hiring Ordinance
+            Consideration of Arrest and Conviction Records in Employment Decisions
           </h1>
           <h2 className="text-2xl font-semibold text-foreground">
-            L.A. Cnty. Code § 8.300.050 et seq
+            Under Title VII of the Civil Rights Act of 1964
           </h2>
 
           <div className="space-y-6">
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-4">
-                8.300.050 Fair Chance Process in Hiring and Employment Decisions
+                Summary
               </h2>
 
               <div className="space-y-4">
                 <p className="text-gray35">
-                  A. Unless legally required, conducting a criminal background check or inquiry regarding the Criminal History information of an Applicant or Employee in connection with hiring or continued employment is voluntary for an Employer.
+                  An employer's use of an individual's criminal history in making employment decisions may, in some instances, violate the prohibition against employment discrimination under Title VII of the Civil Rights Act of 1964, as amended.
+                </p>
+
+                <p className="text-gray35">
+                  The Guidance builds on longstanding court decisions and existing guidance documents that the U.S. Equal Employment Opportunity Commission (Commission or EEOC) issued over twenty years ago.
+                </p>
+
+                <p className="text-gray35">
+                  The Guidance focuses on employment discrimination based on race and national origin. The Introduction provides information about criminal records, employer practices, and Title VII.
                 </p>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">B. Job Postings and Announcements</h3>
+                  <h3 className="text-xl font-semibold text-foreground">Arrest vs. Conviction Records</h3>
                   <p className="text-gray35">
-                    Employers shall not prevent or discourage Applicants or Employees with Criminal History to apply or respond to job solicitations, postings, announcements and advertisements, including with regard to the following:
+                    The fact of an arrest does not establish that criminal conduct has occurred, and an exclusion based on an arrest, in itself, is not job related and consistent with business necessity. However, an employer may make an employment decision based on the conduct underlying an arrest if the conduct makes the individual unfit for the position in question.
+                  </p>
+                  <p className="text-gray35">
+                    In contrast, a conviction record will usually serve as sufficient evidence that a person engaged in particular conduct. In certain circumstances, however, there may be reasons for an employer not to rely on the conviction record alone when making an employment decision.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-foreground">Disparate Treatment and Impact Analysis</h3>
+                  <p className="text-gray35">
+                    A violation may occur when an employer treats criminal history information differently for different applicants or employees, based on their race or national origin (disparate treatment liability).
+                  </p>
+                  <p className="text-gray35">
+                    An employer's neutral policy (e.g., excluding applicants from employment based on certain criminal conduct) may disproportionately impact some individuals protected under Title VII, and may violate the law if not job related and consistent with business necessity (disparate impact liability).
+                  </p>
+                  <p className="text-gray35">
+                    National data supports a finding that criminal record exclusions have a disparate impact based on race and national origin. The national data provides a basis for the Commission to investigate Title VII disparate impact charges challenging criminal record exclusions.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-foreground">Job Related and Business Necessity Defense</h3>
+                  <p className="text-gray35">
+                    Two circumstances in which the Commission believes employers will consistently meet the "job related and consistent with business necessity" defense are as follows:
                   </p>
                   <ol className="list-decimal pl-6 space-y-4">
                     <li className="text-gray35">
-                      In all job solicitations, bulletins, postings, announcements and advertisements, an Employer will include language stating that qualified Applicants with arrest or Conviction records will be considered for Employment in accordance with the Los Angeles County Fair Chance Ordinance for Employers and the California Fair Chance Act.
+                      The employer validates the criminal conduct exclusion for the position in question in light of the Uniform Guidelines on Employee Selection Procedures (if there is data or analysis about criminal conduct as related to subsequent work performance or behaviors); or
                     </li>
                     <li className="text-gray35">
-                      Employers will not include statements in job solicitations, bulletins, postings, announcements, and advertisements that no persons with Criminal History will be considered for hire or should not apply to the Employment position and will not include phrases such as "No Felons," or "No Convictions." An Employer may include language such as or similar to: "Background Check Required," but is prohibited from including phrases such as "Must Have Clean Background" or "Must Pass Background Check." Nothing in this Paragraph prohibits an Employer from stating that a law or regulation limits or prohibits the hiring of individuals with certain specified Criminal History, consistent with Paragraph 3 below.
-                    </li>
-                    <li className="text-gray35">
-                      If the Employer is required by local, State or federal law or regulation to restrict or prohibit the hiring of individuals with certain specified Criminal History for the job position, the Employer must specify in all job solicitations, bulletins, postings, announcements, and advertisements, any and all such laws or regulations that impose restrictions or prohibitions for Employment due to Criminal History.
-                    </li>
-                    <li className="text-gray35">
-                      If the Employer intends to conduct a review of an Applicant's or Employee's Criminal History in connection with a Conditional Offer of Employment, the Employer must include in any job solicitations, bulletins, postings, announcements, or advertisements, a list of all material job duties of the specific job position which the Employer reasonably believes that Criminal History may have a direct, adverse and negative relationship potentially resulting in the withdrawal of the Conditional Offer of Employment.
+                      The employer develops a targeted screen considering at least the nature of the crime, the time elapsed, and the nature of the job (the three factors identified by the court in Green v. Missouri Pacific Railroad, 549 F.2d 1158 (8th Cir. 1977)). The employer's policy then provides an opportunity for an individualized assessment for those people identified by the screen, to determine if the policy as applied is job related and consistent with business necessity. (Although Title VII does not require individualized assessment in all circumstances, the use of a screen that does not include individualized assessment is more likely to violate Title VII.)
                     </li>
                   </ol>
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">C. Prohibited Inquiries Prior to Conditional Offer of Employment</h3>
+                  <h3 className="text-xl font-semibold text-foreground">Legal Compliance</h3>
                   <p className="text-gray35">
-                    Unless legally required to do so, Employers are prohibited from making an inquiry regarding Criminal History prior to extending an Applicant or Employee a Conditional Offer of Employment, including but not limited to, during the application and interview process, as follows:
+                    Compliance with other federal laws and/or regulations that conflict with Title VII is a defense to a charge of discrimination under Title VII.
                   </p>
-                  <ol className="list-decimal pl-6 space-y-4">
-                    <li className="text-gray35">
-                      An Employer will not by any means, inquire about, consider, disseminate, distribute or require disclosure of an Applicant's or Employee's Criminal History.
-                    </li>
-                    <li className="text-gray35">
-                      Employers will not encourage, ask, or make opportunities for Applicants or Employees to voluntarily disclose information about their Criminal History.
-                    </li>
-                    <li className="text-gray35">
-                      An Employer will not end a job interview or reject an application based on Criminal History information that was prematurely provided by the Applicant or Employee, or learned from any other source.
-                    </li>
-                    <li className="text-gray35">
-                      Employers will not end a job interview or reject an application because the Applicant or Employee did not provide Criminal History information.
-                    </li>
-                    <li className="text-gray35">
-                      Employers who violate the prohibition on inquiring regarding Criminal History prior to making a Conditional Offer of Employment may not use an Applicant or Employee's failure to disclose Criminal History, refusal to answer a question regarding Criminal History, or provision of incomplete or inaccurate information regarding Criminal History in response to the Employer's prohibited inquiry as a basis for a subsequent Adverse Action following a Conditional Offer of Employment, including denying the Applicant or Employee the Employment position or withdrawing, rescinding and/or cancelling a Conditional Offer of Employment.
-                    </li>
-                  </ol>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">D. Notice of Intent to Conduct Background Check</h3>
                   <p className="text-gray35">
-                    In connection with a Conditional Offer of Employment, if the Employer intends to conduct a review of an Applicant's or Employee's Criminal History information, the Employer must provide notice in writing to the Applicant or Employee that includes the following:
+                    State and local laws or regulations are preempted by Title VII if they "purport[] to require or permit the doing of any act which would be an unlawful employment practice" under Title VII. 42 U.S.C. § 2000e-7.
                   </p>
-                  <ol className="list-decimal pl-6 space-y-4">
-                    <li className="text-gray35">
-                      A statement that the Conditional Offer of Employment is contingent upon the review of the individual's Criminal History.
-                    </li>
-                    <li className="text-gray35">
-                      A statement that the Employer has good cause to conduct a review of Criminal History for the specific job position with supporting justification provided in writing. A general statement that the Employer is performing a review of Criminal History due to "safety concerns" without more supporting justification is not sufficient to meet this requirement. An Employer establishes good cause if it can demonstrate any of the following:
-                      <ol className="list-[lower-alpha] pl-6 mt-2 space-y-2">
-                        <li className="text-gray35">
-                          The Employer faces a significant risk to its business operations or business reputation unless a review of Criminal History is conducted for the specific job position; or
-                        </li>
-                        <li className="text-gray35">
-                          A review of Criminal History is necessary for the specific job position due to articulable concerns regarding the safety of, or risk of harm or harassment to, the Employer's staff, Employees, contractors, vendors, associates, clients, customers, or the general public.
-                        </li>
-                      </ol>
-                    </li>
-                  </ol>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">G. Initial Individualized Assessment</h3>
-                  <p className="text-gray35">
-                    If an Employer intends to deny an Applicant or Employee a position of Employment, rescind a Conditional Offer of Employment made to an Applicant, or take any other Adverse Action against an Employee, solely or in part because of the Applicant's or Employee's Criminal History, the Employer must first conduct an Initial Individualized Assessment that is documented in writing, of whether the Applicant's or Employee's Criminal History has a direct, adverse and negative bearing on the Applicant's or Employee's ability to perform the duties or responsibilities necessarily related to the applied-for position, such that it justifies denying the Applicant or Employee the Employment position or justifies taking an Adverse Action against an Employee.
-                  </p>
-                  <ol className="list-decimal pl-6 space-y-4">
-                    <li className="text-gray35">
-                      The Initial Individualized Assessment must include at a minimum, consideration of the following factors:
-                      <ol className="list-[lower-alpha] pl-6 mt-2 space-y-2">
-                        <li className="text-gray35">
-                          The nature and gravity of the offense or conduct, including but not limited to, consideration of whether the harm was to property or people, the degree or severity of the harm or offense, the age of the Applicant or Employee when the conduct occurred, and the permanence of the harm or offense;
-                        </li>
-                        <li className="text-gray35">
-                          The time that has passed since the offense or conduct and /or completion of the sentence;
-                        </li>
-                        <li className="text-gray35">
-                          The nature of the Employment position sought or held, including consideration of the specific duties of the job, whether the Employment position offers the opportunity for the same or a similar offense to occur, and whether circumstances leading to the conduct for which the person was convicted or that is the subject of an Unresolved Arrest will recur in the Employment position; and
-                        </li>
-                        <li className="text-gray35">
-                          If the Applicant or Employee voluntarily provides to the Employer any Evidence of Rehabilitation or Mitigating Circumstances before or during the Initial Individualized Assessment, that evidence must also be considered as part of the Initial Individualized Assessment.
-                        </li>
-                      </ol>
-                    </li>
-                  </ol>
                 </div>
               </div>
             </section>
 
-            <section className="mt-8">
-              <h2 className="text-2xl font-semibold text-foreground mb-4">
-                8.300.130 Operative Date
-              </h2>
-              <p className="text-gray35">
-                The provisions set out in this chapter shall become operative at 12:01 a.m., on September 3, 2024.
-              </p>
-            </section>
-
             <div className="mt-8 pt-4 border-t border-border">
               <p className="text-gray35 text-sm">
-                S:\Ordinances\County Counsel\2024\2024-0012
+                Source: U.S. Equal Employment Opportunity Commission
               </p>
             </div>
           </div>
