@@ -545,73 +545,15 @@ export default function AssessmentEvaluate() {
         );
         case 2:
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Background Check</h2>
-            <p className="text-muted-foreground">
-              Review the following criteria to ensure only legally permissible information is considered.
-            </p>
-            <div className="space-y-6">
-              {/* Checklist Item 1 */}
-              <div className="flex items-center gap-4">
-                <Checkbox
-                  id="arrest"
-                  checked={documentValidation.isArrest}
-                  onCheckedChange={(checked) =>
-                    setDocumentValidation(prev => ({ ...prev, isArrest: checked as boolean }))
-                  }
-                  className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
-                  style={{ borderColor: "#d1d5db" }}
-                />
-                <div>
-                  <div className="text-base font-bold font-poppins leading-tight">
-                    Was it an arrest?
-                  </div>
-                  <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
-                    The fact of an arrest does not establish that criminal conduct has occurred. Arrests are not proof of criminal conduct.
-                  </div>
-                </div>
-              </div>
-              {/* Checklist Item 2 */}
-              <div className="flex items-center gap-4">
-                <Checkbox
-                  id="conviction"
-                  checked={documentValidation.isConviction}
-                  onCheckedChange={(checked) =>
-                    setDocumentValidation(prev => ({ ...prev, isConviction: checked as boolean }))
-                  }
-                  className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
-                  style={{ borderColor: "#d1d5db" }}
-                />
-                <div>
-                  <div className="text-base font-bold font-poppins leading-tight">
-                    Was it a record of a conviction?
-                  </div>
-                  <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
-                    A record of a conviction will usually serve as sufficient evidence that a person engaged in particular conduct, given the procedural safeguards associated with trials and guilty pleas.
-                  </div>
-                </div>
-              </div>
-              {/* Checklist Item 3 */}
-              <div className="flex items-center gap-4">
-                <Checkbox
-                  id="challenged"
-                  checked={documentValidation.isChallenged}
-                  onCheckedChange={(checked) =>
-                    setDocumentValidation(prev => ({ ...prev, isChallenged: checked as boolean }))
-                  }
-                  className="h-6 w-6 border-2 border-gray-300 bg-white data-[state=checked]:bg-white data-[state=checked]:text-green-500 focus:ring-0 focus:ring-offset-0 transition"
-                  style={{ borderColor: "#d1d5db" }}
-                />
-                <div>
-                  <div className="text-base font-bold font-poppins leading-tight">
-                    Has the candidate challenged the Background Report accuracy?
-                  </div>
-                  <div className="text-base font-normal font-poppins text-muted-foreground mt-1">
-                    Records also may include inaccuracies or may continue to be reported even if expunged or sealed. A database may continue to report a conviction that was later expunged, or may continue to report as a felony an offense that was subsequently downgraded to a misdemeanor.
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="space-y-4">
+            <h3 className="font-semibold">Nature & Circumstances of the Offense</h3>
+            <ul className="text-sm text-muted-foreground space-y-2">
+              <li>• Offense: Possession with Intent to Sell a Controlled Substance (Class B felony)</li>
+              <li>• Jurisdiction & Disposition: Kings County, NY; convicted 12 May 2018; indeterminate 1–9 year sentence</li>
+              <li>• Custody Period: Served 4 years in state prison (Jun 2019 – Jun 2023)</li>
+              <li>• Supervision: Paroled Jun 2023; completed all parole obligations May 2025</li>
+              <li>• Conduct on Supervision: One curfew violation (Sep 2023) resulted in a formal warning; no sanctions or subsequent incidents</li>
+            </ul>
           </div>
         );
       case 4:
@@ -630,176 +572,57 @@ export default function AssessmentEvaluate() {
         );
       case 5:
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Evidence of Rehabilitation</h2>
-            <RadioGroup
-              value={rehabilitation.hasEvidence === null ? "" : rehabilitation.hasEvidence.toString()}
-              onValueChange={(value) => {
-                const hasEvidence = value === "true";
-                setRehabilitation(prev => ({ ...prev, hasEvidence }));
-                if (!hasEvidence) {
-                  setShowPDFViewerModal(true);
-                }
-              }}
-            >
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="true" id="evidence-yes" />
-                  <Label htmlFor="evidence-yes">Yes, evidence was provided</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="false" id="evidence-no" />
-                  <Label htmlFor="evidence-no">No evidence was provided</Label>
-                </div>
-              </div>
-            </RadioGroup>
-
-              <div>
-              <Label>Rehabilitation Notes</Label>
-              <Textarea
-                value={rehabilitation.notes}
-                onChange={(e) => setRehabilitation(prev => ({ ...prev, notes: e.target.value }))}
-                placeholder="Document any evidence of rehabilitation or mitigating factors..."
-              />
-            </div>
-          </div>
-        );
-      case 6:
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Assessment Summary</h2>
+          <div className="space-y-4">
+            <h3 className="font-semibold">Evidence of Rehabilitation & Good Conduct</h3>
             <div className="space-y-4">
-              <div className="rounded-lg border p-4">
-                <h3 className="font-semibold mb-2">Job-relatedness</h3>
-                <p>{jobRelation.isRelated ? "Directly related" : "Not directly related"}</p>
-                {jobRelation.isRelated && (
-                  <>
-                    <p className="text-sm text-muted-foreground mt-2">Related duties:</p>
-                    <ul className="list-disc pl-5">
-                      {jobRelation.duties.map(duty => (
-                        <li key={duty}>{duty}</li>
-                      ))}
-                </ul>
-                  </>
-                )}
-              </div>
-
-              <div className="rounded-lg border p-4">
-                <h3 className="font-semibold mb-2">Time Elapsed</h3>
-                <p>{timeElapsed.replace("-", " to ")}</p>
-              </div>
-
-              <div className="rounded-lg border p-4">
-                <h3 className="font-semibold mb-2">Rehabilitation Evidence</h3>
-                <p>{rehabilitation.hasEvidence ? "Evidence provided" : "No evidence provided"}</p>
-                {rehabilitation.notes && (
-                  <p className="text-sm text-muted-foreground mt-2">{rehabilitation.notes}</p>
-                )}
-              </div>
-
-              <div className="flex items-start space-x-3 mt-6">
-                <Checkbox
-                  id="certification"
-                  checked={certificationChecked}
-                  onCheckedChange={(checked) => setCertificationChecked(checked as boolean)}
-                />
-                <Label htmlFor="certification" className="text-sm">
-                  I certify that this decision complies with the Fair Chance Ordinance and is based solely on legally permissible information.
-                </Label>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 7:
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Candidate Notification</h2>
-            <div className="rounded-lg border p-4 bg-muted">
-              <h3 className="font-semibold mb-2">Notice of Intent to Take Adverse Action</h3>
-              <p className="text-sm text-muted-foreground">
-                You must give the candidate 7 days to respond before proceeding with any adverse action. During this time, no hiring decision may be finalized.
-              </p>
-            </div>
-            <Button
-              onClick={() => setShowNoticeDialog(true)}
-            >
-              Preview & Send Notice
-            </Button>
-          </div>
-        );
-
-      case 8:
-        if (showWOTCSigningScreen) {
-          return (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold">WOTC Tax Credit Details</h2>
-              
-              <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg border border-green-200 dark:border-green-800">
-                <h3 className="text-xl font-semibold text-green-800 dark:text-green-300 mb-2">
-                  Tax Credit Value
-                </h3>
-                <p className="text-green-700 dark:text-green-400 text-lg">
-                  You are eligible for <span className="font-bold">40% of first-year wages</span> (up to $6,000) if the person works at least 400 hours as part of a WOTC targeted group.
+              <div>
+                <h4 className="text-sm font-medium mb-2">Recovery & Support</h4>
+                <p className="text-sm text-muted-foreground">
+                  • 18‑month verified sobriety; Narcotics Anonymous sponsor support
                 </p>
               </div>
 
-              <Card className="p-6 bg-secondary">
-                <div className="flex items-start gap-3">
-                  <Info className="h-5 w-5 mt-1 flex-shrink-0" />
-                  <div className="space-y-3">
-                    <h4 className="font-semibold">Policy Information</h4>
-                    <p className="text-sm text-muted-foreground">
-                      The Work Opportunity Tax Credit (WOTC) is a federal tax credit available to employers who invest in American job seekers who have consistently faced barriers to employment. Employers may meet their business needs and claim a tax credit if they hire an individual who is in a WOTC targeted group.
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Employers must apply for and receive a certification verifying the new hire is a member of a targeted group before they can claim the tax credit. After the required certification is secured, taxable employers claim the WOTC as a general business credit against their income taxes, and tax-exempt employers claim the WOTC against their payroll taxes.
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      WOTC is authorized until December 31, 2025 (Section 113 of Division EE of P.L. 116-260 -- Consolidated Appropriations Act, 2021).
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
-              <div className="flex justify-end mt-6">
-                <Button onClick={handleSignAndSend}>
-                  SIGN & SEND FOR REVIEW
-                </Button>
+              <div>
+                <h4 className="text-sm font-medium mb-2">Education</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• GED with honors</li>
+                  <li>• A.A.S., Business Administration – Borough of Manhattan CC (CUNY)</li>
+                </ul>
               </div>
-          </div>
-        );
-        }
 
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Final Decision</h2>
-            <div className="space-y-4">
-              <Textarea
-                placeholder="Provide final justification for the hiring decision..."
-              />
-              <div className="flex gap-4">
-                <Button 
-                  variant="outline" 
-                  className="flex-1 ia-button-outline px-5 py-2 rounded-md text-base font-poppins"
-                  onClick={handleProceedWithHire}
-                >
-                  Proceed with Hire
-                </Button>
-                <Button 
-                  variant="destructive" 
-                  className="flex-1 ia-button-primary bg-cinnabar text-white hover:bg-cinnabar-600 px-5 py-2 rounded-md text-base font-poppins"
-                  onClick={() => setShowFinalNoticeDialog(true)}
-                >
-                  Take Adverse Action
-                </Button>
+              <div>
+                <h4 className="text-sm font-medium mb-2">Industry Credentials</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• OSHA 10‑Hour General Industry (Mar 2020)</li>
+                  <li>• NY Dept. of Public Health – Food Handler Certificate (valid through Apr 2023)</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-medium mb-2">Professional Development</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Self‑taught data analysis (Excel, SQL basics)</li>
+                  <li>• Project management coursework</li>
+                  <li>• Bilingual (English/Spanish)</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-medium mb-2">Community Service</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Reentry Coordinator, Osborne Association – founded 20‑student mentorship program for children of incarcerated parents</li>
+                  <li>• Facilitator of restorative‑justice circles inside custody</li>
+                </ul>
               </div>
             </div>
           </div>
         );
-
       default:
-        return null;
+        return (
+          <div className="text-sm text-muted-foreground">
+            The candidate holds a Certificate of Rehabilitation—a court-issued order affirming that an individual convicted of a felony and previously incarcerated in state or local prison has demonstrated rehabilitation under the law.
+          </div>
+        );
     }
   };
 
@@ -1638,11 +1461,11 @@ export default function AssessmentEvaluate() {
       case 7:
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Candidate Notification</h2>
+            <h2 className="text-2xl font-bold">Individualized Assessment</h2>
             <div className="rounded-lg border p-4 bg-muted">
               <h3 className="font-semibold mb-2">Notice of Intent to Take Adverse Action</h3>
               <p className="text-sm text-muted-foreground">
-                You must give the candidate 7 days to respond before proceeding with any adverse action. During this time, no hiring decision may be finalized.
+                You are about to conduct an individualized assessment using the EEOC framework.
               </p>
             </div>
             <Button
