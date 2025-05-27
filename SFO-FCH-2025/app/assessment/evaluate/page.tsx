@@ -65,8 +65,7 @@ export default function AssessmentEvaluate() {
     { id: 4, title: "Time Elapsed Analysis", completed: false },
     { id: 5, title: "Evidence of Rehabilitation", completed: false },
     { id: 6, title: "Assessment Summary", completed: false },
-    { id: 7, title: "Candidate Notification", completed: false },
-    { id: 8, title: "Final Decision", completed: false },
+    { id: 7, title: "Candidate Notification", completed: false }
   ]);
 
   const [hasConditionalOffer, setHasConditionalOffer] = useState<string | null>(null);
@@ -112,6 +111,20 @@ export default function AssessmentEvaluate() {
       name: "",
       mailingAddress: "",
       emailAddress: ""
+    },
+    individualizedAssessment: {
+      generalExplanation: "Individualized assessment generally means that an employer informs the individual that he may be excluded because of past criminal conduct; provides an opportunity to the individual to demonstrate that the exclusion does not properly apply to him; and considers whether the individual's additional information shows that the policy as applied is not job related and consistent with business necessity.",
+      additionalInfo: [
+        "The facts or circumstances surrounding the offense or conduct",
+        "The number of offenses for which the individual was convicted",
+        "Older age at the time of conviction, or release from prison",
+        "Evidence that the individual performed the same type of work, post conviction, with the same or a different employer, with no known incidents of criminal conduct",
+        "The length and consistency of employment history before and after the offense or conduct",
+        "Rehabilitation efforts, e.g., education/training",
+        "Employment or character references and any other information regarding fitness for the particular position",
+        "Whether the individual is bonded under a federal, state, or local bonding program"
+      ],
+      noResponseNote: "If the individual does not respond to the employer's attempt to gather additional information about his background, the employer may make its employment decision without the information."
     }
   });
   const [isEditingNotice, setIsEditingNotice] = useState(false);
@@ -176,6 +189,9 @@ export default function AssessmentEvaluate() {
     riskAssessment: ""
   });
 
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showFinalConfirmationModal, setShowFinalConfirmationModal] = useState(false);
+
   useEffect(() => {
     setDocuments({
       jobDescription: {
@@ -226,6 +242,11 @@ export default function AssessmentEvaluate() {
   const handleNext = () => {
     if (currentStep === 1 && hasConditionalOffer === "no") {
       setShowEEOCGuidanceModal(true);
+      return;
+    }
+
+    if (currentStep === 7) {
+      setShowNoticeDialog(true);
       return;
     }
 
@@ -818,14 +839,21 @@ export default function AssessmentEvaluate() {
               <li key={idx}>{conviction || "____________________________________"}</li>
             ))}
           </ul>
-          
-          <p>Attached to this Preliminary Notice are the following documents:</p>
-          
-          <ul className="list-disc pl-5">
-            <li>A copy of your Criminal Background Check Report.</li>
-            <li>{noticeData.additionalDocuments || "[If applicable, identify any other information or documentation relating to the applicant's or employee's criminal history obtained by the employer, including but not limited to, internet searches, court records, news articles, and/or social media content]"}</li>
-            <li>A copy of our Initial Individualized Assessment, which explains in detail our concerns regarding how your criminal history has a direct, adverse and negative bearing on your ability to perform the duties of the job position.</li>
-          </ul>
+
+          <div className="mt-6">
+            <h3 className="font-semibold">Individualized Assessment Information</h3>
+            <p>{noticeData.individualizedAssessment.generalExplanation}</p>
+            
+            <p className="mt-4">The individual's showing may include information that he was not correctly identified in the criminal record, or that the record is otherwise inaccurate. Other relevant individualized evidence includes, for example:</p>
+            
+            <ul className="list-disc pl-5 mt-2">
+              {noticeData.individualizedAssessment.additionalInfo.map((info, idx) => (
+                <li key={idx}>{info}</li>
+              ))}
+            </ul>
+            
+            <p className="mt-4">{noticeData.individualizedAssessment.noResponseNote}</p>
+          </div>
           
           <div className="mt-6">
             <h3 className="font-semibold">YOUR RIGHT TO RESPOND TO THIS PRELIMINARY NOTICE AND IMPORTANT DEADLINES:</h3>
@@ -849,46 +877,9 @@ export default function AssessmentEvaluate() {
           </div>
           
           <div className="mt-6">
-            <h3 className="font-semibold">RESPONSE EXAMPLES: Below are examples of information and records you may send us for our consideration:</h3>
-            
-            <h4 className="font-semibold mt-4">Information Challenging the Accuracy of the Criminal History Record or Criminal Background Check:</h4>
-            <ul className="list-disc pl-5">
-              <li>Evidence that you were not convicted or not arrested of one or more of the offenses we listed above.</li>
-              <li>Evidence that the criminal history report or background check record is inaccurate (i.e., data errors, single criminal charge is listed multiple times, expunged or sealed records listed, etc.).</li>
-            </ul>
-            
-            <h4 className="font-semibold mt-4">Evidence of Rehabilitation or Mitigating Circumstances:</h4>
-            <ul className="list-disc pl-5">
-              <li>Facts or circumstances surrounding the offense or conduct, showing that the conduct was less serious than the conviction seems.</li>
-              <li>The time that has passed since the conduct that led to your conviction(s) or since your release from incarceration.</li>
-              <li>The length and consistency of employment history or community involvement (such as volunteer activities) before and after the offense(s).</li>
-              <li>Employer recommendations, especially concerning post-conviction employment.</li>
-              <li>Employment or character references from people who know you, such as letters from teachers, counselors, supervisors, clergy, and probation or parole officers.</li>
-              <li>Educational attainment or vocational or professional training since the conviction, including training received while incarcerated.</li>
-              <li>Evidence that you attended school, job training, or counseling.</li>
-              <li>Completion of or active participation in rehabilitative treatment.</li>
-              <li>Evidence that you have performed the same type of work since your conviction.</li>
-              <li>Whether you are bonded under a federal, state, or local bonding program.</li>
-              <li>Your satisfactory compliance with all terms and conditions of parole and/or probation.</li>
-              <li>Any other evidence of your rehabilitation efforts or evidence showing your present fitness for the job position.</li>
-            </ul>
-          </div>
-          
-          <div className="mt-6">
             <h3 className="font-semibold">CONTACT INFO: Please send your Response, requests for extension, submissions and/or any additional information you would like us to consider to:</h3>
             
             <p>{noticeData.contactInfo.name || "[INSERT NAME AND MAILING ADDRESS, EMAIL ADDRESS]"}</p>
-          </div>
-          
-          <div className="mt-6">
-            <h3 className="font-semibold">NEXT STEPS AFTER SUBMISSION OF RESPONSE: Second Individualized Assessment and Final Notice</h3>
-            
-            <p>Within THIRTY (30) CALENDAR DAYS of receipt of your Response to this Preliminary Notice, we will do the following:</p>
-            
-            <ul className="list-disc pl-5">
-              <li>We will review your Response, including any information and records you timely submit to us, and conduct a Second Individualized Assessment, in order to reassess whether your criminal history has a direct, adverse and negative bearing on your ability to perform the duties of the job position.</li>
-              <li>If after conducting the Second Individualized Assessment, we make a final decision to {noticeData.preliminaryDecision || "[Identify the adverse action, i.e., withdraw the conditional job offer, deny the promotion, discharge, etc.]"}, we will send you a Final Notice of Adverse Action.</li>
-            </ul>
           </div>
           
           <div className="mt-6">
@@ -902,6 +893,7 @@ export default function AssessmentEvaluate() {
         </div>
         
         <div className={isEditingNotice ? "space-y-4" : "hidden"}>
+          {/* Existing form fields */}
           <div className="space-y-2">
             <Label htmlFor="date">Date</Label>
             <Input
@@ -957,14 +949,58 @@ export default function AssessmentEvaluate() {
               />
             ))}
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="additionalDocuments">Additional Documents</Label>
+            <Label htmlFor="generalExplanation">Individualized Assessment Explanation</Label>
             <Textarea
-              id="additionalDocuments"
-              value={noticeData.additionalDocuments}
-              onChange={(e) => setNoticeData(prev => ({ ...prev, additionalDocuments: e.target.value }))}
-              placeholder="List any additional documents"
+              id="generalExplanation"
+              value={noticeData.individualizedAssessment.generalExplanation}
+              onChange={(e) => setNoticeData(prev => ({
+                ...prev,
+                individualizedAssessment: {
+                  ...prev.individualizedAssessment,
+                  generalExplanation: e.target.value
+                }
+              }))}
+              placeholder="Enter the general explanation for individualized assessment"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Additional Information Points</Label>
+            {noticeData.individualizedAssessment.additionalInfo.map((info, idx) => (
+              <Input
+                key={idx}
+                value={info}
+                onChange={e => setNoticeData(prev => {
+                  const additionalInfo = [...prev.individualizedAssessment.additionalInfo];
+                  additionalInfo[idx] = e.target.value;
+                  return {
+                    ...prev,
+                    individualizedAssessment: {
+                      ...prev.individualizedAssessment,
+                      additionalInfo
+                    }
+                  };
+                })}
+                placeholder={`Additional information point ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="noResponseNote">No Response Note</Label>
+            <Textarea
+              id="noResponseNote"
+              value={noticeData.individualizedAssessment.noResponseNote}
+              onChange={(e) => setNoticeData(prev => ({
+                ...prev,
+                individualizedAssessment: {
+                  ...prev.individualizedAssessment,
+                  noResponseNote: e.target.value
+                }
+              }))}
+              placeholder="Enter the note about no response"
             />
           </div>
           
@@ -1764,8 +1800,7 @@ export default function AssessmentEvaluate() {
                   description: "The candidate has been notified and has 7 days to respond.",
                 });
                 setShowNoticeDialog(false);
-                setShowReassessmentReminder(true); // Show the reminder dialog
-                // handleNext(); // Move to next step only after closing the reminder
+                setShowSuccessModal(true); // Show success modal instead of directly showing reassessment reminder
               }}
             >
               <Send className="mr-2 h-4 w-4" />
@@ -1814,20 +1849,6 @@ export default function AssessmentEvaluate() {
               <Send className="mr-2 h-4 w-4" />
               Send Final Notice
             </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={showBlockingDialog} onOpenChange={setShowBlockingDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Conditional Offer Required</DialogTitle>
-            <DialogDescription>
-              You must extend a conditional offer before accessing or considering conviction history. This is a requirement under San Francisco's Fair Chance Ordinance.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex justify-end">
-            <Button onClick={() => router.push("/")}>Return to Dashboard</Button>
           </div>
         </DialogContent>
       </Dialog>
@@ -2401,6 +2422,75 @@ export default function AssessmentEvaluate() {
               onClick={() => setShowPDFViewerModal(false)}
             >
               Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-green-600">Success!</DialogTitle>
+            <DialogDescription className="space-y-4 pt-4">
+              <div className="bg-green-50 p-6 rounded-lg border border-green-200">
+                <p className="text-lg leading-relaxed">
+                  You have successfully followed the EEOC guidelines and made a fair chance hiring decision by:
+                </p>
+                <ul className="list-disc pl-6 mt-4 space-y-2">
+                  <li>Conducting an individualized assessment</li>
+                  <li>Providing the candidate with a preliminary notice</li>
+                  <li>Allowing the candidate time to respond with additional information</li>
+                  <li>Following the proper notification procedures</li>
+                </ul>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  The candidate has been notified and has 7 days to respond with any additional information or evidence of rehabilitation.
+                </p>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-3">
+            <Button
+              className="bg-green-600 text-white hover:bg-green-700"
+              onClick={() => {
+                setShowSuccessModal(false);
+                setShowFinalConfirmationModal(true); // Show final confirmation instead of reassessment reminder
+              }}
+            >
+              Continue
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showFinalConfirmationModal} onOpenChange={setShowFinalConfirmationModal}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">Confidentiality Statement</DialogTitle>
+            <DialogDescription className="space-y-6 pt-4">
+              <div className="bg-white p-6 rounded-lg border">
+                <p className="text-lg leading-relaxed mb-8">
+                  Keep information about applicants' and employees' criminal records confidential. Only use it for the purpose for which it was intended.
+                </p>
+                
+                <div className="mt-8">
+                  <p className="text-sm text-muted-foreground mb-2">Approved by the Commission:</p>
+                  <div className="flex flex-col items-end space-y-4">
+                    <div className="w-48 border-t border-gray-400"></div>
+                    <p className="text-sm">Chair Jacqueline A. Berrien</p>
+                  </div>
+                </div>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-3">
+            <Button
+              className="bg-cinnabar text-white hover:bg-cinnabar-600"
+              onClick={() => {
+                setShowFinalConfirmationModal(false);
+                router.push("/"); // Return to dashboard
+              }}
+            >
+              Complete Assessment
             </Button>
           </div>
         </DialogContent>
