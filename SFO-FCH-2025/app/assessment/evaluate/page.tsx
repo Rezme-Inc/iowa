@@ -224,23 +224,6 @@ export default function AssessmentEvaluate() {
   }, []);
 
   const handleStepClick = (stepId: number) => {
-    const previousStepsCompleted = steps
-      .filter(step => step.id < stepId)
-      .every(step => step.completed);
-
-    if (!previousStepsCompleted) {
-      toast({
-        title: "Cannot Skip Steps",
-        description: "Please complete the previous steps before proceeding.",
-      });
-      return;
-    }
-
-    if (stepId > 1 && hasConditionalOffer === "no") {
-      setShowBlockingDialog(true);
-      return;
-    }
-
     setCurrentStep(stepId);
   };
 
@@ -1606,18 +1589,28 @@ export default function AssessmentEvaluate() {
               {steps.map((step) => (
                 <button
                   key={step.id}
-                  className={`w-full p-3 rounded-lg border ${
-                    currentStep === step.id ? "bg-secondary" : ""
-                  } transition-colors hover:bg-secondary/50`}
+                  className={`w-full p-3 rounded-lg border transition-colors ${
+                    currentStep === step.id 
+                      ? "bg-secondary border-cinnabar" 
+                      : "hover:bg-secondary/50 border-gray-200"
+                  }`}
                   onClick={() => handleStepClick(step.id)}
                 >
                   <div className="flex items-center gap-2">
                     {step.completed ? (
                       <Check className="h-4 w-4 text-green-500" />
                     ) : (
-                      <div className="h-4 w-4 rounded-full border" />
+                      <div className={`h-4 w-4 rounded-full border ${
+                        currentStep === step.id ? "border-cinnabar" : "border-gray-300"
+                      }`} />
                     )}
-                    <span className={step.completed ? "text-muted-foreground" : ""}>
+                    <span className={`${
+                      currentStep === step.id 
+                        ? "font-semibold text-cinnabar" 
+                        : step.completed 
+                          ? "text-muted-foreground" 
+                          : ""
+                    }`}>
                       {step.title}
                     </span>
                   </div>
