@@ -339,6 +339,15 @@ export default function AssessmentEvaluate() {
           </div>
         );
 
+      case 4:
+        return (
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Employer policies typically specify the duration of a criminal conduct exclusion. While the Green court did not endorse a specific timeframe for criminal conduct exclusions, it did acknowledge that permanent exclusions from all employment based on any and all offenses were not consistent with the business necessity standard.
+            </p>
+          </div>
+        );
+
       case 5:
         return (
           <div className="space-y-4">
@@ -373,6 +382,24 @@ export default function AssessmentEvaluate() {
             <p className="text-sm text-muted-foreground">
               
               Enforcement: Any complaint alleging a violation of this section shall be filed within the time provided in 5-3-10. Upon certification by the commission of an affirmative finding of probable cause that an employer has committed a violation of this section, the commission shall refer the complaint and probable cause finding to the city attorney for review, together with a recommendation as to the amount of a fine to be assessed. Upon determination that the complaint meets the requisite standard of proof, the city attorney shall issue a municipal infraction citation against the employer. A first offense shall be subject to a fine of up to seven hundred fifty dollars ($750.00), and a repeat offense within a period of three (3) years shall be subject to a fine of up to one thousand dollars ($1,000.00). Fines shall be payable to the complainant. For purposes of enforcing this section, the provisions of sections 5-3-10.D, 5-3-10.E, 5-3-10.F, 5-3-11, 5-3-12 and 5-3-13 shall not apply.
+            </p>
+          </div>
+        );
+      case 7:
+        return (
+          <div className="space-y-4">
+            <h3 className="font-semibold">Fair Credit Reporting Act (FCRA)</h3>
+            <p className="text-sm text-muted-foreground">
+              You must provide the applicant with a pre-adverse action notice together with a copy of the background check report.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              a) Federal = 5 days
+            </p>
+            <p className="text-sm text-muted-foreground">
+              If you decide to make an adverse decision based on information from the background check report, you will need to give the applicant a final notice of the adverse action. This notice must include the name, phone number, and address of the CRA that completed the report.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              a) Can dispute, and obtain free copy up to 60 days
             </p>
           </div>
         );
@@ -2244,7 +2271,7 @@ export default function AssessmentEvaluate() {
               <div className="bg-[#fff5f5] p-6 rounded-lg border border-[#ffeceb]">
                 <p className="text-lg leading-relaxed mb-6">
                   To make any inquiry regarding, or to require any person to disclose or reveal, any convictions, arrests, or pending criminal charges during the application process, including but not limited to any interview. The application process shall begin when the applicant inquires about the employment being sought and shall end when an employer has extended a conditional offer of employment to the applicant. If the applicant voluntarily discloses any information regarding his or her criminal record at the interview, the employer may discuss the criminal record disclosed by the applicant.
-                </p>
+                  </p>
               </div>
             </DialogDescription>
           </DialogHeader>
