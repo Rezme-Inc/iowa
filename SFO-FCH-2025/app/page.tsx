@@ -54,7 +54,7 @@ export default function Home() {
 			<div className="mx-auto max-w-7xl space-y-8 px-8 pb-8">
 				<h1 className="text-4xl font-bold text-foreground">
 					Fair Chance Hiring Compliance Platform Demo:{" "}
-					<span className="text-cinnabar">U.S. Equal Employment Opportunity Commission (EEOC)</span>
+					<span className="text-cinnabar">Iowa</span>
 				</h1>
 				<div className="flex gap-8">
 					{/* Legal Overview Panel */}
@@ -62,37 +62,41 @@ export default function Home() {
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-foreground">
 								<Scale className="h-6 w-6 text-cinnabar" />
-								EEOC Enforcement Guidance
+								Iowa Fair Chance Hiring Law
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<p className="text-gray35">
-								Enforcement Guidance on the Consideration of Arrest and Conviction Records in Employment Decisions under Title VII of the Civil Rights Act
+								Ordinance 5522 and Iowa Code Section 364.3(12)(a)
 							</p>
 							<div className="space-y-2">
-								<h3 className="font-semibold text-gray35">Issuing Authority</h3>
+								<h3 className="font-semibold text-gray35">Permissible Reasons for Adverse Hiring Decisions</h3>
 								<p className="text-sm text-foreground font-poppins">
-									SUBJECT: Enforcement Guidance on the Consideration of Arrest and Conviction Records in Employment Decisions Under Title VII of the Civil Rights Act of 1964, as amended, 42 U.S.C. § 2000e et seq.
+									An employer may make an adverse hiring decision based on an applicant's criminal record in the following situations:
 								</p>
-								<p className="text-sm text-foreground font-poppins">
-									PURPOSE: The purpose of this Enforcement Guidance is to consolidate and update the U.S. Equal Employment Opportunity Commission's guidance documents regarding the use of arrest or conviction records in employment decisions under Title VII of the Civil Rights Act of 1964, as amended, 42 U.S.C. § 2000e et seq.
-								</p>
-								<p className="text-sm text-foreground font-poppins">
-									EFFECTIVE DATE: Upon receipt
-								</p>
-								<p className="text-sm text-foreground font-poppins">
-									EXPIRATION DATE: This Notice will remain in effect until rescinded or superseded.
-								</p>
-								<p className="text-sm text-foreground font-poppins">
-									ORIGINATOR: Office of Legal Counsel.
-								</p>
+								<ol className="text-sm text-foreground font-poppins list-decimal pl-4 space-y-2">
+									<li>When the criminal conduct has a direct and substantial bearing on the fitness or ability to perform the job duties, considering:
+										<ul className="list-disc pl-4 mt-1">
+											<li>Nature of the employment</li>
+											<li>Place and manner of employment</li>
+											<li>Nature and seriousness of the offense</li>
+											<li>Opportunity for similar offense</li>
+											<li>Time elapsed since conviction/arrest</li>
+											<li>Number and types of convictions</li>
+											<li>Evidence of rehabilitation</li>
+										</ul>
+									</li>
+									<li>When employment would involve unreasonable risk to property, safety, or business reputation</li>
+									<li>For positions working with vulnerable populations where the applicant has relevant convictions</li>
+									<li>When required by federal or state law regarding background checks</li>
+								</ol>
 							</div>
 							<Button
 								variant="outline"
 								className="w-full border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins"
 								onClick={() => router.push("/ordinance")}
 							>
-								View EEOC Enforcement Guidance Summary
+								View Full Iowa Law Details
 							</Button>
 						</CardContent>
 					</Card>
