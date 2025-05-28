@@ -119,7 +119,7 @@ export default function Home() {
 					      <div className="flex justify-between w-full">
 					        {stepsRow1.map((step, idx) => (
 					          <div key={step.title} className="flex flex-col items-center min-w-0 flex-1">
-					            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-cinnabar text-white">
+					            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gray-100 text-white">
 					              {step.icon}
 					            </div>
 					            <span className="text-lg font-bold text-foreground text-center break-words leading-tight mt-2 max-w-[200px]">
