@@ -61,11 +61,11 @@ export default function AssessmentEvaluate() {
   const [steps, setSteps] = useState<Step[]>([
     { id: 1, title: "Confirm Conditional Offer", completed: false },
     { id: 2, title: "Background Check", completed: false },
-    { id: 3, title: "Direct Job-Relation Inquiry", completed: false },
-    { id: 4, title: "Time Elapsed Analysis", completed: false },
+    { id: 3, title: "Business Necessity Analysis", completed: false },
+    { id: 4, title: "Time Analysis", completed: false },
     { id: 5, title: "Evidence of Rehabilitation", completed: false },
     { id: 6, title: "Assessment Summary", completed: false },
-    { id: 7, title: "Candidate Notification", completed: false }
+    { id: 7, title: "Final Decision", completed: false }
   ]);
 
   const [hasConditionalOffer, setHasConditionalOffer] = useState<string | null>(null);
