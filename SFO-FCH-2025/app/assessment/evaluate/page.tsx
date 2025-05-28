@@ -192,6 +192,10 @@ export default function AssessmentEvaluate() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFinalConfirmationModal, setShowFinalConfirmationModal] = useState(false);
   const [showGuidanceModal, setShowGuidanceModal] = useState(false);
+  // Add state for showing the hire modal
+  const [showHireModal, setShowHireModal] = useState(false);
+  // Add state for showing the end-of-demo modal
+  const [showEndOfDemoModal, setShowEndOfDemoModal] = useState(false);
 
   useEffect(() => {
     setDocuments({
@@ -247,7 +251,7 @@ export default function AssessmentEvaluate() {
     }
 
     if (currentStep === 7) {
-      setShowNoticeDialog(true);
+      setShowEndOfDemoModal(true);
       return;
     }
 
@@ -859,7 +863,7 @@ export default function AssessmentEvaluate() {
             <div className="rounded-lg border p-4 bg-muted">
               <h3 className="font-semibold mb-2">Notice of Intent to Take Adverse Action</h3>
               <p className="text-sm text-muted-foreground">
-                Finalize your individualized assessment using the Iowa Fair Chance Hiring Law framework.
+                You are about to conduct an individualized assessment using the Iowa Fair Chance Hiring Law framework.
               </p>
             </div>
             <Button
@@ -867,6 +871,41 @@ export default function AssessmentEvaluate() {
             >
               Preview & Send Notice
             </Button>
+            <Button
+              className="bg-green-600 text-white hover:bg-green-700 font-semibold w-full mt-4"
+              onClick={() => setShowHireModal(true)}
+            >
+              Hire the Candidate
+            </Button>
+            <Dialog open={showHireModal} onOpenChange={setShowHireModal}>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <DialogTitle className="text-green-700 text-2xl font-bold mb-2">Congratulations on Your Fair Chance Hire!</DialogTitle>
+                  <DialogDescription className="space-y-4 pt-2">
+                    <p>We have prefiled for you to receive Work Opportunity Tax Credits (WOTC) for hiring a candidate who has faced significant barriers to employment. We've also prefiled the paperwork for federal bonding—a type of business insurance. We will monitor hours worked to maximize your tax incentive.</p>
+                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                      <h3 className="font-semibold mb-2">BENEFITS TO EMPLOYERS</h3>
+                      <ul className="list-disc pl-6 text-sm text-green-900 space-y-2">
+                        <li>The credit available ranges from $2,400 up to $9,600, depending on the targeted group and qualified wages paid to the new employee generally during the first year of employment.</li>
+                        <li>Generally, the credit is 40% of qualified first-year wages for individuals who work 400+ hours in their first year of employment.</li>
+                      </ul>
+                    </div>
+                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
+                      <h3 className="font-semibold mb-2">The Federal Bonding Program (FBP)</h3>
+                      <ul className="list-disc pl-6 text-sm text-blue-900 space-y-2">
+                        <li>Employers can receive fidelity bonds free of charge when hiring certain job applicants.</li>
+                        <li>The bonds reimburse the employer for any loss due to employee theft ($5,000 up to $25,000), and cover the first six months of employment at no cost to the job applicant or the employer ($0 deductible).</li>
+                      </ul>
+                    </div>
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex justify-end mt-6">
+                  <Button className="bg-green-600 text-white hover:bg-green-700" onClick={() => setShowHireModal(false)}>
+                    Close
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         );
 
@@ -2480,6 +2519,25 @@ export default function AssessmentEvaluate() {
               }}
             >
               I Understand
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* End of Demo Modal */}
+      <Dialog open={showEndOfDemoModal} onOpenChange={setShowEndOfDemoModal}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-cinnabar mb-2">End of Demo</DialogTitle>
+            <DialogDescription className="space-y-4 pt-2">
+              <p className="text-lg leading-relaxed">
+                This is the end of the demo experience. To unlock more features or request customizations for your organization, please reach out to our team.
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end mt-6">
+            <Button className="bg-cinnabar text-white hover:bg-cinnabar-600" onClick={() => setShowEndOfDemoModal(false)}>
+              Close
             </Button>
           </div>
         </DialogContent>

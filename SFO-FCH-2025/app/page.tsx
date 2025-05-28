@@ -9,29 +9,29 @@ import { useRouter } from "next/navigation";
 
 const stepsRow1 = [
 	{
-		title: "Remove Blanket Exclusions",
+		title: "Initial Application Review",
 		icon: <FileText className="w-6 h-6" />,
 	},
 	{
-		title: "Train Your Team",
+		title: "Conditional Offer",
 		icon: <ClipboardList className="w-6 h-6" />,
 	},
 	{
-		title: "Establish a Written Policy",
+		title: "Background Check",
 		icon: <Scale className="w-6 h-6" />,
 	},
 ];
 const stepsRow2 = [
 	{
-		title: "Implement Individualized Assessments",
+		title: "Individualized Assessment",
 		icon: <AlertTriangle className="w-6 h-6" />,
 	},
 	{
-		title: "Ensure Job Relevance",
+		title: "Adverse Action Notice",
 		icon: <Users className="w-6 h-6" />,
 	},
 	{
-		title: "Safeguard Confidentiality",
+		title: "Final Decision",
 		icon: <CheckCircle2 className="w-6 h-6" />,
 	},
 ];
@@ -111,8 +111,7 @@ export default function Home() {
 					  </CardHeader>
 					  <CardContent className="space-y-4">
 					    <p className="text-gray35">
-					      Start a structured workflow to evaluate conviction history in
-					      alignment the EEOC guidance. This process will provide clarity to the public regarding existing requirements under the law or agency policies.
+					      Start a structured workflow to evaluate conviction history in alignment with the Iowa Fair Chance Hiring Law. This process will guide you through the required steps for making fair and compliant hiring decisions.
 					    </p>
 					    {/* Steps Row (Icons + Arrows) */}
 					    <div className="relative w-full mt-6 space-y-6">
@@ -141,6 +140,17 @@ export default function Home() {
 					            </span>
 					          </div>
 					        ))}
+					      </div>
+					    </div>
+					    <div className="mt-6 space-y-4">
+					      <div className="bg-muted p-4 rounded-lg">
+					        <h3 className="font-semibold mb-2">Key Requirements</h3>
+					        <ul className="list-disc pl-6 text-sm text-muted-foreground space-y-2">
+					          <li>No criminal record inquiries on initial applications</li>
+					          <li>Must wait until after conditional offer to conduct background checks</li>
+					          <li>Must provide notice before taking adverse action</li>
+					          <li>Must conduct individualized assessment for any adverse decisions</li>
+					        </ul>
 					      </div>
 					    </div>
 					    <Button

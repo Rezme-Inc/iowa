@@ -169,7 +169,7 @@ export default function AssessmentIntake() {
                         1. Job Description
                       </Label>
                       <p className="ia-text text-gray35 mt-1">
-                        Attach the job posting or internal job description for this role. This will help in determining whether the offense is job-related per the guidance of the EEOC.
+                        Attach the job posting or internal job description for this role. This will help in determining whether the offense is job-related per the guidance of Iowa Code section 364.3(12)(a) and the EEOC.
                       </p>
                     </div>
                     <div className="grid gap-4">
@@ -311,7 +311,7 @@ export default function AssessmentIntake() {
               <DialogDescription className="space-y-6 pt-2 ia-text text-gray-700">
                 <div className="bg-muted p-4 rounded-lg border border-cinnabar">
                   <p>
-                    All materials have been ingested to power your real-time intelligence system. You're about to review <span className="font-bold text-foreground">Jacobi Iverson</span> for a Sales Associate role located in <span className="font-bold text-foreground">Stockton, CA</span> under the enforcement guidance of the <span className="font-bold text-foreground">U.S. Equal Employment Opportunity Commission</span>. We will walk you through an individualized assessment informed by your company policy, applicable laws, and background check data that has been ingested to create your hiring protocol and agentic workflows. Below you will find a summary of the background report and the job requisition you are looking to fill at your organization:
+                    All materials have been ingested to power your real-time intelligence system. You're about to review <span className="font-bold text-foreground">Jacobi Iverson</span> for a Sales Associate role located in <span className="font-bold text-foreground">Waterloo, IA</span> under the enforcement guidance of Iowa Code section 364.3(12)(a). We will walk you through an individualized assessment informed by your company policy, applicable laws, and background check data that has been ingested to create your hiring protocol and agentic workflows. Below you will find a summary of the background report and the job requisition you are looking to fill at your organization:
                   </p>
                 </div>
                 <Collapsible defaultOpen>
@@ -325,7 +325,7 @@ export default function AssessmentIntake() {
                       <ul className="list-disc pl-6 space-y-2 ia-text">
                         <li>Conviction: Possession with Intent to Sell a Controlled Substance (Class B felony)</li>
                         <li>Date of Conviction: May 12, 2018</li>
-                        <li>Jurisdiction: Sacramento County, CA</li>
+                        <li>Jurisdiction: Waterloo, IA</li>
                         <li>Sentence: Indeterminate 1–9 years; served four years in state custody (June 2019 – June 2023)</li>
                         <li>Release & Supervision: Paroled in June 2023; completed all parole and probation requirements by May 2025</li>
                         <li>Parole Violation: One curfew violation recorded in September 2023; resulted in a formal warning and no further sanctions</li>
@@ -365,9 +365,9 @@ export default function AssessmentIntake() {
                   <CollapsibleContent>
                     <div className="bg-muted p-4 rounded-b-lg border-b border-x border-border">
                       <ul className="list-disc pl-6 space-y-2 ia-text">
-                        <li>Your reviewers can now begin conducting individualized assessments with intelligent support from your own policies and the EEOC's enforcement guidance</li>
+                        <li>Your reviewers can now begin conducting individualized assessments with intelligent support from your own policies and Iowa Code section 364.3(12)(a)</li>
                         <li>As they evaluate candidates with criminal histories, relevant guidance from your uploaded documents will automatically appear</li>
-                        <li>Each assessment question will be accompanied by applicable content from your policies, ensuring adherence with both the EEOC's enforcement guidance and your internal protocols</li>
+                        <li>Each assessment question will be accompanied by applicable content from your policies, ensuring adherence with both Iowa Code section 364.3(12)(a) and your internal protocols</li>
                       </ul>
                     </div>
                   </CollapsibleContent>
