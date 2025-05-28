@@ -315,63 +315,47 @@ export default function AssessmentEvaluate() {
       case 1:
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold">SEC. 4904 (c)</h3>
+            <h3 className="font-semibold">Iowa Code section 364.3(12)</h3>
             <p className="text-sm text-muted-foreground">
-              The Employer shall not require applicants or potential applicants for employment, or employees, to disclose, and shall not inquire into or discuss, their Conviction History or an Unresolved Arrest until after a conditional offer of employment. The Employer may not itself conduct or obtain from a third party a Background Check until after a conditional offer of employment.
+            To make any inquiry regarding, or to require any person to disclose or reveal, any convictions, arrests, or pending criminal charges during the application process, including but not limited to any interview. The application process shall begin when the applicant inquires about the employment being sought and shall end when an employer has extended a conditional offer of employment to the applicant. If the applicant voluntarily discloses any information regarding his or her criminal record at the interview, the employer may discuss the criminal record disclosed by the applicant.
             </p>
           </div>
         );
       case 2:
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold">SEC. 4904 subsections (a)(1)-(7)</h3>
+            <h3 className="font-semibold">Iowa Code section 364.3(12)</h3>
             <p className="text-sm text-muted-foreground mb-2">
-              The FCO prohibits covered employers from ever considering the following:
+               
             </p>
-            <ul className="text-sm text-muted-foreground space-y-2">
-              <li>• An arrest not leading to a conviction, except for unresolved arrests</li>
-              <li>• Participation in a diversion or deferral of judgment program</li>
-              <li>• A conviction that has been dismissed, expunged, otherwise invalidated, or inoperative</li>
-              <li>• A conviction in the juvenile justice system</li>
-              <li>• An offense other than a felony or misdemeanor, such as an infraction</li>
-              <li>• A conviction that is more than 7 years old (unless the position being considered supervises minors or dependent adults)</li>
-              <li>• A conviction for decriminalized conduct, including the non-commercial use and cultivation of cannabis</li>
-            </ul>
+            
+            <p className="text-sm text-muted-foreground">
+              Handling Of Criminal Records: Employers shall comply with any obligations arising under federal or state law relating to authorization for background checks, notifying applicants about adverse hiring decisions based on an applicant's criminal record, and any other matters involving the use of criminal record information.
+            </p>
           </div>
         );
       case 3:
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold">Section 4093 Definitions</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Directly-Related Conviction in the employment context shall mean that the conduct for which a person was convicted or that is the subject of an Unresolved Arrest has a direct and specific negative bearing on that person's ability to perform the duties or responsibilities necessarily related to the employment position. In determining whether the conviction or Unresolved Arrest is directly related to the employment position, the Employer shall consider whether the employment position offers the opportunity for the same or a similar offense to occur and whether circumstances leading to the conduct for which the person was convicted or that is the subject of an Unresolved Arrest will recur in the employment position.
-            </p>
-            <h3 className="font-semibold">SEC. 4904 (f)</h3>
             <p className="text-sm text-muted-foreground">
-              In making an employment decision based on an applicant's or employee's Conviction History, an Employer shall conduct an individualized assessment, considering only Directly-Related Convictions, the time that has elapsed since the Conviction or Unresolved Arrest, and any evidence of inaccuracy or Evidence of Rehabilitation or Other Mitigating Factors.
+              Employers can consider the following factors:
             </p>
+            <ul className="list-disc pl-6 text-sm text-muted-foreground">
+              <li>the nature of the employment</li>
+              <li>the place and manner in which the employment will be performed</li>
+              <li>the nature and seriousness of the offense or conduct</li>
+              <li>whether the employment presents an opportunity for the commission of a similar offense or conduct</li>
+              <li>the length of time between the conviction or arrest and the application for employment (not including time on probation or parole or the time during which fines or other financial penalties or remedies may be outstanding)</li>
+              <li>the number and types of convictions or pending charges</li>
+              <li>any verifiable information provided by the applicant that is related to the applicant's rehabilitation or good conduct.</li>
+            </ul>
           </div>
         );
-      case 4:
-        return (
-          <div className="space-y-4">
-            <h3 className="font-semibold">Time Elapsed Restrictions</h3>
-            <p className="text-sm text-muted-foreground mb-2">
-              The Fair Chance Ordinance (FCO) prohibits covered employers from ever considering the following:
-            </p>
-            <p className="text-sm text-muted-foreground mb-4">
-              A conviction that is more than 7 years old (unless the position being considered supervises minors or dependent adults).
-            </p>
-            <h3 className="font-semibold">SEC. 4904. (5)</h3>
-            <p className="text-sm text-muted-foreground">
-              A Conviction that is more than seven years old, the date of Conviction being the date of sentencing, except that this restriction and any limitations imposed in this Article 49 based on the limitation in this subsection (a)(5) shall not apply where the applicant or employee is or will be (A) providing services to or have supervisory or disciplinary authority over a minor, (B) providing services to or have supervisory or disciplinary authority over a "dependent adult," as that phrase is defined in California Welfare and Institutions Code Section 15610.23 or any successor state law, or (C) providing support services or care to or has supervisory authority over a person 65 years or older;
-            </p>
-          </div>
-        );
+
       case 5:
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold">SEC. 4903. DEFINITIONS</h3>
+            <h3 className="font-semibold">5-3-15 DEFINITIONS</h3>
             <div className="space-y-6">
               <div>
                 <h4 className="text-sm font-medium mb-2">Rehabilitation Evidence</h4>
@@ -388,55 +372,28 @@ export default function AssessmentEvaluate() {
               <div>
                 <h4 className="text-sm font-medium mb-2">Voluntary Mitigating Factors</h4>
                 <ul className="text-sm text-muted-foreground space-y-2">
-                  <li>• Coercive conditions preceding offense</li>
-                  <li>• History of intimate physical/emotional abuse</li>
-                  <li>• Untreated substance abuse</li>
-                  <li>• Untreated mental illness</li>
+                  <li>• Verifiable information provided by the applicant that is related to the applicant's rehabilitation or good conduct.</li>
                 </ul>
               </div>
             </div>
           </div>
         );
-      case 7:
-        return (
-          <div className="space-y-4">
-            <h3 className="font-semibold">SEC. 4904 (h)</h3>
-            <p className="text-sm text-muted-foreground">
-              If, within seven days of the date that the notice described in subsection (g) is provided by the Employer to the applicant or employee, the applicant or employee gives the Employer notice, orally or in writing, of evidence of the inaccuracy of the item or items of Conviction History or any Evidence of Rehabilitation or Other Mitigating Factors, the Employer shall delay any Adverse Action for a reasonable period after receipt of the information and during that time shall reconsider the prospective Adverse Action in light of the information.
-            </p>
-          </div>
-        );
+
       case 6:
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold">SEC. 4910. EMPLOYER RECORDS</h3>
+            <h3 className="font-semibold">5-3-15 (d)</h3>
             <p className="text-sm text-muted-foreground">
-              (a) An Employer shall retain records of employment, application forms, and other pertinent data and records required under this Article, for a period of three years, and shall allow the OLSE access to such records, with appropriate notice and at a mutually agreeable time, to monitor compliance with the requirements of this Article.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              (d) Where an Employer does not maintain or retain adequate records documenting compliance with this Article or does not allow the OLSE reasonable access to such records, it shall be presumed that the Employer did not comply with this Article, absent clear and convincing evidence otherwise.
+              
+              (d) Enforcement: Any complaint alleging a violation of this section shall be filed within the time provided in 5-3-10. Upon certification by the commission of an affirmative finding of probable cause that an employer has committed a violation of this section, the commission shall refer the complaint and probable cause finding to the city attorney for review, together with a recommendation as to the amount of a fine to be assessed. Upon determination that the complaint meets the requisite standard of proof, the city attorney shall issue a municipal infraction citation against the employer. A first offense shall be subject to a fine of up to seven hundred fifty dollars ($750.00), and a repeat offense within a period of three (3) years shall be subject to a fine of up to one thousand dollars ($1,000.00). Fines shall be payable to the complainant. For purposes of enforcing this section, the provisions of sections 5-3-10.D, 5-3-10.E, 5-3-10.F, 5-3-11, 5-3-12 and 5-3-13 shall not apply.
             </p>
           </div>
         );
-      case 8:
-        return (
-          <div className="space-y-4">
-            <h3 className="font-semibold">SEC. 4904 (f), (g), (i)</h3>
-            <p className="text-sm text-muted-foreground">
-              In making an employment decision based on an applicant's or employee's Conviction History, an Employer shall conduct an individualized assessment, considering only Directly-Related Convictions, the time that has elapsed since the Conviction or Unresolved Arrest, and any evidence of inaccuracy or Evidence of Rehabilitation or Other Mitigating Factors.
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              If an Employer intends to base an Adverse Action on an item or items in the applicant or employee's Conviction History, prior to taking any Adverse Action the Employer shall provide the applicant or employee with a copy of the Background Check Report, if any, and shall notify the applicant or employee of the prospective Adverse Action and the items forming the basis for the prospective Adverse Action.
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Upon taking any final Adverse Action based upon the Conviction History of an applicant or employee, an Employer shall notify the applicant or employee of the final Adverse Action.
-            </p>
-          </div>
-        );
+    
       default:
         return (
           <div className="text-sm text-muted-foreground">
-            Select a step to view relevant legal guidance.
+            No legal intelligence has been detected in our last scan for this step.
           </div>
         );
     }
@@ -472,7 +429,7 @@ export default function AssessmentEvaluate() {
         return (
           <div className="space-y-4">
             <p className="text-sm text-muted-foreground">
-            Pursuant to the San Francisco Fair Chance Ordinance, we consider for employment qualified applicants with arrest and conviction records.
+            Pursuant to Ordinance No. 5522, we consider for employment qualified applicants with arrest and conviction records.
             </p>
           </div>
         );
@@ -541,7 +498,7 @@ export default function AssessmentEvaluate() {
             <h3 className="font-semibold">Nature & Circumstances of the Offense</h3>
             <ul className="text-sm text-muted-foreground space-y-2">
               <li>• Offense: Possession with Intent to Sell a Controlled Substance (Class B felony)</li>
-              <li>• Jurisdiction & Disposition: Kings County, NY; convicted 12 May 2018; indeterminate 1–9 year sentence</li>
+              <li>• Jurisdiction & Disposition: Waterloo, IA; convicted 12 May 2018; indeterminate 1–9 year sentence</li>
               <li>• Custody Period: Served 4 years in state prison (Jun 2019 – Jun 2023)</li>
               <li>• Supervision: Paroled Jun 2023; completed all parole obligations May 2025</li>
               <li>• Conduct on Supervision: One curfew violation (Sep 2023) resulted in a formal warning; no sanctions or subsequent incidents</li>
@@ -598,7 +555,7 @@ export default function AssessmentEvaluate() {
                 <h4 className="text-sm font-medium mb-2">Industry Credentials</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• OSHA 10‑Hour General Industry (Mar 2020)</li>
-                  <li>• NY Dept. of Public Health – Food Handler Certificate (valid through Apr 2023)</li>
+                  <li>• IA Dept. of Public Health – Food Handler Certificate (valid through Apr 2023)</li>
                 </ul>
               </div>
 
