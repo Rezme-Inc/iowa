@@ -385,7 +385,7 @@ export default function AssessmentEvaluate() {
             <h3 className="font-semibold">5-3-15 (d)</h3>
             <p className="text-sm text-muted-foreground">
               
-              (d) Enforcement: Any complaint alleging a violation of this section shall be filed within the time provided in 5-3-10. Upon certification by the commission of an affirmative finding of probable cause that an employer has committed a violation of this section, the commission shall refer the complaint and probable cause finding to the city attorney for review, together with a recommendation as to the amount of a fine to be assessed. Upon determination that the complaint meets the requisite standard of proof, the city attorney shall issue a municipal infraction citation against the employer. A first offense shall be subject to a fine of up to seven hundred fifty dollars ($750.00), and a repeat offense within a period of three (3) years shall be subject to a fine of up to one thousand dollars ($1,000.00). Fines shall be payable to the complainant. For purposes of enforcing this section, the provisions of sections 5-3-10.D, 5-3-10.E, 5-3-10.F, 5-3-11, 5-3-12 and 5-3-13 shall not apply.
+              Enforcement: Any complaint alleging a violation of this section shall be filed within the time provided in 5-3-10. Upon certification by the commission of an affirmative finding of probable cause that an employer has committed a violation of this section, the commission shall refer the complaint and probable cause finding to the city attorney for review, together with a recommendation as to the amount of a fine to be assessed. Upon determination that the complaint meets the requisite standard of proof, the city attorney shall issue a municipal infraction citation against the employer. A first offense shall be subject to a fine of up to seven hundred fifty dollars ($750.00), and a repeat offense within a period of three (3) years shall be subject to a fine of up to one thousand dollars ($1,000.00). Fines shall be payable to the complainant. For purposes of enforcing this section, the provisions of sections 5-3-10.D, 5-3-10.E, 5-3-10.F, 5-3-11, 5-3-12 and 5-3-13 shall not apply.
             </p>
           </div>
         );
@@ -445,7 +445,7 @@ export default function AssessmentEvaluate() {
         return (
           <div className="space-y-4">
             <p className="text-sm text-muted-foreground">
-            We are committed to fair hiring practices and fully adheres to the requirements set forth by the San Francisco Office of Labor Standards Enforcement (OLSE) under the Fair Chance Ordinance (FCO). This includes providing applicants with automated notice of their right to file a complaint with the OLSE if they believe we are not in compliance with the law.
+            We are committed to fair hiring practices that fully adheres to the The Iowa Supreme Court Case No. 20-0575
             </p>
           </div>
         );
@@ -476,7 +476,7 @@ export default function AssessmentEvaluate() {
       default:
         return (
           <div className="text-sm text-muted-foreground">
-            Select a step to view relevant company policies.
+            Upload docs in your compliance protocol compiler to view relevant company policies.
           </div>
         );
     }
@@ -859,7 +859,7 @@ export default function AssessmentEvaluate() {
             <div className="rounded-lg border p-4 bg-muted">
               <h3 className="font-semibold mb-2">Notice of Intent to Take Adverse Action</h3>
               <p className="text-sm text-muted-foreground">
-                You are about to conduct an individualized assessment using the Iowa Fair Chance Hiring Law framework.
+                Finalize your individualized assessment using the Iowa Fair Chance Hiring Law framework.
               </p>
             </div>
             <Button
