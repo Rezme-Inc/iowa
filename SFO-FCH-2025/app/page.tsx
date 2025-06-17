@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { User, Users, ClipboardList, CheckCircle2, FileText, AlertTriangle, ArrowRight, Scale } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -38,6 +39,7 @@ const stepsRow2 = [
 
 export default function Home() {
 	const router = useRouter();
+	const [showRestorativeRecordModal, setShowRestorativeRecordModal] = useState(false);
 
 	return (
 		<div className="min-h-screen bg-background font-poppins p-0">
@@ -119,7 +121,7 @@ export default function Home() {
 					      <div className="flex justify-between w-full">
 					        {stepsRow1.map((step, idx) => (
 					          <div key={step.title} className="flex flex-col items-center min-w-0 flex-1">
-					            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gray-100 text-white">
+					            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-cinnabar text-white">
 					              {step.icon}
 					            </div>
 					            <span className="text-lg font-bold text-foreground text-center break-words leading-tight mt-2 max-w-[200px]">
@@ -177,21 +179,41 @@ export default function Home() {
 							Chance hiring process.
 						</p>
 						<Button
-							asChild
 							className="w-full border-cinnabar text-cinnabar hover:bg-cinnabar hover:text-white transition font-poppins"
 							variant="outline"
+							onClick={() => setShowRestorativeRecordModal(true)}
 						>
-							<a
-								href="https://cornell.restorativerecord.com/"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								Demo The Restorative Record
-							</a>
+							Demo The Restorative Record
 						</Button>
 					</CardContent>
 				</Card>
 			</div>
+
+			{/* Restorative Record Modal */}
+			<Dialog open={showRestorativeRecordModal} onOpenChange={setShowRestorativeRecordModal}>
+				<DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
+					<DialogHeader>
+						<DialogTitle className="text-2xl font-bold text-cinnabar mb-4">
+							The Restorative Record - Candidate Portal Demo
+						</DialogTitle>
+					</DialogHeader>
+					<div className="w-full h-[70vh] overflow-hidden rounded-lg border">
+						<iframe
+							src="/Jacobi%20Iverson%20-%20Restorative%20record%20.pdf"
+							className="w-full h-full"
+							title="The Restorative Record - Candidate Portal Demo"
+						/>
+					</div>
+					<div className="flex justify-end gap-3 mt-4">
+						<Button
+							className="bg-cinnabar text-white hover:bg-cinnabar-600"
+							onClick={() => setShowRestorativeRecordModal(false)}
+						>
+							Close
+						</Button>
+					</div>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }

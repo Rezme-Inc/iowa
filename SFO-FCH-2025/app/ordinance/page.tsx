@@ -14,13 +14,13 @@ export default function OrdinancePage() {
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
+        <Button
+          variant="ghost"
             className="p-0 hover:bg-transparent"
             onClick={() => router.back()}
-          >
+        >
             <ArrowLeft className="h-6 w-6 text-cinnabar" />
-          </Button>
+        </Button>
           <h1 className="text-3xl font-bold text-foreground">
             Iowa Fair Chance Hiring Law
           </h1>
@@ -43,7 +43,7 @@ export default function OrdinancePage() {
                   <h3 className="font-semibold mb-2">ADVERSE HIRING DECISION</h3>
                   <p className="text-sm text-muted-foreground">
                     A refusal to hire an applicant or the revocation of a conditional offer of employment to an applicant.
-                  </p>
+                </p>
                 </div>
                 <div className="bg-muted p-4 rounded-lg">
                   <h3 className="font-semibold mb-2">APPLICANT</h3>
@@ -55,7 +55,7 @@ export default function OrdinancePage() {
                   <h3 className="font-semibold mb-2">ARREST</h3>
                   <p className="text-sm text-muted-foreground">
                     The taking of a person into custody when and in the manner authorized by law or military authority due to an accusation or suspicion that the person committed a crime.
-                  </p>
+                </p>
                 </div>
                 <div className="bg-muted p-4 rounded-lg">
                   <h3 className="font-semibold mb-2">CONVICTION</h3>
@@ -110,7 +110,7 @@ export default function OrdinancePage() {
             {/* Legitimate Business Reasons Section */}
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold text-foreground">Legitimate Business Reasons</h2>
-              <div className="space-y-4">
+                <div className="space-y-4">
                 <div className="bg-muted p-4 rounded-lg">
                   <h3 className="font-semibold mb-2">1. Direct and Substantial Bearing on Job Duties</h3>
                   <p className="text-sm text-muted-foreground mb-2">
@@ -188,8 +188,8 @@ export default function OrdinancePage() {
                 </ul>
                 <p className="text-sm text-muted-foreground mt-2">
                   Fines shall be payable to the complainant. For purposes of enforcing this section, the provisions of sections 5-3-10.D, 5-3-10.E, 5-3-10.F, 5-3-11, 5-3-12 and 5-3-13 shall not apply.
-                </p>
-              </div>
+              </p>
+            </div>
             </section>
 
             {/* Effect on Other Laws Section */}
@@ -199,13 +199,13 @@ export default function OrdinancePage() {
                 <p className="text-sm text-muted-foreground">
                   This section shall not be interpreted or applied as imposing an obligation on the part of an employer to provide accommodations or job modifications in order to facilitate the employment of an applicant. Nothing in this section shall be construed to create a private right of action to seek damages or other relief of any kind.
                 </p>
-              </div>
+          </div>
             </section>
 
             {/* Effective Date */}
             <div className="text-sm text-muted-foreground border-t pt-4">
               Effective Date: July 1, 2020 (Ord. 5522, 11-4-2019; amd. Ord. 5547, 5-9-2020)
-            </div>
+        </div>
           </CardContent>
         </Card>
       </div>
